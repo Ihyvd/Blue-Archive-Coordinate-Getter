@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blue Archive Coordinate Tool</title>
+    <style>
+        /**
+         * Blue Archive Coordinate Tool - CSS Style Module
+         * ================================================================================
+         * Provides comprehensive styling for the Blue Archive coordinate tool interface.
+         * This module handles theming, glassmorphism effects, animations, and responsive
+         * design elements for the bookmark tool generator page.
+         * 
+         * Table of Contents:
+         * ================================================================================
+         * 1. CSS Custom Properties (Theme Variables)
+         *    - Blue Archive attack type colors
+         *    - Glassmorphism effect variables
+         *    - UI component styling variables
+         *    
+         * 2. Base Layout and Background System
+         *    - Body styling and positioning
+         *    - Animated gradient background
+         *    - Overflow and viewport handling
+         *    
+         * 3. Glassmorphism Container System
+         *    - Main container styling
+         *    - Backdrop blur effects
+         *    - Border and shadow systems
+         *    
+         * 4. Typography and Content Styling
+         *    - Heading styles
+         *    - Instruction block styling
+         *    - Code block presentation
+         *    
+         * 5. Interactive Elements
+         *    - Button styling and states
+         *    - Link presentation
+         *    - Hover effects and transitions
+         */
+
+        /* ============================================================================
+         * Section 1: CSS Custom Properties (Theme Variables)
+         * ============================================================================
+         * Defines the color palette based on Blue Archive attack types and creates
+         * reusable variables for the glassmorphism effect system.
+         */
+        :root {
+            /* Blue Archive Attack Type Color Palette */
+            --ba-explosion: rgb(167, 12, 25);    /* Red - Explosive damage type */
+            --ba-pierce: rgb(178, 109, 31);      /* Orange - Piercing damage type */
+            --ba-mystic: rgb(33, 111, 156);      /* Blue - Mystic damage type */
+            --ba-sonic: rgb(148, 49, 165);       /* Purple - Sonic damage type */
+            --ba-normal: rgb(72, 85, 130);       /* Dark blue - Normal damage type(?) */
+            
+            /* Glassmorphism Effect Variables */
+            /* These create the translucent, blurred glass effect for modern UI design */
+            --glass-bg: rgba(255, 255, 255, 0.15);           /* Semi-transparent white background */
+            --glass-border: rgba(255, 255, 255, 0.2);        /* Subtle border for glass elements */
+            --glass-text: rgba(0, 0, 0, 0.8);               /* High contrast text on glass */
+            --glass-text-light: rgba(0, 0, 0, 0.6);         /* Lower contrast text for subtlety */
+            --glass-accent: rgba(255, 255, 255, 0.3);        /* Accent color for highlights */
+            --glass-button: rgba(255, 255, 255, 0.2);        /* Button background on glass */
+            --glass-button-hover: rgba(255, 255, 255, 0.3);  /* Button hover state */
+            --glass-shadow: rgba(0, 0, 0, 0.1);             /* Soft shadow for depth */
+        }
+
+        /* ============================================================================
+         * Section 2: Base Layout and Background System
+         * ============================================================================
+         * Establishes the foundational layout structure and creates the animated
+         * background gradient using Blue Archive theme colors.
+         */
+        body {
+            /* Typography system using modern font stack */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            
+            /* Layout reset and viewport setup */
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;          /* Ensure full viewport height coverage */
+            position: relative;          /* Enable absolute positioning for child elements */
+            overflow-x: hidden;         /* Prevent horizontal scrollbar from gradient animation */
+            
+            /* Dynamic animated background using Blue Archive colors */
+            /* Creates a diagonal gradient that cycles through all attack type colors */
+            background: linear-gradient(-45deg, 
+                var(--ba-explosion), 
+                var(--ba-pierce), 
+                var(--ba-mystic), 
+                var(--ba-sonic), 
+                var(--ba-normal));
+            
+            /* Large background size enables smooth animation transitions */
+            background-size: 400% 400%;
+            
+            /* Apply the gradient animation with smooth easing */
+            animation: gradientShift 15s ease infinite;
+        }
+
+        /* Dynamic gradient animation keyframes */
+        /* Creates a smooth cycling effect through the color spectrum */
+        @keyframes gradientShift {
+            0% { 
+                background-position: 0% 50%; 
+            }
+            50% { 
+                background-position: 100% 50%; 
+            }
+            100% { 
+                background-position: 0% 50%; 
+            }
+        }
+
+        /* ============================================================================
+         * Section 3: Glassmorphism Container System
+         * ============================================================================
+         * Creates the main content container with modern glassmorphism effects,
+         * including backdrop blur, translucent backgrounds, and subtle shadows.
+         */
+        .container {
+            /* Layout and positioning */
+            max-width: 900px;           /* Optimal reading width for content */
+            margin: 0 auto;             /* Center horizontally */
+            padding: 30px;              /* Internal spacing for content */
+            
+            /* Glassmorphism visual effects */
+            background: var(--glass-bg);                    /* Semi-transparent background */
+            backdrop-filter: blur(20px);                    /* Background blur effect */
+            -webkit-backdrop-filter: blur(20px);            /* Safari compatibility */
+            
+            /* Border and shape styling */
+            border-radius: 20px;                            /* Rounded corners for modern look */
+            border: 1px solid var(--glass-border);          /* Subtle border definition */
+            
+            /* Shadow system for depth perception */
+            box-shadow: 
+                0 8px 32px var(--glass-shadow),            /* Primary shadow for depth */
+                inset 0 1px 0 var(--glass-border);         /* Inner highlight for glass effect */
+            
+            /* Enable relative positioning for child elements */
+            position: relative;
+        }
+
+        /* ============================================================================
+         * Section 4: Typography and Content Styling
+         * ============================================================================
+         * Defines styling for text elements, instruction blocks, and code display areas.
+         */
+        
+        /* Primary heading styling */
+        h1 {
+            color: #2c3e50;             /* Dark blue-gray for good contrast */
+            margin-top: 0;              /* Remove default top margin */
+        }
+
+        /* Instruction block container */
+        /* Creates a highlighted informational section with Blue Archive theming */
+        #instructions {
+            background-color: #eaf7ff;   /* Light blue background matching BA color scheme */
+            padding: 15px;               /* Internal spacing for readability */
+            border-radius: 5px;          /* Subtle rounded corners */
+            margin-bottom: 20px;         /* Spacing from following elements */
+            border-left: 5px solid #3498db;  /* Blue accent border for visual hierarchy */
+        }
+
+        /* Instruction block heading */
+        #instructions h2 {
+            margin-top: 0;               /* Remove default top margin for tight spacing */
+            color: #2980b9;              /* Darker blue to match border accent */
+        }
+
+        /* Instruction list styling */
+        #instructions ul {
+            padding-left: 20px;          /* Standard indentation for list items */
+        }
+
+        /* Code display block styling */
+        /* Provides a dedicated area for displaying the generated bookmarklet code */
+        .code-block {
+            background-color: #f0f0f0;   /* Light gray background for code contrast */
+            padding: 15px;               /* Internal spacing for code readability */
+            border-radius: 5px;          /* Consistent corner radius with other elements */
+            margin-top: 20px;            /* Separation from preceding content */
+            font-family: monospace;      /* Monospaced font for code display */
+            white-space: pre-wrap;       /* Preserve formatting and allow wrapping */
+            overflow-x: auto;            /* Enable horizontal scrolling for long lines */
+        }
+
+        /* ============================================================================
+         * Section 5: Interactive Elements
+         * ============================================================================
+         * Styling for buttons, links, and other interactive components with
+         * hover states and visual feedback.
+         */
+        
+        /* Bookmarklet link styling */
+        /* Creates a prominent, draggable link for the generated bookmarklet */
+        .bookmarklet-link {
+            display: inline-block;       /* Allow padding while maintaining inline behavior */
+            padding: 8px 15px;           /* Comfortable click target size */
+            background-color: #3498db;   /* Blue background matching BA theme */
+            color: white;                /* High contrast text */
+            text-decoration: none;       /* Remove default link underline */
+            border-radius: 4px;          /* Subtle rounded corners */
+            margin: 10px 0;              /* Vertical spacing from surrounding elements */
+        }
+
+        /* General button styling */
+        /* Base styles for all button elements in the interface */
+        button {
+            display: block;              /* Full width block-level buttons */
+            margin: 10px 0;              /* Consistent vertical spacing */
+            padding: 8px 15px;           /* Comfortable click target dimensions */
+            color: white;                /* White text for contrast */
+            border: none;                /* Remove default browser button styling */
+            border-radius: 4px;          /* Consistent corner radius */
+            cursor: pointer;             /* Indicate interactive element */
+        }
+
+        /* Test button variant styling */
+        .test-btn {
+            background-color: #27ae60;   /* Green color for positive/test actions */
+        }
+
+        /* Copy button variant styling */
+        .copy-btn {
+            background-color: #9b59b6;   /* Purple color for secondary actions */
+        }
+    </style>
+</head>
+
+<body>
+    <!--
+    ================================================================================
+    Blue Archive Coordinate Tool - Main Content Structure
+    ================================================================================
+    This section contains the HTML structure for the coordinate tool interface,
+    including the instruction panel and code display area.
+    -->
+    <div class="container">
+        <!-- Primary heading for the tool -->
+        <h1>Blue Archive Coordinate Tool v1</h1>
+
+        <!-- Instruction panel with usage guidelines -->
+        <!-- Provides comprehensive instructions for using the generated bookmarklet -->
+        <div id="instructions">
+            <h2>Information</h2>
+            <ul>
+                <!-- Core interaction method - Shift+click replaces right-click for better compatibility -->
+                <li>Hold Shift and click anywhere on the video to place markers</li>
+                
+                <!-- Resolution management features -->
+                <li>Enter custom resolution values if needed and click "Apply"</li>
+                <li>Lock the resolution to prevent automatic resizing</li>
+                
+                <!-- Overlay activation and interaction -->
+                <li>Click "Activate Overlay" to place an overlay on the video</li>
+                <li>Left-clicks will pass through the overlay to interact with the video</li>
+                
+                <!-- Customization and editing features -->
+                <li>Customize marker colors and sizes using the control panel</li>
+                <li>Drag markers to adjust their position</li>
+                <li>Edit coordinate values in the control panel</li>
+                
+                <!-- Automatic calculation features -->
+                <li>Values automatically update with 100-based ratio calculations</li>
+                
+                <!-- Import/Export functionality for Blue Archive integration -->
+                <li>Import coordinates from Blue Archive or export your current markers</li>
+                
+                <!-- New zoom compatibility feature -->
+                <li>Tool automatically adjusts when you zoom in/out of the page</li>
+            </ul>
+        </div>
+
+        <!-- Code display container -->
+        <!-- This element will be populated by JavaScript with the bookmarklet code and instructions -->
+        <div id="bookmarkletCode" class="code-block">
+            <!-- Bookmarklet code will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <!--
+    ================================================================================
+    Blue Archive Coordinate Tool - JavaScript Module System
+    ================================================================================
+    This script handles the generation and presentation of the bookmarklet code.
+    The system is organized into several key areas:
+    
+    1. DOM Ready Event Handler
+       - Ensures the page is fully loaded before script execution
+       - Coordinates the initialization of all components
+       
+    2. Bookmarklet Code Generation
+       - Contains the complete coordinate tool functionality
+       - Handles video detection, overlay creation, and marker management
+       - Includes zoom detection and scaling capabilities
+       
+    3. UI Construction and Presentation
+       - Creates the user interface for the bookmarklet
+       - Handles instruction display and link generation
+       - Manages drag-and-drop functionality for bookmark installation
+    -->
+    <script>
+        /**
+         * Main Initialization Handler
+         * ================================================================================
+         * Coordinates the startup sequence for the coordinate tool generator.
+         * This function executes when the DOM is fully loaded and ready for manipulation.
+         * 
+         * Key responsibilities:
+         * - Generate the complete bookmarklet code
+         * - Create the user interface elements
+         * - Set up drag-and-drop functionality for bookmark installation
+         * - Display usage instructions and implementation guidance
+         */
+        document.addEventListener('DOMContentLoaded', function() {
+            /**
+             * Bookmarklet Code Variable
+             * ================================================================================
+             * Contains the complete JavaScript code for the Blue Archive coordinate tool.
+             * This code will be executed when the bookmarklet is clicked on a video page.
+             * 
+             * The bookmarklet includes:
+             * - Video detection and overlay creation
+             * - Marker placement and management system
+             * - Zoom detection and automatic scaling
+             * - Import/export functionality for BlueStacks integration
+             * - Coordinate calculation and display
+             * - Timer and cleanup management
+             */
+            var bookmarkletCode = `
+            (function(){
+                if(window.baCoordinateToolActive){
+                    alert('Blue Archive Coordinate Tool is already running. Click "Close" in the control panel to remove it first.');
+                    return;
+                }
+                window.baCoordinateToolActive = true;
+                var css='.ba-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(52,152,219,0.1);cursor:crosshair;z-index:10000;pointer-events:none}.ba-marker{position:absolute;transform:translate(-50%,-50%);pointer-events:all;cursor:move;z-index:10001;display:flex;align-items:center;justify-content:center}.ba-marker-inner{width:3px;height:3px;background-color:red;border-radius:50%;position:absolute;z-index:10002}.ba-marker-ring{border:1px solid rgba(65,180,255,0.9);border-radius:50%;width:20px;height:20px;background-color:transparent;position:absolute;z-index:10001;pointer-events:none}.ba-marker-label{position:absolute;top:-24px;left:0;background-color:rgba(0,0,0,0.7);color:white;padding:2px 6px;border-radius:3px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:10002}.ba-controls{position:absolute;top:10px;right:10px;background-color:rgba(0,0,0,0.8);color:white;padding:12px;border-radius:8px;width:320px;min-width:320px;max-width:400px;z-index:10002;font-family:Arial,sans-serif;font-size:12px;pointer-events:all;box-sizing:border-box}.ba-controls h3{margin-top:0;margin-bottom:12px;font-size:14px;display:flex;justify-content:space-between;align-items:center}.ba-btn{background-color:#3498db;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;margin-right:5px;font-size:12px;min-width:60px}.ba-btn:hover{background-color:#2980b9}.ba-coordinates-list{margin-top:10px;max-height:300px;overflow-y:auto}.ba-coordinate-item{background-color:rgba(255,255,255,0.1);padding:8px;margin-bottom:8px;border-radius:3px}.ba-coordinate-item h4{margin:0 0 5px 0;font-size:12px;display:flex;justify-content:space-between;align-items:center}.ba-delete-btn{background-color:#e74c3c;padding:2px 5px;font-size:10px}.ba-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.ba-input-group{display:flex;flex-direction:column;margin-bottom:5px}.ba-input-group label{font-size:10px;margin-bottom:3px;color:white}.ba-input-group input{background-color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:4px;border-radius:3px;font-size:11px;width:100%;box-sizing:border-box}.ba-size-color-controls{margin-top:12px;background-color:rgba(52,152,219,0.1);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.2)}.ba-control-item{display:flex;flex-direction:column;margin-bottom:12px;width:100%}.ba-control-item:last-child{margin-bottom:0}.ba-control-item label{font-size:12px;margin-bottom:6px;color:white;font-weight:500}.ba-control-row{display:flex;align-items:center;gap:8px;width:100%}.ba-control-row input[type="range"]{flex:1;min-width:0}.ba-control-row input[type="color"]{width:40px;height:30px;border:none;border-radius:4px;cursor:pointer;padding:0}.ba-control-row span{min-width:45px;text-align:right;font-size:11px;color:#ccc}.ba-import-export{display:flex;justify-content:space-between;margin-top:12px;gap:8px}.ba-import-export .ba-btn{flex:1;margin-right:0}.ba-import-modal{display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5)}.ba-zoom-indicator{position:absolute;top:10px;left:10px;background-color:rgba(0,0,0,0.8);color:white;padding:8px 12px;border-radius:6px;font-size:11px;z-index:10003;pointer-events:none;font-family:Arial,sans-serif}';
+                var style=document.createElement('style');
+                style.textContent=css;
+                document.head.appendChild(style);
+                var markers=[];
+                var markerCount=0;
+                var isDragging=false;
+                var selectedMarker=null;
+                var dragOffsetX=0;
+                var dragOffsetY=0;
+                var controlIsDragging=false;
+                var controlDragOffsetX=0;
+                var controlDragOffsetY=0;
+                var isResLocked=false;
+                var currentRingSize=20;
+                var currentDotSize=3;
+                var currentRingColor="#41b4ff";
+                var currentDotColor="#ff0000";
+                var overlay,controls,resPanel,importModal,zoomIndicator;
+                var widthInput,heightInput,lockResCheckbox;
+                var isFullscreen=false;
+                var videoContainer=null;
+                var videoRect=null;
+                var isShiftPressed=false;
+                var mouseX=0,mouseY=0;
+                var currentZoomLevel=1;
+                var baseZoomLevel=1;
+                var zoomCheckInterval;
+                var lastKnownZoom=1;
+                var originalVideoRect=null;
+                function detectZoomLevel(){
+                    var zoomLevel=Math.round((window.outerWidth/window.innerWidth)*100)/100;
+                    if(isNaN(zoomLevel)||zoomLevel<=0){
+                        zoomLevel=1;
+                    }
+                    if(window.devicePixelRatio){
+                        var alternativeZoom=1/window.devicePixelRatio;
+                        if(Math.abs(alternativeZoom-zoomLevel)>0.1){
+                            zoomLevel=alternativeZoom;
+                        }
+                    }
+                    return Math.max(0.1,Math.min(5,zoomLevel));
+                }
+                function updateZoomIndicator(){
+                    if(zoomIndicator){
+                        var displayZoom=Math.round(currentZoomLevel*100);
+                        zoomIndicator.textContent='Zoom: '+displayZoom+'%';
+                    }
+                }
+                function handleZoomChange(){
+                    var newZoomLevel=detectZoomLevel();
+                    if(Math.abs(newZoomLevel-lastKnownZoom)>0.05){
+                        currentZoomLevel=newZoomLevel;
+                        lastKnownZoom=newZoomLevel;
+                        updateZoomIndicator();
+                        if(!isFullscreen&&videoContainer){
+                            var newVideoRect=videoContainer.getBoundingClientRect();
+                            if(overlay&&newVideoRect.width>0&&newVideoRect.height>0){
+                                videoRect=newVideoRect;
+                                updateOverlayForZoom();
+                                updateControlPanelPositions();
+                                updateResolutionPanelValues();
+                            }
+                        }
+                    }
+                }
+                function updateOverlayForZoom(){
+                    if(!overlay||!videoRect)return;
+                    overlay.style.width=videoRect.width+'px';
+                    overlay.style.height=videoRect.height+'px';
+                    overlay.style.top=videoRect.top+window.scrollY+'px';
+                    overlay.style.left=videoRect.left+window.scrollX+'px';
+                    if(!isResLocked){
+                        updateMarkerPositions();
+                    }
+                }
+                function updateControlPanelPositions(){
+                    if(controls&&!isFullscreen){
+                        var controlsWidth=320;
+                        var preferredLeft=videoRect.left+window.scrollX+videoRect.width-controlsWidth;
+                        var maxLeft=window.innerWidth-controlsWidth-10;
+                        var minLeft=10;
+                        var finalLeft=Math.max(minLeft,Math.min(preferredLeft,maxLeft));
+                        controls.style.top=(videoRect.top+window.scrollY+10)+'px';
+                        controls.style.left=finalLeft+'px';
+                    }
+                    if(resPanel&&!isFullscreen){
+                        var panelWidth=400;
+                        var preferredLeft=videoRect.left+window.scrollX;
+                        var maxLeft=window.innerWidth-panelWidth-10;
+                        var minLeft=10;
+                        var finalLeft=Math.max(minLeft,Math.min(preferredLeft,maxLeft));
+                        var preferredTop=videoRect.top+window.scrollY-60;
+                        var finalTop=Math.max(10,preferredTop);
+                        resPanel.style.left=finalLeft+'px';
+                        resPanel.style.top=finalTop+'px';
+                    }
+                }
+                function updateResolutionPanelValues(){
+                    if(widthInput&&heightInput&&videoRect){
+                        widthInput.value=Math.round(videoRect.width);
+                        heightInput.value=Math.round(videoRect.height);
+                    }
+                }
+                function startZoomMonitoring(){
+                    baseZoomLevel=detectZoomLevel();
+                    currentZoomLevel=baseZoomLevel;
+                    lastKnownZoom=baseZoomLevel;
+                    zoomCheckInterval=setInterval(handleZoomChange,250);
+                    window.addEventListener('resize',handleZoomChange);
+                    window.addEventListener('wheel',function(e){
+                        if(e.ctrlKey){
+                            setTimeout(handleZoomChange,100);
+                        }
+                    },true);
+                    if(window.visualViewport){
+                        window.visualViewport.addEventListener('resize',handleZoomChange);
+                    }
+                }
+                function stopZoomMonitoring(){
+                    if(zoomCheckInterval){
+                        clearInterval(zoomCheckInterval);
+                        zoomCheckInterval=null;
+                    }
+                    window.removeEventListener('resize',handleZoomChange);
+                    if(window.visualViewport){
+                        window.visualViewport.removeEventListener('resize',handleZoomChange);
+                    }
+                }
+                if(window.location.hostname.includes('youtube.com')){
+                    videoContainer=document.querySelector('div#container.style-scope.ytd-player');
+                    if(!videoContainer){
+                        videoContainer=document.querySelector('#movie_player');
+                    }
+                    if(!videoContainer){
+                        videoContainer=document.querySelector('.html5-video-container');
+                    }
+                }
+                if(!videoContainer){
+                    var videos=document.querySelectorAll('video');
+                    if(videos.length>0){
+                        videoContainer=videos[0];
+                    }else{
+                        alert('No video found on this page');
+                        window.baCoordinateToolActive = false;
+                        return;
+                    }
+                }
+                videoRect=videoContainer.getBoundingClientRect();
+                originalVideoRect=Object.assign({},videoRect);
+                function createZoomIndicator(){
+                    zoomIndicator=document.createElement('div');
+                    zoomIndicator.className='ba-zoom-indicator';
+                    if(isFullscreen&&document.fullscreenElement){
+                        zoomIndicator.style.position='fixed';
+                        document.fullscreenElement.appendChild(zoomIndicator);
+                    }else{
+                        zoomIndicator.style.position='absolute';
+                        zoomIndicator.style.top=videoRect.top+window.scrollY+10+'px';
+                        zoomIndicator.style.left=videoRect.left+window.scrollX+10+'px';
+                        document.body.appendChild(zoomIndicator);
+                    }
+                    updateZoomIndicator();
+                }
+                function createResolutionPanel(){
+                    resPanel=document.createElement('div');
+                    resPanel.className='ba-resolution-panel';
+                    resPanel.style.position='absolute';
+                    var panelWidth = 400;
+                    var preferredLeft = videoRect.left + window.scrollX;
+                    var maxLeft = window.innerWidth - panelWidth - 10;
+                    var minLeft = 10;
+                    var finalLeft = Math.max(minLeft, Math.min(preferredLeft, maxLeft));
+                    var preferredTop = videoRect.top + window.scrollY - 60;
+                    var finalTop = Math.max(10, preferredTop);
+                    resPanel.style.left=finalLeft+'px';
+                    resPanel.style.top=finalTop+'px';
+                    resPanel.style.backgroundColor='rgba(0,0,0,0.8)';
+                    resPanel.style.padding='10px';
+                    resPanel.style.borderRadius='5px';
+                    resPanel.style.color='white';
+                    resPanel.style.zIndex='10001';
+                    resPanel.style.display='flex';
+                    resPanel.style.alignItems='center';
+                    resPanel.style.pointerEvents='all';
+                    resPanel.innerHTML='<span style="margin-right:10px">Resolution:</span><input type="number" class="ba-width" value="'+Math.round(videoRect.width)+'" style="width:60px;margin-right:5px;padding:3px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;border-radius:3px"><span style="margin:0 5px">×</span><input type="number" class="ba-height" value="'+Math.round(videoRect.height)+'" style="width:60px;margin-right:10px;padding:3px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;border-radius:3px"><button class="ba-apply-res" style="background:#2ecc71;color:white;border:none;padding:3px 8px;border-radius:3px;cursor:pointer">Apply</button><label style="margin-left:10px;display:flex;align-items:center;cursor:pointer"><input type="checkbox" class="ba-lock-res" style="margin-right:5px">Lock</label>';
+                    if(isFullscreen&&document.fullscreenElement){
+                        document.fullscreenElement.appendChild(resPanel);
+                    }else{
+                        document.body.appendChild(resPanel);
+                    }
+                    widthInput=resPanel.querySelector('.ba-width');
+                    heightInput=resPanel.querySelector('.ba-height');
+                    lockResCheckbox=resPanel.querySelector('.ba-lock-res');
+                    resPanel.querySelector('.ba-apply-res').addEventListener('click',applyResolution);
+                    lockResCheckbox.addEventListener('change',function(){
+                        isResLocked=this.checked;
+                    });
+                }
+                function createImportModal(){
+                    importModal=document.createElement('div');
+                    importModal.className='ba-import-modal';
+                    importModal.innerHTML='<div style="background:#fff;margin:10% auto;padding:20px;border-radius:8px;width:80%;max-width:700px"><h3 style="margin-top:0;color:#2c3e50">Import Coordinates</h3><p>Paste coordinates below or upload a file:</p><input type="file" accept=".json,.txt,.cfg" id="ba-import-file" style="margin-bottom:10px"><textarea id="ba-import-text" style="width:100%;height:200px;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:5px;font-family:monospace" placeholder="Paste JSON or CFG content here..."></textarea><div id="ba-profile-selector" style="display:none;margin-top:15px"><h4 style="margin-top:0;color:#2c3e50">Select profile to import:</h4><select id="ba-profile-select" style="width:100%;padding:8px;margin-top:5px"></select></div><div style="display:flex;justify-content:flex-end;gap:10px"><button id="ba-close-import" style="padding:8px 15px;background-color:#7f8c8d;color:white;border:none;border-radius:4px">Cancel</button><button id="ba-process-import" style="padding:8px 15px;background-color:#27ae60;color:white;border:none;border-radius:4px">Import</button></div></div>';
+                    document.body.appendChild(importModal);
+                    
+                    document.getElementById('ba-close-import').addEventListener('click',function(){
+                        importModal.style.display='none';
+                        document.getElementById('ba-profile-selector').style.display='none';
+                        document.getElementById('ba-import-text').value='';
+                    });
+                    
+                    document.getElementById('ba-import-file').addEventListener('change',function(e){
+                        const file=e.target.files[0];
+                        if(!file) return;
+                        
+                        document.getElementById('ba-profile-selector').style.display='none';
+                        
+                        const reader=new FileReader();
+                        reader.onload=function(event){
+                            document.getElementById('ba-import-text').value=event.target.result;
+                            
+                            try {
+                                const jsonData=JSON.parse(event.target.result);
+                                if(jsonData.ControlSchemes && Array.isArray(jsonData.ControlSchemes) && jsonData.ControlSchemes.length>1){
+                                    const profileSelector=document.getElementById('ba-profile-selector');
+                                    const profileSelect=document.getElementById('ba-profile-select');
+                                    profileSelector.style.display='block';
+                                    profileSelect.innerHTML='';
+                                    
+                                    jsonData.ControlSchemes.forEach(function(scheme,index){
+                                        const option=document.createElement('option');
+                                        option.value=index;
+                                        option.textContent=scheme.Name+(scheme.Selected?' (Selected)':'')+(scheme.BuiltIn?' (Built-in)':'');
+                                        profileSelect.appendChild(option);
+                                        
+                                        if(scheme.Selected){
+                                            profileSelect.value=index;
+                                        }
+                                    });
+                                }
+                            } catch(error){
+                                console.log("Pre-parsing failed, will try again during import",error);
+                            }
+                        };
+                        reader.readAsText(file);
+                    });
+                    
+                    document.getElementById('ba-process-import').addEventListener('click',function(){
+                        processImport();
+                    });
+                }
+                function processImport(){
+                    var jsonText=document.getElementById('ba-import-text').value.trim();
+                    var profileSelector=document.getElementById('ba-profile-selector');
+                    var profileSelect=document.getElementById('ba-profile-select');
+                    
+                    if(!jsonText){
+                        alert('Please paste coordinate data or upload a file');
+                        return;
+                    }
+                    
+                    try{
+                        var jsonData=JSON.parse(jsonText);
+                        
+                        if(jsonData.ControlSchemes && Array.isArray(jsonData.ControlSchemes) && jsonData.ControlSchemes.length>1){
+                            if(profileSelector.style.display === 'block'){
+                                var selectedIndex=parseInt(profileSelect.value);
+                                var selectedProfile=jsonData.ControlSchemes[selectedIndex];
+                                
+                                if(markers.length>0 && confirm('Do you want to clear existing markers before importing?')){
+                                    resetMarkers();
+                                }
+                                
+                                importProfile(selectedProfile);
+                                
+                                importModal.style.display='none';
+                                profileSelector.style.display='none';
+                                document.getElementById('ba-import-text').value='';
+                            } else {
+                                profileSelector.style.display='block';
+                                profileSelect.innerHTML='';
+                                
+                                jsonData.ControlSchemes.forEach(function(scheme, index){
+                                    var option=document.createElement('option');
+                                    option.value=index;
+                                    option.textContent=scheme.Name+(scheme.Selected?' (Selected)':'')+(scheme.BuiltIn?' (Built-in)':'');
+                                    profileSelect.appendChild(option);
+                                    
+                                    if(scheme.Selected){
+                                        profileSelect.value=index;
+                                    }
+                                });
+                            }
+                        } else {
+                            profileSelector.style.display='none';
+                            
+                            if(markers.length>0 && confirm('Do you want to clear existing markers before importing?')){
+                                resetMarkers();
+                            }
+                            
+                            if(jsonData.ControlSchemes && Array.isArray(jsonData.ControlSchemes) && jsonData.ControlSchemes.length>0){
+                                var selectedProfile=jsonData.ControlSchemes.find(function(scheme){return scheme.Selected}) || jsonData.ControlSchemes[0];
+                                importProfile(selectedProfile);
+                            } else if(jsonData.GameControls && Array.isArray(jsonData.GameControls)){
+                                importBlueArchiveFormat(jsonData);
+                            } else {
+                                importGenericFormat(jsonData);
+                            }
+                            
+                            importModal.style.display='none';
+                            
+                            document.getElementById('ba-import-text').value='';
+                        }
+                    } catch(error){
+                        alert('Invalid data format: '+error.message);
+                        console.error(error);
+                    }
+                }
+                
+                function importProfile(profile){
+                    if(profile && profile.GameControls && Array.isArray(profile.GameControls)){
+                        var profileName=profile.Name || "Unnamed Profile";
+                        importBlueArchiveFormat(profile, profileName);
+                    } else {
+                        alert('The selected profile does not contain valid GameControls data');
+                    }
+                }
+                
+                function importBlueArchiveFormat(jsonData, profileName){
+                    var controls=jsonData.GameControls;
+                    var imported=0;
+                    controls.forEach(function(control){
+                        if(control.Type==="Tap"&&typeof control.X==='number'&&typeof control.Y==='number'){
+                            var ratioX=control.X;
+                            var ratioY=control.Y;
+                            var rect=overlay.getBoundingClientRect();
+                            var x=(ratioX/100)*rect.width;
+                            var y=(ratioY/100)*rect.height;
+                            var markerId=addMarker(x,y);
+                            if(control.Key){
+                                var marker=markers.find(function(m){return m.id==markerId});
+                                if(marker&&marker.labelElement){
+                                    marker.labelElement.textContent='#'+markerId+' - '+control.Key;
+                                    
+                                    var markerLabelInput=marker.coordItem.querySelector('.ba-marker-label-input');
+                                    if(markerLabelInput){
+                                        markerLabelInput.value=control.Key;
+                                    }
+                                }
+                            }
+                            imported++;
+                        }
+                    });
+                    var profileInfo=profileName?' from profile "'+profileName+'"':'';
+                    alert('Successfully imported '+imported+' coordinate points'+profileInfo);
+                }
+                
+                function importGenericFormat(jsonData){
+                    var imported=0;
+                    if(Array.isArray(jsonData)){
+                        jsonData.forEach(function(item){
+                            if((item.x!==undefined&&item.y!==undefined)||(item.X!==undefined&&item.Y!==undefined)){
+                                var x=item.x!==undefined?item.x:item.X;
+                                var y=item.y!==undefined?item.y:item.Y;
+                                var rect=overlay.getBoundingClientRect();
+                                var pixelX,pixelY;
+                                if(x<=100&&y<=100){
+                                    pixelX=(x/100)*rect.width;
+                                    pixelY=(y/100)*rect.height;
+                                }else{
+                                    pixelX=x;
+                                    pixelY=y;
+                                }
+                                addMarker(pixelX,pixelY);
+                                imported++;
+                            }
+                        });
+                    }
+                    alert('Successfully imported '+imported+' coordinate points');
+                }
+                
+                function exportCoordinates(){
+                    if(markers.length===0){
+                        alert('No markers to export');
+                        return;
+                    }
+                    
+                    var formatSelection=confirm(
+                        'Choose export format:\\n\\n'+
+                        'Click "OK" to export in CFG format (for BlueStacks)\\n'+
+                        'Click "Cancel" to export in simple JSON format'
+                    );
+                    
+                    if(formatSelection){
+                        var exportData={
+                            "MetaData":{
+                                "ParserVersion":"17",
+                                "UpdateVersion":"",
+                                "UpdateArticleKey":"",
+                                "CloudUpdateTimeUTC":new Date().toISOString().split('T').join(' ').substring(0,19)
+                            },
+                            "ControlSchemes":[
+                                {
+                                    "Name":"Blue Archive Coordinates - "+new Date().toISOString().split('T')[0],
+                                    "BuiltIn":false,
+                                    "Selected":true,
+                                    "IsBookMarked":false,
+                                    "IsCategoryVisible":true,
+                                    "KeyboardLayout":"United States",
+                                    "GameControls":markers.map(function(marker,index){
+                                        var coordItem=marker.coordItem;
+                                        var ratioX=parseFloat(coordItem.querySelector('.ba-ratio-x').value);
+                                        var ratioY=parseFloat(coordItem.querySelector('.ba-ratio-y').value);
+                                        var labelText=marker.labelElement.textContent;
+                                        var keyMatch=labelText.match(/#\\d+ - (.+)/);
+                                        var key=keyMatch?keyMatch[1]:'Marker_'+(index+1);
+                                        return{
+                                            "$type":"Tap, Bluestacks",
+                                            "Type":"Tap",
+                                            "Tweaks":0,
+                                            "Exclusive":false,
+                                            "ExclusiveDelay":200,
+                                            "XExpr":"",
+                                            "YExpr":"",
+                                            "XOverlayOffset":"",
+                                            "YOverlayOffset":"",
+                                            "StartCondition":"",
+                                            "EnableCondition":"",
+                                            "ShowOnOverlay":true,
+                                            "X":ratioX,
+                                            "Y":ratioY,
+                                            "Key":key,
+                                            "Key_alt1":"",
+                                            "GuidanceCategory":"",
+                                            "Guidance":{}
+                                        };
+                                    }),
+                                    "Images":[]
+                                }
+                            ],
+                            "Strings":{}
+                        };
+                        
+                        var jsonString=JSON.stringify(exportData,null,4);
+                        var blob=new Blob([jsonString],{type:'application/json'});
+                        var url=URL.createObjectURL(blob);
+                        var a=document.createElement('a');
+                        a.href=url;
+                        a.download='blue_archive_coordinates.cfg';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    }else{
+                        var exportData={
+                            Name:"Blue Archive Coordinates - "+new Date().toISOString().split('T')[0],
+                            GameControls:markers.map(function(marker,index){
+                                var coordItem=marker.coordItem;
+                                var ratioX=parseFloat(coordItem.querySelector('.ba-ratio-x').value);
+                                var ratioY=parseFloat(coordItem.querySelector('.ba-ratio-y').value);
+                                var labelText=marker.labelElement.textContent;
+                                var keyMatch=labelText.match(/#\\d+ - (.+)/);
+                                var key=keyMatch?keyMatch[1]:'Marker_'+(index+1);
+                                return{
+                                    "$type":"Tap, Bluestacks",
+                                    "Type":"Tap",
+                                    "Tweaks":0,
+                                    "Exclusive":false,
+                                    "ExclusiveDelay":200,
+                                    "ShowOnOverlay":true,
+                                    "X":ratioX,
+                                    "Y":ratioY,
+                                    "Key":key
+                                };
+                            })
+                        };
+                        
+                        var jsonString=JSON.stringify(exportData,null,2);
+                        var blob=new Blob([jsonString],{type:'application/json'});
+                        var url=URL.createObjectURL(blob);
+                        var a=document.createElement('a');
+                        a.href=url;
+                        a.download='blue_archive_coordinates.json';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    }
+                }
+                function createOverlay(){
+                    overlay=document.createElement('div');
+                    overlay.className='ba-overlay';
+                    overlay.style.position='absolute';
+                    overlay.style.width=videoRect.width+'px';
+                    overlay.style.height=videoRect.height+'px';
+                    overlay.style.top=videoRect.top+window.scrollY+'px';
+                    overlay.style.left=videoRect.left+window.scrollX+'px';
+                    if(isFullscreen&&document.fullscreenElement){
+                        overlay.style.position='fixed';
+                        overlay.style.top='0';
+                        overlay.style.left='0';
+                        document.fullscreenElement.appendChild(overlay);
+                    }else{
+                        document.body.appendChild(overlay);
+                    }
+                    
+                    overlay.addEventListener('click', function(e) {
+                        if(isDragging) {
+                            e.stopPropagation();
+                        } else if(isShiftPressed) {
+                            e.preventDefault();
+                            var rect = overlay.getBoundingClientRect();
+                            var x = e.clientX - rect.left;
+                            var y = e.clientY - rect.top;
+                            addMarker(x, y);
+                        }
+                    });
+                    
+                    overlay.addEventListener('mousemove', function(e) {
+                        var rect = overlay.getBoundingClientRect();
+                        mouseX = e.clientX - rect.left;
+                        mouseY = e.clientY - rect.top;
+                    });
+                }
+                function createControls(){
+                    controls=document.createElement('div');
+                    controls.className='ba-controls';
+                    if(isFullscreen){
+                        controls.style.position='fixed';
+                        controls.style.top='10px';
+                        controls.style.right='10px';
+                    }else{
+                        var controlsWidth = 320;
+                        var preferredLeft = videoRect.left + window.scrollX + videoRect.width - controlsWidth;
+                        var maxLeft = window.innerWidth - controlsWidth - 10;
+                        var minLeft = 10;
+                        var finalLeft = Math.max(minLeft, Math.min(preferredLeft, maxLeft));
+                        controls.style.top=(videoRect.top+window.scrollY+10)+'px';
+                        controls.style.left=finalLeft+'px';
+                    }
+                    controls.innerHTML='<div class="ba-control-header"><h3><span>Blue Archive Coordinates</span><button class="ba-btn ba-add-btn">Add</button></h3></div>';
+                    
+                    var sizeColorControls=document.createElement('div');
+                    sizeColorControls.className='ba-size-color-controls';
+                    sizeColorControls.innerHTML='<div class="ba-control-item"><label>Ring Size:</label><div class="ba-control-row"><input type="range" class="ba-ring-size" min="10" max="500" value="20" step="1"><span class="ba-ring-size-value">20px</span></div></div><div class="ba-control-item"><label>Dot Size:</label><div class="ba-control-row"><input type="range" class="ba-dot-size" min="1" max="20" value="3" step="1"><span class="ba-dot-size-value">3px</span></div></div><div class="ba-control-item"><label>Ring Color:</label><div class="ba-control-row"><input type="color" class="ba-ring-color" value="#41b4ff"><span class="ba-ring-color-hex">#41b4ff</span></div></div><div class="ba-control-item"><label>Dot Color:</label><div class="ba-control-row"><input type="color" class="ba-dot-color" value="#ff0000"><span class="ba-dot-color-hex">#ff0000</span></div></div>';
+                    controls.appendChild(sizeColorControls);
+                    
+                    var coordListDiv=document.createElement('div');
+                    coordListDiv.className='ba-coordinates-list';
+                    controls.appendChild(coordListDiv);
+                    
+                    var importExportDiv=document.createElement('div');
+                    importExportDiv.className='ba-import-export';
+                    importExportDiv.innerHTML='<button class="ba-btn ba-import-btn">Import</button><button class="ba-btn ba-export-btn">Export</button>';
+                    controls.appendChild(importExportDiv);
+                    
+                    var buttonDiv=document.createElement('div');
+                    buttonDiv.style.textAlign='right';
+                    buttonDiv.style.marginTop='10px';
+                    buttonDiv.innerHTML='<button class="ba-btn ba-reset-btn">Reset</button><button class="ba-btn ba-close-btn">Close</button>';
+                    controls.appendChild(buttonDiv);
+                    
+                    if(isFullscreen&&document.fullscreenElement){
+                        document.fullscreenElement.appendChild(controls);
+                    }else{
+                        document.body.appendChild(controls);
+                    }
+                    
+                    controls.querySelector('.ba-add-btn').addEventListener('click',function(){
+                        var rect=overlay.getBoundingClientRect();
+                        var x=rect.width/2;
+                        var y=rect.height/2;
+                        addMarker(x,y);
+                    });
+                    
+                    controls.querySelector('.ba-reset-btn').addEventListener('click',function(){
+                        resetMarkers();
+                    });
+                    
+                    controls.querySelector('.ba-close-btn').addEventListener('click',function(){
+                        closeOverlay();
+                    });
+                    
+                    controls.querySelector('.ba-import-btn').addEventListener('click',function(){
+                        if(!importModal){
+                            createImportModal();
+                        }
+                        importModal.style.display='block';
+                    });
+                    
+                    controls.querySelector('.ba-export-btn').addEventListener('click',function(){
+                        exportCoordinates();
+                    });
+                    
+                    var ringSizeSlider=controls.querySelector('.ba-ring-size');
+                    var ringSizeValue=controls.querySelector('.ba-ring-size-value');
+                    var dotSizeSlider=controls.querySelector('.ba-dot-size');
+                    var dotSizeValue=controls.querySelector('.ba-dot-size-value');
+                    var ringColorInput=controls.querySelector('.ba-ring-color');
+                    var ringColorHex=controls.querySelector('.ba-ring-color-hex');
+                    var dotColorInput=controls.querySelector('.ba-dot-color');
+                    var dotColorHex=controls.querySelector('.ba-dot-color-hex');
+                    
+                    ringSizeSlider.addEventListener('input',function(){
+                        currentRingSize=parseInt(this.value);
+                        ringSizeValue.textContent=currentRingSize+'px';
+                        markers.forEach(function(marker){
+                            if(marker.ring){
+                                marker.ring.style.width=currentRingSize+'px';
+                                marker.ring.style.height=currentRingSize+'px';
+                            }
+                        });
+                    });
+                    
+                    dotSizeSlider.addEventListener('input',function(){
+                        currentDotSize=parseInt(this.value);
+                        dotSizeValue.textContent=currentDotSize+'px';
+                        markers.forEach(function(marker){
+                            if(marker.dot){
+                                marker.dot.style.width=currentDotSize+'px';
+                                marker.dot.style.height=currentDotSize+'px';
+                            }
+                        });
+                    });
+                    
+                    ringColorInput.addEventListener('input',function(){
+                        currentRingColor=this.value;
+                        ringColorHex.textContent=this.value;
+                        markers.forEach(function(marker){
+                            if(marker.ring){
+                                marker.ring.style.borderColor=currentRingColor;
+                            }
+                        });
+                    });
+                    
+                    dotColorInput.addEventListener('input',function(){
+                        currentDotColor=this.value;
+                        dotColorHex.textContent=this.value;
+                        markers.forEach(function(marker){
+                            if(marker.dot){
+                                marker.dot.style.backgroundColor=currentDotColor;
+                            }
+                        });
+                    });
+                }
+                function applyResolution(){
+                    var width=parseInt(widthInput.value)||videoRect.width;
+                    var height=parseInt(heightInput.value)||videoRect.height;
+                    if(width<1||height<1){
+                        alert('Please enter valid dimensions greater than 0');
+                        return;
+                    }
+                    overlay.style.width=width+'px';
+                    overlay.style.height=height+'px';
+                    if(!isResLocked){
+                        updateMarkerPositions();
+                    }
+                }
+                function updateMarkerPositions(){
+                    if(isResLocked)return;
+                    var rect=overlay.getBoundingClientRect();
+                    markers.forEach(function(marker){
+                        var coordItem=marker.coordItem;
+                        var ratioXInput=coordItem.querySelector('.ba-ratio-x');
+                        var ratioYInput=coordItem.querySelector('.ba-ratio-y');
+                        var ratioX=parseFloat(ratioXInput.value);
+                        var ratioY=parseFloat(ratioYInput.value);
+                        var newX=(ratioX/100)*rect.width;
+                        var newY=(ratioY/100)*rect.height;
+                        marker.element.style.left=newX+'px';
+                        marker.element.style.top=newY+'px';
+                        var rawXInput=coordItem.querySelector('.ba-raw-x');
+                        var rawYInput=coordItem.querySelector('.ba-raw-y');
+                        rawXInput.value=Math.round(newX);
+                        rawYInput.value=Math.round(newY);
+                    });
+                }
+                function addMarker(x,y){
+                    markerCount++;
+                    var marker=document.createElement('div');
+                    marker.className='ba-marker';
+                    marker.style.left=x+'px';
+                    marker.style.top=y+'px';
+                    marker.setAttribute('data-id',markerCount);
+                    
+                    var innerDot=document.createElement('div');
+                    innerDot.className='ba-marker-inner';
+                    innerDot.style.width=currentDotSize+'px';
+                    innerDot.style.height=currentDotSize+'px';
+                    innerDot.style.backgroundColor=currentDotColor;
+                    
+                    var outerRing=document.createElement('div');
+                    outerRing.className='ba-marker-ring';
+                    outerRing.style.width=currentRingSize+'px';
+                    outerRing.style.height=currentRingSize+'px';
+                    outerRing.style.borderColor=currentRingColor;
+                    
+                    var labelElement=document.createElement('div');
+                    labelElement.className='ba-marker-label';
+                    labelElement.textContent='#'+markerCount;
+                    
+                    marker.appendChild(outerRing);
+                    marker.appendChild(innerDot);
+                    marker.appendChild(labelElement);
+                    overlay.appendChild(marker);
+                    
+                    marker.addEventListener('mousedown',function(e){
+                        e.preventDefault();
+                        e.stopPropagation();
+                        isDragging=true;
+                        selectedMarker=this;
+                        var rect=marker.getBoundingClientRect();
+                        dragOffsetX=e.clientX-(rect.left+rect.width/2);
+                        dragOffsetY=e.clientY-(rect.top+rect.height/2);
+                    });
+                    
+                    var rect=overlay.getBoundingClientRect();
+                    var ratioX=(x/rect.width*100).toFixed(2);
+                    var ratioY=(y/rect.height*100).toFixed(2);
+                    
+                    var coordItem=document.createElement('div');
+                    coordItem.className='ba-coordinate-item';
+                    coordItem.setAttribute('data-id',markerCount);
+                    
+                    coordItem.innerHTML='<h4><span>Marker #'+markerCount+'</span><button class="ba-btn ba-delete-btn" data-id="'+markerCount+'">×</button></h4><div class="ba-inputs"><div class="ba-input-group"><label>X:</label><input type="number" class="ba-raw-x" value="'+Math.round(x)+'" data-id="'+markerCount+'"></div><div class="ba-input-group"><label>Y:</label><input type="number" class="ba-raw-y" value="'+Math.round(y)+'" data-id="'+markerCount+'"></div><div class="ba-input-group"><label>Ratio X:</label><input type="number" class="ba-ratio-x" value="'+ratioX+'" data-id="'+markerCount+'"></div><div class="ba-input-group"><label>Ratio Y:</label><input type="number" class="ba-ratio-y" value="'+ratioY+'" data-id="'+markerCount+'"></div><div class="ba-input-group" style="grid-column:span 2;"><label>Label:</label><input type="text" class="ba-marker-label-input" value="" placeholder="Custom label" data-id="'+markerCount+'"></div></div>';
+                    
+                    controls.querySelector('.ba-coordinates-list').appendChild(coordItem);
+                    
+                    coordItem.querySelector('.ba-delete-btn').addEventListener('click',function(){
+                        var id=parseInt(this.getAttribute('data-id'));
+                        deleteMarker(id);
+                        renumberMarkers();
+                    });
+                    
+                    var rawXInput=coordItem.querySelector('.ba-raw-x');
+                    var rawYInput=coordItem.querySelector('.ba-raw-y');
+                    var ratioXInput=coordItem.querySelector('.ba-ratio-x');
+                    var ratioYInput=coordItem.querySelector('.ba-ratio-y');
+                    var markerLabelInput=coordItem.querySelector('.ba-marker-label-input');
+                    
+                    rawXInput.addEventListener('input',function(){
+                        var id=parseInt(this.getAttribute('data-id'));
+                        var markerObj=markers.find(function(m){return m.id===id});
+                        if(!markerObj)return;
+                        var newX=parseFloat(this.value);
+                        markerObj.element.style.left=newX+'px';
+                        var rect=overlay.getBoundingClientRect();
+                        var newRatioX=(newX/rect.width*100).toFixed(2);
+                        ratioXInput.value=newRatioX;
+                    });
+                    
+                    rawYInput.addEventListener('input',function(){
+                        var id=parseInt(this.getAttribute('data-id'));
+                        var markerObj=markers.find(function(m){return m.id===id});
+                        if(!markerObj)return;
+                        var newY=parseFloat(this.value);
+                        markerObj.element.style.top=newY+'px';
+                        var rect=overlay.getBoundingClientRect();
+                        var newRatioY=(newY/rect.height*100).toFixed(2);
+                        ratioYInput.value=newRatioY;
+                    });
+                    
+                    ratioXInput.addEventListener('input',function(){
+                        var id=parseInt(this.getAttribute('data-id'));
+                        var markerObj=markers.find(function(m){return m.id===id});
+                        if(!markerObj)return;
+                        var newRatioX=parseFloat(this.value);
+                        var rect=overlay.getBoundingClientRect();
+                        var newX=newRatioX*rect.width/100;
+                        markerObj.element.style.left=newX+'px';
+                        rawXInput.value=Math.round(newX);
+                    });
+                    
+                    ratioYInput.addEventListener('input',function(){
+                        var id=parseInt(this.getAttribute('data-id'));
+                        var markerObj=markers.find(function(m){return m.id===id});
+                        if(!markerObj)return;
+                        var newRatioY=parseFloat(this.value);
+                        var rect=overlay.getBoundingClientRect();
+                        var newY=newRatioY*rect.height/100;
+                        markerObj.element.style.top=newY+'px';
+                        rawYInput.value=Math.round(newY);
+                    });
+                    
+                    markerLabelInput.addEventListener('input',function(){
+                        var id=parseInt(this.getAttribute('data-id'));
+                        var markerObj=markers.find(function(m){return m.id===id});
+                        if(!markerObj)return;
+                        var label=this.value.trim();
+                        if(label){
+                            markerObj.labelElement.textContent='#'+id+' - '+label;
+                        }else{
+                            markerObj.labelElement.textContent='#'+id;
+                        }
+                    });
+                    
+                    markers.push({
+                        id:markerCount,
+                        element:marker,
+                        ring:outerRing,
+                        dot:innerDot,
+                        labelElement:labelElement,
+                        coordItem:coordItem,
+                        x:x,
+                        y:y
+                    });
+                    
+                    return markerCount;
+                }
+                function deleteMarker(id){
+                    var markerIndex=markers.findIndex(function(m){return m.id===id});
+                    if(markerIndex===-1)return;
+                    var marker=markers[markerIndex];
+                    if(marker.element&&marker.element.parentNode){
+                        marker.element.parentNode.removeChild(marker.element);
+                    }
+                    if(marker.coordItem&&marker.coordItem.parentNode){
+                        marker.coordItem.parentNode.removeChild(marker.coordItem);
+                    }
+                    markers.splice(markerIndex,1);
+                }
+                function renumberMarkers(){
+                    markers.sort(function(a,b){return a.id-b.id});
+                    markers.forEach(function(marker,index){
+                        var newId=index+1;
+                        var oldId=marker.id;
+                        marker.id=newId;
+                        marker.element.setAttribute('data-id',newId);
+                        marker.coordItem.setAttribute('data-id',newId);
+                        marker.coordItem.querySelector('h4 span').textContent='Marker #'+newId;
+                        marker.coordItem.querySelector('.ba-delete-btn').setAttribute('data-id',newId);
+                        marker.coordItem.querySelectorAll('input').forEach(function(input){
+                            input.setAttribute('data-id',newId);
+                        });
+                        var labelText=marker.labelElement.textContent;
+                        if(labelText.includes(' - ')){
+                            var customLabel=labelText.split(' - ')[1];
+                            marker.labelElement.textContent='#'+newId+' - '+customLabel;
+                        }else{
+                            marker.labelElement.textContent='#'+newId;
+                        }
+                    });
+                }
+                function resetMarkers(){
+                    markers.forEach(function(marker){
+                        if(marker.element&&marker.element.parentNode){
+                            marker.element.parentNode.removeChild(marker.element);
+                        }
+                    });
+                    markers=[];
+                    markerCount=0;
+                    if(controls){
+                        controls.querySelector('.ba-coordinates-list').innerHTML='';
+                    }
+                }
+                function closeOverlay(){
+                    window.baCoordinateToolActive = false;
+                    stopZoomMonitoring();
+                    if(overlay)overlay.remove();
+                    if(controls)controls.remove();
+                    if(resPanel)resPanel.remove();
+                    if(importModal)importModal.remove();
+                    if(zoomIndicator)zoomIndicator.remove();
+                    removeFullscreenEventListeners();
+                    document.removeEventListener('keydown',handleKeyDown);
+                    document.removeEventListener('keyup',handleKeyUp);
+                    style.remove();
+                }
+                function handleFullscreenChange(){
+                    isFullscreen=!!document.fullscreenElement||!!document.webkitFullscreenElement||!!document.mozFullScreenElement||!!document.msFullscreenElement;
+                    if(overlay){
+                        var markerRatios=[];
+                        markers.forEach(function(marker){
+                            var coordItem=marker.coordItem;
+                            var ratioX=parseFloat(coordItem.querySelector('.ba-ratio-x').value);
+                            var ratioY=parseFloat(coordItem.querySelector('.ba-ratio-y').value);
+                            markerRatios.push({id:marker.id,ratioX:ratioX,ratioY:ratioY});
+                        });
+                        if(overlay)overlay.remove();
+                        if(controls)controls.remove();
+                        if(resPanel)resPanel.remove();
+                        if(importModal)importModal.remove();
+                        if(zoomIndicator)zoomIndicator.remove();
+                        if(isFullscreen){
+                            videoRect={
+                                left:0,
+                                top:0,
+                                width:window.innerWidth,
+                                height:window.innerHeight
+                            };
+                        }else{
+                            videoRect=videoContainer.getBoundingClientRect();
+                        }
+                        createOverlay();
+                        createControls();
+                        createResolutionPanel();
+                        createZoomIndicator();
+                        markerRatios.forEach(function(markerRatio){
+                            var rect=overlay.getBoundingClientRect();
+                            var x=(markerRatio.ratioX/100)*rect.width;
+                            var y=(markerRatio.ratioY/100)*rect.height;
+                            addMarker(x,y);
+                        });
+                        widthInput.value=Math.round(videoRect.width);
+                        heightInput.value=Math.round(videoRect.height);
+                    }
+                }
+                function handleKeyDown(e){
+                    if(e.key==='Shift'){
+                        isShiftPressed=true;
+                        if(overlay){
+                            overlay.style.cursor='crosshair';
+                            overlay.style.pointerEvents='all';
+                        }
+                    }
+                }
+                function handleKeyUp(e){
+                    if(e.key==='Shift'){
+                        isShiftPressed=false;
+                        if(overlay){
+                            overlay.style.cursor='default';
+                            overlay.style.pointerEvents='none';
+                        }
+                    }
+                }
+                function addFullscreenEventListeners(){
+                    document.addEventListener('fullscreenchange',handleFullscreenChange);
+                    document.addEventListener('webkitfullscreenchange',handleFullscreenChange);
+                    document.addEventListener('mozfullscreenchange',handleFullscreenChange);
+                    document.addEventListener('MSFullscreenChange',handleFullscreenChange);
+                }
+                function removeFullscreenEventListeners(){
+                    document.removeEventListener('fullscreenchange',handleFullscreenChange);
+                    document.removeEventListener('webkitfullscreenchange',handleFullscreenChange);
+                    document.removeEventListener('mozfullscreenchange',handleFullscreenChange);
+                    document.removeEventListener('MSFullscreenChange',handleFullscreenChange);
+                }
+                document.addEventListener('keydown',handleKeyDown);
+                document.addEventListener('keyup',handleKeyUp);
+                document.addEventListener('mousemove',function(e){
+                    if(isDragging&&selectedMarker){
+                        var rect=overlay.getBoundingClientRect();
+                        var newX=e.clientX-rect.left-dragOffsetX;
+                        var newY=e.clientY-rect.top-dragOffsetY;
+                        newX=Math.max(0,Math.min(rect.width,newX));
+                        newY=Math.max(0,Math.min(rect.height,newY));
+                        selectedMarker.style.left=newX+'px';
+                        selectedMarker.style.top=newY+'px';
+                        var id=parseInt(selectedMarker.getAttribute('data-id'));
+                        var marker=markers.find(function(m){return m.id==id});
+                        if(marker){
+                            var coordItem=marker.coordItem;
+                            var rawXInput=coordItem.querySelector('.ba-raw-x');
+                            var rawYInput=coordItem.querySelector('.ba-raw-y');
+                            rawXInput.value=Math.round(newX);
+                            rawYInput.value=Math.round(newY);
+                            var ratioXInput=coordItem.querySelector('.ba-ratio-x');
+                            var ratioYInput=coordItem.querySelector('.ba-ratio-y');
+                            ratioXInput.value=(newX/rect.width*100).toFixed(2);
+                            ratioYInput.value=(newY/rect.height*100).toFixed(2);
+                        }
+                    }
+                });
+                document.addEventListener('mouseup',function(){
+                    isDragging=false;
+                    selectedMarker=null;
+                });
+                createOverlay();
+                createControls();
+                createResolutionPanel();
+                createZoomIndicator();
+                startZoomMonitoring();
+                addFullscreenEventListeners();
+                if(window.location.hostname.includes('youtube.com')){
+                    var ytFullscreenBtn=document.querySelector('.ytp-fullscreen-button');
+                    if(ytFullscreenBtn){
+                        ytFullscreenBtn.addEventListener('click',function(){
+                            setTimeout(handleFullscreenChange,300);
+                        });
+                    }
+                    var ytTheaterBtn=document.querySelector('.ytp-size-button');
+                    if(ytTheaterBtn){
+                        ytTheaterBtn.addEventListener('click',function(){
+                            setTimeout(function(){
+                                videoRect=videoContainer.getBoundingClientRect();
+                                if(overlay){
+                                    overlay.style.width=videoRect.width+'px';
+                                    overlay.style.height=videoRect.height+'px';
+                                    overlay.style.top=(videoRect.top+window.scrollY)+'px';
+                                    overlay.style.left=(videoRect.left+window.scrollX)+'px';
+                                    if(widthInput&&heightInput){
+                                        widthInput.value=Math.round(videoRect.width);
+                                        heightInput.value=Math.round(videoRect.height);
+                                    }
+                                    updateMarkerPositions();
+                                }
+                                if(controls&&!isFullscreen){
+                                    var controlsWidth = 320;
+                                    var preferredLeft = videoRect.left + window.scrollX + videoRect.width - controlsWidth;
+                                    var maxLeft = window.innerWidth - controlsWidth - 10;
+                                    var minLeft = 10;
+                                    var finalLeft = Math.max(minLeft, Math.min(preferredLeft, maxLeft));
+                                    controls.style.top=(videoRect.top+window.scrollY+10)+'px';
+                                    controls.style.left=finalLeft+'px';
+                                }
+                                if(resPanel&&!isFullscreen){
+                                    var panelWidth = 400;
+                                    var preferredLeft = videoRect.left + window.scrollX;
+                                    var maxLeft = window.innerWidth - panelWidth - 10;
+                                    var minLeft = 10;
+                                    var finalLeft = Math.max(minLeft, Math.min(preferredLeft, maxLeft));
+                                    var preferredTop = videoRect.top + window.scrollY - 60;
+                                    var finalTop = Math.max(10, preferredTop);
+                                    resPanel.style.left=finalLeft+'px';
+                                    resPanel.style.top=finalTop+'px';
+                                }
+                            },300);
+                        });
+                    }
+                }
+            })();
+            `;
+
+            /**
+             * Bookmarklet Code Display Container
+             * ================================================================================
+             * Gets the container element where the bookmarklet code and instructions
+             * will be displayed to the user.
+             */
+            var bookmarkletCodeBlock = document.getElementById('bookmarkletCode');
+            
+            /**
+             * Bookmarklet Link Creation
+             * ================================================================================
+             * Creates the actual bookmarklet link that users can drag to their bookmarks bar.
+             * The link contains the entire coordinate tool functionality encoded as a
+             * javascript: URL that browsers can execute when clicked.
+             * 
+             * Process:
+             * 1. Create an anchor element for the bookmarklet
+             * 2. Set the href to a javascript: URL with encoded bookmarklet code
+             * 3. Make the link draggable for easy bookmark installation
+             * 4. Apply appropriate styling and text content
+             */
+            var bookmarkletLink = document.createElement('a');
+            
+            // Create the javascript: URL by encoding the bookmarklet code
+            // The code is minified by removing extra whitespace for a cleaner URL
+            bookmarkletLink.href = 'javascript:' + encodeURIComponent(bookmarkletCode.replace(/\s+/g, ' ').trim());
+            
+            // Set user-friendly display text for the link
+            bookmarkletLink.textContent = 'Blue Archive Coordinates Bookmarklet';
+            
+            // Apply CSS class for consistent styling
+            bookmarkletLink.className = 'bookmarklet-link';
+            
+            // Enable drag-and-drop functionality for bookmark installation
+            bookmarkletLink.setAttribute('draggable', 'true');
+
+            /**
+             * Usage Instructions Generation
+             * ================================================================================
+             * Creates comprehensive instructions for using the bookmarklet tool.
+             * This includes installation guidance and feature explanations to help
+             * users understand the complete functionality of the coordinate tool.
+             */
+            var instructions = document.createElement('div');
+            instructions.innerHTML =
+                '<p><strong>How to Use This Bookmarklet:</strong></p>' +
+                '<p>Drag this link to your bookmarks bar:</p>' +
+                '<p>This tool lets you place markers on videos for Blue Archive coordinates by:</p>' +
+                '<ul>' +
+                '<li>Hold SHIFT and click to place markers</li>' +
+                '<li>Customize marker colors and sizes</li>' +
+                '<li>Add labels to markers for easy identification</li>' +
+                '<li>Import/Export in CFG format for BlueStacks</li>' +
+                '<li>Automatically adjusts when you zoom the page</li>' +
+                '<li>Shows current zoom level in top-left corner</li>' +
+                '<li>Works best on YouTube</li>' +
+                '</ul>';
+
+            /**
+             * Final UI Assembly
+             * ================================================================================
+             * Assembles all the generated elements into the final user interface.
+             * Clears any existing content and inserts the new instructions and bookmarklet link.
+             */
+            // Clear any existing content from the container
+            bookmarkletCodeBlock.innerHTML = '';
+            
+            // Add the instruction text first for logical reading order
+            bookmarkletCodeBlock.appendChild(instructions);
+            
+            // Add the draggable bookmarklet link below the instructions
+            bookmarkletCodeBlock.appendChild(bookmarkletLink);
+        });
+    </script>
+</body>
+
+</html>
