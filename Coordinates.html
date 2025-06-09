@@ -6,332 +6,153 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blue Archive Coordinate Tool</title>
     <style>
-        /**
-         * Blue Archive Coordinate Tool - CSS Style Module
-         * ================================================================================
-         * Provides comprehensive styling for the Blue Archive coordinate tool interface.
-         * This module handles theming, glassmorphism effects, animations, and responsive
-         * design elements for the bookmark tool generator page.
-         * 
-         * Table of Contents:
-         * ================================================================================
-         * 1. CSS Custom Properties (Theme Variables)
-         *    - Blue Archive attack type colors
-         *    - Glassmorphism effect variables
-         *    - UI component styling variables
-         *    
-         * 2. Base Layout and Background System
-         *    - Body styling and positioning
-         *    - Animated gradient background
-         *    - Overflow and viewport handling
-         *    
-         * 3. Glassmorphism Container System
-         *    - Main container styling
-         *    - Backdrop blur effects
-         *    - Border and shadow systems
-         *    
-         * 4. Typography and Content Styling
-         *    - Heading styles
-         *    - Instruction block styling
-         *    - Code block presentation
-         *    
-         * 5. Interactive Elements
-         *    - Button styling and states
-         *    - Link presentation
-         *    - Hover effects and transitions
-         */
-
-        /* ============================================================================
-         * Section 1: CSS Custom Properties (Theme Variables)
-         * ============================================================================
-         * Defines the color palette based on Blue Archive attack types and creates
-         * reusable variables for the glassmorphism effect system.
-         */
+        /* CSS Custom Properties for Blue Archive theme colors */
         :root {
-            /* Blue Archive Attack Type Color Palette */
-            --ba-explosion: rgb(167, 12, 25);    /* Red - Explosive damage type */
-            --ba-pierce: rgb(178, 109, 31);      /* Orange - Piercing damage type */
-            --ba-mystic: rgb(33, 111, 156);      /* Blue - Mystic damage type */
-            --ba-sonic: rgb(148, 49, 165);       /* Purple - Sonic damage type */
-            --ba-normal: rgb(72, 85, 130);       /* Dark blue - Normal damage type(?) */
+            --ba-explosion: rgb(167, 12, 25);
+            --ba-pierce: rgb(178, 109, 31);
+            --ba-mystic: rgb(33, 111, 156);
+            --ba-sonic: rgb(148, 49, 165);
+            --ba-normal: rgb(72, 85, 130);
             
-            /* Glassmorphism Effect Variables */
-            /* These create the translucent, blurred glass effect for modern UI design */
-            --glass-bg: rgba(255, 255, 255, 0.15);           /* Semi-transparent white background */
-            --glass-border: rgba(255, 255, 255, 0.2);        /* Subtle border for glass elements */
-            --glass-text: rgba(0, 0, 0, 0.8);               /* High contrast text on glass */
-            --glass-text-light: rgba(0, 0, 0, 0.6);         /* Lower contrast text for subtlety */
-            --glass-accent: rgba(255, 255, 255, 0.3);        /* Accent color for highlights */
-            --glass-button: rgba(255, 255, 255, 0.2);        /* Button background on glass */
-            --glass-button-hover: rgba(255, 255, 255, 0.3);  /* Button hover state */
-            --glass-shadow: rgba(0, 0, 0, 0.1);             /* Soft shadow for depth */
+            --glass-bg: rgba(255, 255, 255, 0.15);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --glass-text: rgba(0, 0, 0, 0.8);
+            --glass-text-light: rgba(0, 0, 0, 0.6);
+            --glass-accent: rgba(255, 255, 255, 0.3);
+            --glass-button: rgba(255, 255, 255, 0.2);
+            --glass-button-hover: rgba(255, 255, 255, 0.3);
+            --glass-shadow: rgba(0, 0, 0, 0.1);
         }
 
-        /* ============================================================================
-         * Section 2: Base Layout and Background System
-         * ============================================================================
-         * Establishes the foundational layout structure and creates the animated
-         * background gradient using Blue Archive theme colors.
-         */
         body {
-            /* Typography system using modern font stack */
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            
-            /* Layout reset and viewport setup */
             margin: 0;
             padding: 20px;
-            min-height: 100vh;          /* Ensure full viewport height coverage */
-            position: relative;          /* Enable absolute positioning for child elements */
-            overflow-x: hidden;         /* Prevent horizontal scrollbar from gradient animation */
-            
-            /* Dynamic animated background using Blue Archive colors */
-            /* Creates a diagonal gradient that cycles through all attack type colors */
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
             background: linear-gradient(-45deg, 
                 var(--ba-explosion), 
                 var(--ba-pierce), 
                 var(--ba-mystic), 
                 var(--ba-sonic), 
                 var(--ba-normal));
-            
-            /* Large background size enables smooth animation transitions */
             background-size: 400% 400%;
-            
-            /* Apply the gradient animation with smooth easing */
             animation: gradientShift 15s ease infinite;
         }
 
-        /* Dynamic gradient animation keyframes */
-        /* Creates a smooth cycling effect through the color spectrum */
         @keyframes gradientShift {
-            0% { 
-                background-position: 0% 50%; 
-            }
-            50% { 
-                background-position: 100% 50%; 
-            }
-            100% { 
-                background-position: 0% 50%; 
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* ============================================================================
-         * Section 3: Glassmorphism Container System
-         * ============================================================================
-         * Creates the main content container with modern glassmorphism effects,
-         * including backdrop blur, translucent backgrounds, and subtle shadows.
-         */
         .container {
-            /* Layout and positioning */
-            max-width: 900px;           /* Optimal reading width for content */
-            margin: 0 auto;             /* Center horizontally */
-            padding: 30px;              /* Internal spacing for content */
-            
-            /* Glassmorphism visual effects */
-            background: var(--glass-bg);                    /* Semi-transparent background */
-            backdrop-filter: blur(20px);                    /* Background blur effect */
-            -webkit-backdrop-filter: blur(20px);            /* Safari compatibility */
-            
-            /* Border and shape styling */
-            border-radius: 20px;                            /* Rounded corners for modern look */
-            border: 1px solid var(--glass-border);          /* Subtle border definition */
-            
-            /* Shadow system for depth perception */
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
             box-shadow: 
-                0 8px 32px var(--glass-shadow),            /* Primary shadow for depth */
-                inset 0 1px 0 var(--glass-border);         /* Inner highlight for glass effect */
-            
-            /* Enable relative positioning for child elements */
+                0 8px 32px var(--glass-shadow),
+                inset 0 1px 0 var(--glass-border);
             position: relative;
         }
 
-        /* ============================================================================
-         * Section 4: Typography and Content Styling
-         * ============================================================================
-         * Defines styling for text elements, instruction blocks, and code display areas.
-         */
-        
-        /* Primary heading styling */
         h1 {
-            color: #2c3e50;             /* Dark blue-gray for good contrast */
-            margin-top: 0;              /* Remove default top margin */
+            color: #2c3e50;
+            margin-top: 0;
         }
 
-        /* Instruction block container */
-        /* Creates a highlighted informational section with Blue Archive theming */
         #instructions {
-            background-color: #eaf7ff;   /* Light blue background matching BA color scheme */
-            padding: 15px;               /* Internal spacing for readability */
-            border-radius: 5px;          /* Subtle rounded corners */
-            margin-bottom: 20px;         /* Spacing from following elements */
-            border-left: 5px solid #3498db;  /* Blue accent border for visual hierarchy */
+            background-color: #eaf7ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
         }
 
-        /* Instruction block heading */
         #instructions h2 {
-            margin-top: 0;               /* Remove default top margin for tight spacing */
-            color: #2980b9;              /* Darker blue to match border accent */
+            margin-top: 0;
+            color: #2980b9;
         }
 
-        /* Instruction list styling */
         #instructions ul {
-            padding-left: 20px;          /* Standard indentation for list items */
+            padding-left: 20px;
         }
 
-        /* Code display block styling */
-        /* Provides a dedicated area for displaying the generated bookmarklet code */
         .code-block {
-            background-color: #f0f0f0;   /* Light gray background for code contrast */
-            padding: 15px;               /* Internal spacing for code readability */
-            border-radius: 5px;          /* Consistent corner radius with other elements */
-            margin-top: 20px;            /* Separation from preceding content */
-            font-family: monospace;      /* Monospaced font for code display */
-            white-space: pre-wrap;       /* Preserve formatting and allow wrapping */
-            overflow-x: auto;            /* Enable horizontal scrolling for long lines */
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
         }
 
-        /* ============================================================================
-         * Section 5: Interactive Elements
-         * ============================================================================
-         * Styling for buttons, links, and other interactive components with
-         * hover states and visual feedback.
-         */
-        
-        /* Bookmarklet link styling */
-        /* Creates a prominent, draggable link for the generated bookmarklet */
         .bookmarklet-link {
-            display: inline-block;       /* Allow padding while maintaining inline behavior */
-            padding: 8px 15px;           /* Comfortable click target size */
-            background-color: #3498db;   /* Blue background matching BA theme */
-            color: white;                /* High contrast text */
-            text-decoration: none;       /* Remove default link underline */
-            border-radius: 4px;          /* Subtle rounded corners */
-            margin: 10px 0;              /* Vertical spacing from surrounding elements */
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px 0;
         }
 
-        /* General button styling */
-        /* Base styles for all button elements in the interface */
         button {
-            display: block;              /* Full width block-level buttons */
-            margin: 10px 0;              /* Consistent vertical spacing */
-            padding: 8px 15px;           /* Comfortable click target dimensions */
-            color: white;                /* White text for contrast */
-            border: none;                /* Remove default browser button styling */
-            border-radius: 4px;          /* Consistent corner radius */
-            cursor: pointer;             /* Indicate interactive element */
+            display: block;
+            margin: 10px 0;
+            padding: 8px 15px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
         }
 
-        /* Test button variant styling */
         .test-btn {
-            background-color: #27ae60;   /* Green color for positive/test actions */
+            background-color: #27ae60;
         }
 
-        /* Copy button variant styling */
         .copy-btn {
-            background-color: #9b59b6;   /* Purple color for secondary actions */
+            background-color: #9b59b6;
         }
     </style>
 </head>
 
 <body>
-    <!--
-    ================================================================================
-    Blue Archive Coordinate Tool - Main Content Structure
-    ================================================================================
-    This section contains the HTML structure for the coordinate tool interface,
-    including the instruction panel and code display area.
-    -->
     <div class="container">
-        <!-- Primary heading for the tool -->
-        <h1>Blue Archive Coordinate Tool v1</h1>
+        <h1>Blue Archive Coordinate Tool v1.2</h1>
 
-        <!-- Instruction panel with usage guidelines -->
-        <!-- Provides comprehensive instructions for using the generated bookmarklet -->
         <div id="instructions">
             <h2>Information</h2>
             <ul>
-                <!-- Core interaction method - Shift+click replaces right-click for better compatibility -->
                 <li>Hold Shift and click anywhere on the video to place markers</li>
-                
-                <!-- Resolution management features -->
                 <li>Enter custom resolution values if needed and click "Apply"</li>
                 <li>Lock the resolution to prevent automatic resizing</li>
-                
-                <!-- Overlay activation and interaction -->
                 <li>Click "Activate Overlay" to place an overlay on the video</li>
                 <li>Left-clicks will pass through the overlay to interact with the video</li>
-                
-                <!-- Customization and editing features -->
                 <li>Customize marker colors and sizes using the control panel</li>
                 <li>Drag markers to adjust their position</li>
                 <li>Edit coordinate values in the control panel</li>
-                
-                <!-- Automatic calculation features -->
                 <li>Values automatically update with 100-based ratio calculations</li>
-                
-                <!-- Import/Export functionality for Blue Archive integration -->
                 <li>Import coordinates from Blue Archive or export your current markers</li>
-                
-                <!-- New zoom compatibility feature -->
                 <li>Tool automatically adjusts when you zoom in/out of the page</li>
+                <li><strong>v1.2 Update:</strong> Fixed control panel visibility on all screens and improved export dialog</li>
             </ul>
         </div>
 
-        <!-- Code display container -->
-        <!-- This element will be populated by JavaScript with the bookmarklet code and instructions -->
         <div id="bookmarkletCode" class="code-block">
             <!-- Bookmarklet code will be inserted here by JavaScript -->
         </div>
     </div>
 
-    <!--
-    ================================================================================
-    Blue Archive Coordinate Tool - JavaScript Module System
-    ================================================================================
-    This script handles the generation and presentation of the bookmarklet code.
-    The system is organized into several key areas:
-    
-    1. DOM Ready Event Handler
-       - Ensures the page is fully loaded before script execution
-       - Coordinates the initialization of all components
-       
-    2. Bookmarklet Code Generation
-       - Contains the complete coordinate tool functionality
-       - Handles video detection, overlay creation, and marker management
-       - Includes zoom detection and scaling capabilities
-       
-    3. UI Construction and Presentation
-       - Creates the user interface for the bookmarklet
-       - Handles instruction display and link generation
-       - Manages drag-and-drop functionality for bookmark installation
-    -->
     <script>
-        /**
-         * Main Initialization Handler
-         * ================================================================================
-         * Coordinates the startup sequence for the coordinate tool generator.
-         * This function executes when the DOM is fully loaded and ready for manipulation.
-         * 
-         * Key responsibilities:
-         * - Generate the complete bookmarklet code
-         * - Create the user interface elements
-         * - Set up drag-and-drop functionality for bookmark installation
-         * - Display usage instructions and implementation guidance
-         */
         document.addEventListener('DOMContentLoaded', function() {
-            /**
-             * Bookmarklet Code Variable
-             * ================================================================================
-             * Contains the complete JavaScript code for the Blue Archive coordinate tool.
-             * This code will be executed when the bookmarklet is clicked on a video page.
-             * 
-             * The bookmarklet includes:
-             * - Video detection and overlay creation
-             * - Marker placement and management system
-             * - Zoom detection and automatic scaling
-             * - Import/export functionality for BlueStacks integration
-             * - Coordinate calculation and display
-             * - Timer and cleanup management
-             */
             var bookmarkletCode = `
             (function(){
                 if(window.baCoordinateToolActive){
@@ -339,7 +160,7 @@
                     return;
                 }
                 window.baCoordinateToolActive = true;
-                var css='.ba-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(52,152,219,0.1);cursor:crosshair;z-index:10000;pointer-events:none}.ba-marker{position:absolute;transform:translate(-50%,-50%);pointer-events:all;cursor:move;z-index:10001;display:flex;align-items:center;justify-content:center}.ba-marker-inner{width:3px;height:3px;background-color:red;border-radius:50%;position:absolute;z-index:10002}.ba-marker-ring{border:1px solid rgba(65,180,255,0.9);border-radius:50%;width:20px;height:20px;background-color:transparent;position:absolute;z-index:10001;pointer-events:none}.ba-marker-label{position:absolute;top:-24px;left:0;background-color:rgba(0,0,0,0.7);color:white;padding:2px 6px;border-radius:3px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:10002}.ba-controls{position:absolute;top:10px;right:10px;background-color:rgba(0,0,0,0.8);color:white;padding:12px;border-radius:8px;width:320px;min-width:320px;max-width:400px;z-index:10002;font-family:Arial,sans-serif;font-size:12px;pointer-events:all;box-sizing:border-box}.ba-controls h3{margin-top:0;margin-bottom:12px;font-size:14px;display:flex;justify-content:space-between;align-items:center}.ba-btn{background-color:#3498db;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;margin-right:5px;font-size:12px;min-width:60px}.ba-btn:hover{background-color:#2980b9}.ba-coordinates-list{margin-top:10px;max-height:300px;overflow-y:auto}.ba-coordinate-item{background-color:rgba(255,255,255,0.1);padding:8px;margin-bottom:8px;border-radius:3px}.ba-coordinate-item h4{margin:0 0 5px 0;font-size:12px;display:flex;justify-content:space-between;align-items:center}.ba-delete-btn{background-color:#e74c3c;padding:2px 5px;font-size:10px}.ba-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.ba-input-group{display:flex;flex-direction:column;margin-bottom:5px}.ba-input-group label{font-size:10px;margin-bottom:3px;color:white}.ba-input-group input{background-color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:4px;border-radius:3px;font-size:11px;width:100%;box-sizing:border-box}.ba-size-color-controls{margin-top:12px;background-color:rgba(52,152,219,0.1);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.2)}.ba-control-item{display:flex;flex-direction:column;margin-bottom:12px;width:100%}.ba-control-item:last-child{margin-bottom:0}.ba-control-item label{font-size:12px;margin-bottom:6px;color:white;font-weight:500}.ba-control-row{display:flex;align-items:center;gap:8px;width:100%}.ba-control-row input[type="range"]{flex:1;min-width:0}.ba-control-row input[type="color"]{width:40px;height:30px;border:none;border-radius:4px;cursor:pointer;padding:0}.ba-control-row span{min-width:45px;text-align:right;font-size:11px;color:#ccc}.ba-import-export{display:flex;justify-content:space-between;margin-top:12px;gap:8px}.ba-import-export .ba-btn{flex:1;margin-right:0}.ba-import-modal{display:none;position:fixed;z-index:1001;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5)}.ba-zoom-indicator{position:absolute;top:10px;left:10px;background-color:rgba(0,0,0,0.8);color:white;padding:8px 12px;border-radius:6px;font-size:11px;z-index:10003;pointer-events:none;font-family:Arial,sans-serif}';
+                var css='.ba-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(52,152,219,0.1);cursor:crosshair;z-index:10000;pointer-events:none}.ba-marker{position:absolute;transform:translate(-50%,-50%);pointer-events:all;cursor:move;z-index:10001;display:flex;align-items:center;justify-content:center}.ba-marker-inner{width:3px;height:3px;background-color:red;border-radius:50%;position:absolute;z-index:10002}.ba-marker-ring{border:1px solid rgba(65,180,255,0.9);border-radius:50%;width:20px;height:20px;background-color:transparent;position:absolute;z-index:10001;pointer-events:none}.ba-marker-label{position:absolute;top:-24px;left:0;background-color:rgba(0,0,0,0.7);color:white;padding:2px 6px;border-radius:3px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:10002}.ba-controls{position:fixed !important;top:10px;right:10px;background-color:rgba(0,0,0,0.8);color:white;padding:12px;border-radius:8px;width:320px;min-width:320px;max-width:400px;z-index:2147483647;font-family:Arial,sans-serif;font-size:12px;pointer-events:all;box-sizing:border-box;max-height:90vh;overflow-y:auto;box-shadow:0 4px 20px rgba(0,0,0,0.3)}.ba-controls h3{margin-top:0;margin-bottom:12px;font-size:14px;display:flex;justify-content:space-between;align-items:center}.ba-btn{background-color:#3498db;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;margin-right:5px;font-size:12px;min-width:60px}.ba-btn:hover{background-color:#2980b9}.ba-coordinates-list{margin-top:10px;max-height:300px;overflow-y:auto}.ba-coordinate-item{background-color:rgba(255,255,255,0.1);padding:8px;margin-bottom:8px;border-radius:3px}.ba-coordinate-item h4{margin:0 0 5px 0;font-size:12px;display:flex;justify-content:space-between;align-items:center}.ba-delete-btn{background-color:#e74c3c;padding:2px 5px;font-size:10px}.ba-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.ba-input-group{display:flex;flex-direction:column;margin-bottom:5px}.ba-input-group label{font-size:10px;margin-bottom:3px;color:white}.ba-input-group input{background-color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:4px;border-radius:3px;font-size:11px;width:100%;box-sizing:border-box}.ba-size-color-controls{margin-top:12px;background-color:rgba(52,152,219,0.1);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.2)}.ba-control-item{display:flex;flex-direction:column;margin-bottom:12px;width:100%}.ba-control-item:last-child{margin-bottom:0}.ba-control-item label{font-size:12px;margin-bottom:6px;color:white;font-weight:500}.ba-control-row{display:flex;align-items:center;gap:8px;width:100%}.ba-control-row input[type="range"]{flex:1;min-width:0}.ba-control-row input[type="color"]{width:40px;height:30px;border:none;border-radius:4px;cursor:pointer;padding:0}.ba-control-row span{min-width:45px;text-align:right;font-size:11px;color:#ccc}.ba-import-export{display:flex;justify-content:space-between;margin-top:12px;gap:8px}.ba-import-export .ba-btn{flex:1;margin-right:0}.ba-import-modal{display:none;position:fixed;z-index:2147483648;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5)}.ba-zoom-indicator{position:absolute;top:10px;left:10px;background-color:rgba(0,0,0,0.8);color:white;padding:8px 12px;border-radius:6px;font-size:11px;z-index:10003;pointer-events:none;font-family:Arial,sans-serif}.ba-export-dialog{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background-color:white;padding:25px;border-radius:8px;z-index:2147483648;box-shadow:0 4px 20px rgba(0,0,0,0.3);min-width:320px}.ba-export-dialog h3{margin-top:0;color:#2c3e50;margin-bottom:20px}.ba-export-option{background-color:#f7f7f7;padding:15px;margin-bottom:15px;border-radius:5px;cursor:pointer;border:2px solid transparent;transition:all 0.2s}.ba-export-option:hover{border-color:#3498db;background-color:#eaf7ff}.ba-export-option h4{margin:0 0 5px 0;color:#2c3e50}.ba-export-option p{margin:0;font-size:12px;color:#666}.ba-export-buttons{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.ba-debug-info{position:fixed;bottom:10px;left:10px;background-color:rgba(255,0,0,0.8);color:white;padding:10px;border-radius:5px;font-size:11px;z-index:2147483647;max-width:300px}@media screen and (max-width:768px){.ba-controls{right:5px;top:5px;width:280px;min-width:280px}}';
                 var style=document.createElement('style');
                 style.textContent=css;
                 document.head.appendChild(style);
@@ -357,7 +178,7 @@
                 var currentDotSize=3;
                 var currentRingColor="#41b4ff";
                 var currentDotColor="#ff0000";
-                var overlay,controls,resPanel,importModal,zoomIndicator;
+                var overlay,controls,resPanel,importModal,zoomIndicator,exportDialog;
                 var widthInput,heightInput,lockResCheckbox;
                 var isFullscreen=false;
                 var videoContainer=null;
@@ -369,6 +190,28 @@
                 var zoomCheckInterval;
                 var lastKnownZoom=1;
                 var originalVideoRect=null;
+                var debugInfo=null;
+                
+                function createDebugInfo(){
+                    debugInfo=document.createElement('div');
+                    debugInfo.className='ba-debug-info';
+                    debugInfo.innerHTML='<strong>Debug Info:</strong><br>Control Panel Created: Yes<br>Visible: <span id="ba-debug-visible">Checking...</span><br>Position: <span id="ba-debug-position">Checking...</span>';
+                    document.body.appendChild(debugInfo);
+                    
+                    setTimeout(function(){
+                        if(controls){
+                            var rect=controls.getBoundingClientRect();
+                            var isVisible=rect.width>0&&rect.height>0&&rect.right>0&&rect.bottom>0;
+                            document.getElementById('ba-debug-visible').textContent=isVisible?'Yes':'No';
+                            document.getElementById('ba-debug-position').textContent='Top:'+rect.top+', Right:'+(window.innerWidth-rect.right);
+                        }
+                    },500);
+                    
+                    setTimeout(function(){
+                        if(debugInfo)debugInfo.remove();
+                    },5000);
+                }
+                
                 function detectZoomLevel(){
                     var zoomLevel=Math.round((window.outerWidth/window.innerWidth)*100)/100;
                     if(isNaN(zoomLevel)||zoomLevel<=0){
@@ -417,14 +260,30 @@
                 }
                 function updateControlPanelPositions(){
                     if(controls&&!isFullscreen){
-                        var controlsWidth=320;
-                        var preferredLeft=videoRect.left+window.scrollX+videoRect.width-controlsWidth;
-                        var maxLeft=window.innerWidth-controlsWidth-10;
-                        var minLeft=10;
-                        var finalLeft=Math.max(minLeft,Math.min(preferredLeft,maxLeft));
-                        controls.style.top=(videoRect.top+window.scrollY+10)+'px';
-                        controls.style.left=finalLeft+'px';
+                        controls.style.position='fixed';
+                        controls.style.top='10px';
+                        
+                        var panelWidth=parseInt(window.getComputedStyle(controls).width);
+                        var rightSpace=10;
+                        var maxRight=window.innerWidth-panelWidth-rightSpace;
+                        
+                        if(window.innerWidth<768){
+                            controls.style.right='5px';
+                            controls.style.top='5px';
+                        }else{
+                            controls.style.right=rightSpace+'px';
+                        }
+                        
+                        var rect=controls.getBoundingClientRect();
+                        if(rect.right>window.innerWidth){
+                            controls.style.right=(window.innerWidth-panelWidth-5)+'px';
+                        }
+                        if(rect.left<0){
+                            controls.style.left='5px';
+                            controls.style.right='auto';
+                        }
                     }
+                    
                     if(resPanel&&!isFullscreen){
                         var panelWidth=400;
                         var preferredLeft=videoRect.left+window.scrollX;
@@ -720,19 +579,31 @@
                     alert('Successfully imported '+imported+' coordinate points');
                 }
                 
-                function exportCoordinates(){
-                    if(markers.length===0){
-                        alert('No markers to export');
-                        return;
-                    }
+                function createExportDialog(){
+                    if(exportDialog)exportDialog.remove();
                     
-                    var formatSelection=confirm(
-                        'Choose export format:\\n\\n'+
-                        'Click "OK" to export in CFG format (for BlueStacks)\\n'+
-                        'Click "Cancel" to export in simple JSON format'
-                    );
+                    exportDialog=document.createElement('div');
+                    exportDialog.className='ba-export-dialog';
+                    exportDialog.innerHTML='<h3>Choose Export Format</h3><div class="ba-export-option" data-format="cfg"><h4>CFG Format (BlueStacks)</h4><p>For importing into BlueStacks emulator. Creates a complete control scheme configuration file.</p></div><div class="ba-export-option" data-format="json"><h4>Simple JSON Format</h4><p>Lightweight format for sharing coordinates or importing into other tools.</p></div><div class="ba-export-buttons"><button class="ba-btn" onclick="window.cancelExport()">Cancel</button></div>';
                     
-                    if(formatSelection){
+                    document.body.appendChild(exportDialog);
+                    
+                    var options=exportDialog.querySelectorAll('.ba-export-option');
+                    options.forEach(function(option){
+                        option.addEventListener('click',function(){
+                            var format=this.getAttribute('data-format');
+                            performExport(format);
+                            exportDialog.remove();
+                        });
+                    });
+                    
+                    window.cancelExport=function(){
+                        exportDialog.remove();
+                    };
+                }
+                
+                function performExport(format){
+                    if(format==='cfg'){
                         var exportData={
                             "MetaData":{
                                 "ParserVersion":"17",
@@ -824,6 +695,16 @@
                         URL.revokeObjectURL(url);
                     }
                 }
+                
+                function exportCoordinates(){
+                    if(markers.length===0){
+                        alert('No markers to export');
+                        return;
+                    }
+                    
+                    createExportDialog();
+                }
+                
                 function createOverlay(){
                     overlay=document.createElement('div');
                     overlay.className='ba-overlay';
@@ -862,19 +743,9 @@
                 function createControls(){
                     controls=document.createElement('div');
                     controls.className='ba-controls';
-                    if(isFullscreen){
-                        controls.style.position='fixed';
-                        controls.style.top='10px';
-                        controls.style.right='10px';
-                    }else{
-                        var controlsWidth = 320;
-                        var preferredLeft = videoRect.left + window.scrollX + videoRect.width - controlsWidth;
-                        var maxLeft = window.innerWidth - controlsWidth - 10;
-                        var minLeft = 10;
-                        var finalLeft = Math.max(minLeft, Math.min(preferredLeft, maxLeft));
-                        controls.style.top=(videoRect.top+window.scrollY+10)+'px';
-                        controls.style.left=finalLeft+'px';
-                    }
+                    controls.style.position='fixed';
+                    controls.style.top='10px';
+                    controls.style.right='10px';
                     controls.innerHTML='<div class="ba-control-header"><h3><span>Blue Archive Coordinates</span><button class="ba-btn ba-add-btn">Add</button></h3></div>';
                     
                     var sizeColorControls=document.createElement('div');
@@ -902,6 +773,12 @@
                     }else{
                         document.body.appendChild(controls);
                     }
+                    
+                    createDebugInfo();
+                    
+                    setTimeout(function(){
+                        updateControlPanelPositions();
+                    },100);
                     
                     controls.querySelector('.ba-add-btn').addEventListener('click',function(){
                         var rect=overlay.getBoundingClientRect();
@@ -1198,6 +1075,8 @@
                     if(resPanel)resPanel.remove();
                     if(importModal)importModal.remove();
                     if(zoomIndicator)zoomIndicator.remove();
+                    if(exportDialog)exportDialog.remove();
+                    if(debugInfo)debugInfo.remove();
                     removeFullscreenEventListeners();
                     document.removeEventListener('keydown',handleKeyDown);
                     document.removeEventListener('keyup',handleKeyUp);
@@ -1331,26 +1210,7 @@
                                     }
                                     updateMarkerPositions();
                                 }
-                                if(controls&&!isFullscreen){
-                                    var controlsWidth = 320;
-                                    var preferredLeft = videoRect.left + window.scrollX + videoRect.width - controlsWidth;
-                                    var maxLeft = window.innerWidth - controlsWidth - 10;
-                                    var minLeft = 10;
-                                    var finalLeft = Math.max(minLeft, Math.min(preferredLeft, maxLeft));
-                                    controls.style.top=(videoRect.top+window.scrollY+10)+'px';
-                                    controls.style.left=finalLeft+'px';
-                                }
-                                if(resPanel&&!isFullscreen){
-                                    var panelWidth = 400;
-                                    var preferredLeft = videoRect.left + window.scrollX;
-                                    var maxLeft = window.innerWidth - panelWidth - 10;
-                                    var minLeft = 10;
-                                    var finalLeft = Math.max(minLeft, Math.min(preferredLeft, maxLeft));
-                                    var preferredTop = videoRect.top + window.scrollY - 60;
-                                    var finalTop = Math.max(10, preferredTop);
-                                    resPanel.style.left=finalLeft+'px';
-                                    resPanel.style.top=finalTop+'px';
-                                }
+                                updateControlPanelPositions();
                             },300);
                         });
                     }
@@ -1358,49 +1218,14 @@
             })();
             `;
 
-            /**
-             * Bookmarklet Code Display Container
-             * ================================================================================
-             * Gets the container element where the bookmarklet code and instructions
-             * will be displayed to the user.
-             */
             var bookmarkletCodeBlock = document.getElementById('bookmarkletCode');
             
-            /**
-             * Bookmarklet Link Creation
-             * ================================================================================
-             * Creates the actual bookmarklet link that users can drag to their bookmarks bar.
-             * The link contains the entire coordinate tool functionality encoded as a
-             * javascript: URL that browsers can execute when clicked.
-             * 
-             * Process:
-             * 1. Create an anchor element for the bookmarklet
-             * 2. Set the href to a javascript: URL with encoded bookmarklet code
-             * 3. Make the link draggable for easy bookmark installation
-             * 4. Apply appropriate styling and text content
-             */
             var bookmarkletLink = document.createElement('a');
-            
-            // Create the javascript: URL by encoding the bookmarklet code
-            // The code is minified by removing extra whitespace for a cleaner URL
             bookmarkletLink.href = 'javascript:' + encodeURIComponent(bookmarkletCode.replace(/\s+/g, ' ').trim());
-            
-            // Set user-friendly display text for the link
             bookmarkletLink.textContent = 'Blue Archive Coordinates Bookmarklet';
-            
-            // Apply CSS class for consistent styling
             bookmarkletLink.className = 'bookmarklet-link';
-            
-            // Enable drag-and-drop functionality for bookmark installation
             bookmarkletLink.setAttribute('draggable', 'true');
 
-            /**
-             * Usage Instructions Generation
-             * ================================================================================
-             * Creates comprehensive instructions for using the bookmarklet tool.
-             * This includes installation guidance and feature explanations to help
-             * users understand the complete functionality of the coordinate tool.
-             */
             var instructions = document.createElement('div');
             instructions.innerHTML =
                 '<p><strong>How to Use This Bookmarklet:</strong></p>' +
@@ -1416,19 +1241,8 @@
                 '<li>Works best on YouTube</li>' +
                 '</ul>';
 
-            /**
-             * Final UI Assembly
-             * ================================================================================
-             * Assembles all the generated elements into the final user interface.
-             * Clears any existing content and inserts the new instructions and bookmarklet link.
-             */
-            // Clear any existing content from the container
             bookmarkletCodeBlock.innerHTML = '';
-            
-            // Add the instruction text first for logical reading order
             bookmarkletCodeBlock.appendChild(instructions);
-            
-            // Add the draggable bookmarklet link below the instructions
             bookmarkletCodeBlock.appendChild(bookmarkletLink);
         });
     </script>
