@@ -4,16 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Archive Coordinate Tool</title>
+    <title>Blue Archive Coordinate Tool v1.3</title>
+    
+    <!-- 
+    ================================================================================
+    Blue Archive Coordinate Tool - Style Definitions
+    ================================================================================
+    This section contains all CSS styling for the coordinate tool interface.
+    The styles are organized into logical sections for maintainability.
+    
+    Table of Contents:
+    1. CSS Custom Properties (Theme Colors)
+    2. Body and Animation Styles
+    3. Container Styles
+    4. Typography and Headers
+    5. UI Component Styles
+    6. Button Styles
+    7. Note and Alert Styles
+    ================================================================================
+    -->
     <style>
-        /* CSS Custom Properties for Blue Archive theme colors */
+        /**
+         * Section 1: CSS Custom Properties (Theme Colors)
+         * ================================================================================
+         * Defines the Blue Archive color scheme used throughout the tool.
+         * These variables make it easy to maintain consistent theming.
+         */
         :root {
+            /* Blue Archive damage type colors */
             --ba-explosion: rgb(167, 12, 25);
             --ba-pierce: rgb(178, 109, 31);
             --ba-mystic: rgb(33, 111, 156);
             --ba-sonic: rgb(148, 49, 165);
             --ba-normal: rgb(72, 85, 130);
             
+            /* Glassmorphism effect colors */
             --glass-bg: rgba(255, 255, 255, 0.15);
             --glass-border: rgba(255, 255, 255, 0.2);
             --glass-text: rgba(0, 0, 0, 0.8);
@@ -24,6 +49,12 @@
             --glass-shadow: rgba(0, 0, 0, 0.1);
         }
 
+        /**
+         * Section 2: Body and Animation Styles
+         * ================================================================================
+         * Main body styling with animated gradient background.
+         * The gradient shifts through Blue Archive damage type colors.
+         */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
@@ -31,6 +62,7 @@
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
+            /* Animated gradient background using BA colors */
             background: linear-gradient(-45deg, 
                 var(--ba-explosion), 
                 var(--ba-pierce), 
@@ -41,12 +73,19 @@
             animation: gradientShift 15s ease infinite;
         }
 
+        /* Gradient animation keyframes */
         @keyframes gradientShift {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
+        /**
+         * Section 3: Container Styles
+         * ================================================================================
+         * Main content container with glassmorphism effect.
+         * Uses backdrop-filter for the blurred glass appearance.
+         */
         .container {
             max-width: 900px;
             margin: 0 auto;
@@ -62,11 +101,21 @@
             position: relative;
         }
 
+        /**
+         * Section 4: Typography and Headers
+         * ================================================================================
+         * Styles for headings and text elements.
+         */
         h1 {
             color: #2c3e50;
             margin-top: 0;
         }
 
+        /**
+         * Section 5: UI Component Styles
+         * ================================================================================
+         * Styles for various UI components like instructions, code blocks, etc.
+         */
         #instructions {
             background-color: #eaf7ff;
             padding: 15px;
@@ -104,6 +153,11 @@
             margin: 10px 0;
         }
 
+        /**
+         * Section 6: Button Styles
+         * ================================================================================
+         * Common button styling for test and copy buttons.
+         */
         button {
             display: block;
             margin: 10px 0;
@@ -121,1127 +175,382 @@
         .copy-btn {
             background-color: #9b59b6;
         }
+
+        /**
+         * Section 7: Note and Alert Styles
+         * ================================================================================
+         * Styles for error notes and fix notes (alert boxes).
+         */
+        .error-note {
+            background-color: #ffebee;
+            border: 1px solid #f44336;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .error-note h3 {
+            color: #d32f2f;
+            margin-top: 0;
+        }
+
+        .fix-note {
+            background-color: #e8f5e8;
+            border: 1px solid #4caf50;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .fix-note h3 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
     </style>
 </head>
 
 <body>
+    <!-- 
+    ================================================================================
+    Main Content Container
+    ================================================================================
+    Contains all the visible content of the page including:
+    - Title and version information
+    - Fix notes for version 1.3
+    - Instructions for using the tool
+    - Bookmarklet code container
+    ================================================================================
+    -->
     <div class="container">
-        <h1>Blue Archive Coordinate Tool v1.2</h1>
+        <h1>Blue Archive Coordinate Tool v1.3</h1>
 
-        <div id="instructions">
-            <h2>Information</h2>
+        <!-- Version 1.3 Fix Notes -->
+        <div class="fix-note">
+            <h3>Fixed Issues in v1.3:</h3>
             <ul>
-                <li>Hold Shift and click anywhere on the video to place markers</li>
-                <li>Enter custom resolution values if needed and click "Apply"</li>
-                <li>Lock the resolution to prevent automatic resizing</li>
-                <li>Click "Activate Overlay" to place an overlay on the video</li>
-                <li>Left-clicks will pass through the overlay to interact with the video</li>
-                <li>Customize marker colors and sizes using the control panel</li>
-                <li>Drag markers to adjust their position</li>
-                <li>Edit coordinate values in the control panel</li>
-                <li>Values automatically update with 100-based ratio calculations</li>
-                <li>Import coordinates from Blue Archive or export your current markers</li>
-                <li>Tool automatically adjusts when you zoom in/out of the page</li>
-                <li><strong>v1.2 Update:</strong> Fixed control panel visibility on all screens and improved export dialog</li>
+                <li>Fixed CSP (Content Security Policy) issues</li>
+                <li>Fixed TrustedHTML assignment errors</li>
+                <li>Replaced all innerHTML assignments with proper DOM manipulation</li>
             </ul>
         </div>
 
+        <!-- Tool Instructions -->
+        <div id="instructions">
+            <h2>Information</h2>
+            <ul>
+                <li>Click "Activate Overlay" to place an overlay on the video</li>
+                <li>Customize marker colors and sizes using the control panel</li>
+                <li>Drag markers to adjust their position</li>
+                <li>Edit coordinate values in the control panel</li>
+                <li>Enter custom resolution values if needed and click "Apply"</li>
+                <li>Hold Shift and click anywhere on the video to place markers</li>
+                <li>Import coordinates from Blue Archive or export your current markers</li>
+                <li>Left-clicks will pass through the overlay to interact with the video</li>
+                <li>Lock the resolution to prevent automatic resizing</li>
+                <li>Tool automatically adjusts when you zoom in/out of the page</li>
+                <li>Values automatically update with 100-based ratio calculations</li>
+            </ul>
+        </div>
+
+        <!-- Bookmarklet Code Container -->
         <div id="bookmarkletCode" class="code-block">
             <!-- Bookmarklet code will be inserted here by JavaScript -->
         </div>
     </div>
 
+    <!-- 
+    ================================================================================
+    JavaScript Section
+    ================================================================================
+    This script handles:
+    1. DOM Content Loading
+    2. Bookmarklet Code Generation
+    3. Dynamic Content Insertion
+    4. User Interface Creation
+    
+    The script waits for DOM to load before executing to ensure all elements
+    are available for manipulation.
+    ================================================================================
+    -->
     <script>
+        /**
+         * Main Initialization Function
+         * ================================================================================
+         * Executes when the DOM is fully loaded.
+         * Creates the bookmarklet code and inserts it into the page.
+         */
         document.addEventListener('DOMContentLoaded', function() {
-            var bookmarkletCode = `
-            (function(){
-                if(window.baCoordinateToolActive){
-                    alert('Blue Archive Coordinate Tool is already running. Click "Close" in the control panel to remove it first.');
-                    return;
-                }
-                window.baCoordinateToolActive = true;
-                var css='.ba-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(52,152,219,0.1);cursor:crosshair;z-index:10000;pointer-events:none}.ba-marker{position:absolute;transform:translate(-50%,-50%);pointer-events:all;cursor:move;z-index:10001;display:flex;align-items:center;justify-content:center}.ba-marker-inner{width:3px;height:3px;background-color:red;border-radius:50%;position:absolute;z-index:10002}.ba-marker-ring{border:1px solid rgba(65,180,255,0.9);border-radius:50%;width:20px;height:20px;background-color:transparent;position:absolute;z-index:10001;pointer-events:none}.ba-marker-label{position:absolute;top:-24px;left:0;background-color:rgba(0,0,0,0.7);color:white;padding:2px 6px;border-radius:3px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:10002}.ba-controls{position:fixed !important;top:10px;right:10px;background-color:rgba(0,0,0,0.8);color:white;padding:12px;border-radius:8px;width:320px;min-width:320px;max-width:400px;z-index:2147483647;font-family:Arial,sans-serif;font-size:12px;pointer-events:all;box-sizing:border-box;max-height:90vh;overflow-y:auto;box-shadow:0 4px 20px rgba(0,0,0,0.3)}.ba-controls h3{margin-top:0;margin-bottom:12px;font-size:14px;display:flex;justify-content:space-between;align-items:center}.ba-btn{background-color:#3498db;color:white;border:none;padding:5px 10px;border-radius:4px;cursor:pointer;margin-right:5px;font-size:12px;min-width:60px}.ba-btn:hover{background-color:#2980b9}.ba-coordinates-list{margin-top:10px;max-height:300px;overflow-y:auto}.ba-coordinate-item{background-color:rgba(255,255,255,0.1);padding:8px;margin-bottom:8px;border-radius:3px}.ba-coordinate-item h4{margin:0 0 5px 0;font-size:12px;display:flex;justify-content:space-between;align-items:center}.ba-delete-btn{background-color:#e74c3c;padding:2px 5px;font-size:10px}.ba-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.ba-input-group{display:flex;flex-direction:column;margin-bottom:5px}.ba-input-group label{font-size:10px;margin-bottom:3px;color:white}.ba-input-group input{background-color:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:4px;border-radius:3px;font-size:11px;width:100%;box-sizing:border-box}.ba-size-color-controls{margin-top:12px;background-color:rgba(52,152,219,0.1);padding:12px;border-radius:6px;border:1px solid rgba(255,255,255,0.2)}.ba-control-item{display:flex;flex-direction:column;margin-bottom:12px;width:100%}.ba-control-item:last-child{margin-bottom:0}.ba-control-item label{font-size:12px;margin-bottom:6px;color:white;font-weight:500}.ba-control-row{display:flex;align-items:center;gap:8px;width:100%}.ba-control-row input[type="range"]{flex:1;min-width:0}.ba-control-row input[type="color"]{width:40px;height:30px;border:none;border-radius:4px;cursor:pointer;padding:0}.ba-control-row span{min-width:45px;text-align:right;font-size:11px;color:#ccc}.ba-import-export{display:flex;justify-content:space-between;margin-top:12px;gap:8px}.ba-import-export .ba-btn{flex:1;margin-right:0}.ba-import-modal{display:none;position:fixed;z-index:2147483648;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5)}.ba-zoom-indicator{position:absolute;top:10px;left:10px;background-color:rgba(0,0,0,0.8);color:white;padding:8px 12px;border-radius:6px;font-size:11px;z-index:10003;pointer-events:none;font-family:Arial,sans-serif}.ba-export-dialog{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background-color:white;padding:25px;border-radius:8px;z-index:2147483648;box-shadow:0 4px 20px rgba(0,0,0,0.3);min-width:320px}.ba-export-dialog h3{margin-top:0;color:#2c3e50;margin-bottom:20px}.ba-export-option{background-color:#f7f7f7;padding:15px;margin-bottom:15px;border-radius:5px;cursor:pointer;border:2px solid transparent;transition:all 0.2s}.ba-export-option:hover{border-color:#3498db;background-color:#eaf7ff}.ba-export-option h4{margin:0 0 5px 0;color:#2c3e50}.ba-export-option p{margin:0;font-size:12px;color:#666}.ba-export-buttons{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.ba-debug-info{position:fixed;bottom:10px;left:10px;background-color:rgba(255,0,0,0.8);color:white;padding:10px;border-radius:5px;font-size:11px;z-index:2147483647;max-width:300px}@media screen and (max-width:768px){.ba-controls{right:5px;top:5px;width:280px;min-width:280px}}';
-                var style=document.createElement('style');
-                style.textContent=css;
-                document.head.appendChild(style);
-                var markers=[];
-                var markerCount=0;
-                var isDragging=false;
-                var selectedMarker=null;
-                var dragOffsetX=0;
-                var dragOffsetY=0;
-                var controlIsDragging=false;
-                var controlDragOffsetX=0;
-                var controlDragOffsetY=0;
-                var isResLocked=false;
-                var currentRingSize=20;
-                var currentDotSize=3;
-                var currentRingColor="#41b4ff";
-                var currentDotColor="#ff0000";
-                var overlay,controls,resPanel,importModal,zoomIndicator,exportDialog;
-                var widthInput,heightInput,lockResCheckbox;
-                var isFullscreen=false;
-                var videoContainer=null;
-                var videoRect=null;
-                var isShiftPressed=false;
-                var mouseX=0,mouseY=0;
-                var currentZoomLevel=1;
-                var baseZoomLevel=1;
-                var zoomCheckInterval;
-                var lastKnownZoom=1;
-                var originalVideoRect=null;
-                var debugInfo=null;
-                
-                function createDebugInfo(){
-                    debugInfo=document.createElement('div');
-                    debugInfo.className='ba-debug-info';
-                    debugInfo.innerHTML='<strong>Debug Info:</strong><br>Control Panel Created: Yes<br>Visible: <span id="ba-debug-visible">Checking...</span><br>Position: <span id="ba-debug-position">Checking...</span>';
-                    document.body.appendChild(debugInfo);
-                    
-                    setTimeout(function(){
-                        if(controls){
-                            var rect=controls.getBoundingClientRect();
-                            var isVisible=rect.width>0&&rect.height>0&&rect.right>0&&rect.bottom>0;
-                            document.getElementById('ba-debug-visible').textContent=isVisible?'Yes':'No';
-                            document.getElementById('ba-debug-position').textContent='Top:'+rect.top+', Right:'+(window.innerWidth-rect.right);
-                        }
-                    },500);
-                    
-                    setTimeout(function(){
-                        if(debugInfo)debugInfo.remove();
-                    },5000);
-                }
-                
-                function detectZoomLevel(){
-                    var zoomLevel=Math.round((window.outerWidth/window.innerWidth)*100)/100;
-                    if(isNaN(zoomLevel)||zoomLevel<=0){
-                        zoomLevel=1;
-                    }
-                    if(window.devicePixelRatio){
-                        var alternativeZoom=1/window.devicePixelRatio;
-                        if(Math.abs(alternativeZoom-zoomLevel)>0.1){
-                            zoomLevel=alternativeZoom;
-                        }
-                    }
-                    return Math.max(0.1,Math.min(5,zoomLevel));
-                }
-                function updateZoomIndicator(){
-                    if(zoomIndicator){
-                        var displayZoom=Math.round(currentZoomLevel*100);
-                        zoomIndicator.textContent='Zoom: '+displayZoom+'%';
-                    }
-                }
-                function handleZoomChange(){
-                    var newZoomLevel=detectZoomLevel();
-                    if(Math.abs(newZoomLevel-lastKnownZoom)>0.05){
-                        currentZoomLevel=newZoomLevel;
-                        lastKnownZoom=newZoomLevel;
-                        updateZoomIndicator();
-                        if(!isFullscreen&&videoContainer){
-                            var newVideoRect=videoContainer.getBoundingClientRect();
-                            if(overlay&&newVideoRect.width>0&&newVideoRect.height>0){
-                                videoRect=newVideoRect;
-                                updateOverlayForZoom();
-                                updateControlPanelPositions();
-                                updateResolutionPanelValues();
-                            }
-                        }
-                    }
-                }
-                function updateOverlayForZoom(){
-                    if(!overlay||!videoRect)return;
-                    overlay.style.width=videoRect.width+'px';
-                    overlay.style.height=videoRect.height+'px';
-                    overlay.style.top=videoRect.top+window.scrollY+'px';
-                    overlay.style.left=videoRect.left+window.scrollX+'px';
-                    if(!isResLocked){
-                        updateMarkerPositions();
-                    }
-                }
-                function updateControlPanelPositions(){
-                    if(controls&&!isFullscreen){
-                        controls.style.position='fixed';
-                        controls.style.top='10px';
-                        
-                        var panelWidth=parseInt(window.getComputedStyle(controls).width);
-                        var rightSpace=10;
-                        var maxRight=window.innerWidth-panelWidth-rightSpace;
-                        
-                        if(window.innerWidth<768){
-                            controls.style.right='5px';
-                            controls.style.top='5px';
-                        }else{
-                            controls.style.right=rightSpace+'px';
-                        }
-                        
-                        var rect=controls.getBoundingClientRect();
-                        if(rect.right>window.innerWidth){
-                            controls.style.right=(window.innerWidth-panelWidth-5)+'px';
-                        }
-                        if(rect.left<0){
-                            controls.style.left='5px';
-                            controls.style.right='auto';
-                        }
-                    }
-                    
-                    if(resPanel&&!isFullscreen){
-                        var panelWidth=400;
-                        var preferredLeft=videoRect.left+window.scrollX;
-                        var maxLeft=window.innerWidth-panelWidth-10;
-                        var minLeft=10;
-                        var finalLeft=Math.max(minLeft,Math.min(preferredLeft,maxLeft));
-                        var preferredTop=videoRect.top+window.scrollY-60;
-                        var finalTop=Math.max(10,preferredTop);
-                        resPanel.style.left=finalLeft+'px';
-                        resPanel.style.top=finalTop+'px';
-                    }
-                }
-                function updateResolutionPanelValues(){
-                    if(widthInput&&heightInput&&videoRect){
-                        widthInput.value=Math.round(videoRect.width);
-                        heightInput.value=Math.round(videoRect.height);
-                    }
-                }
-                function startZoomMonitoring(){
-                    baseZoomLevel=detectZoomLevel();
-                    currentZoomLevel=baseZoomLevel;
-                    lastKnownZoom=baseZoomLevel;
-                    zoomCheckInterval=setInterval(handleZoomChange,250);
-                    window.addEventListener('resize',handleZoomChange);
-                    window.addEventListener('wheel',function(e){
-                        if(e.ctrlKey){
-                            setTimeout(handleZoomChange,100);
-                        }
-                    },true);
-                    if(window.visualViewport){
-                        window.visualViewport.addEventListener('resize',handleZoomChange);
-                    }
-                }
-                function stopZoomMonitoring(){
-                    if(zoomCheckInterval){
-                        clearInterval(zoomCheckInterval);
-                        zoomCheckInterval=null;
-                    }
-                    window.removeEventListener('resize',handleZoomChange);
-                    if(window.visualViewport){
-                        window.visualViewport.removeEventListener('resize',handleZoomChange);
-                    }
-                }
-                if(window.location.hostname.includes('youtube.com')){
-                    videoContainer=document.querySelector('div#container.style-scope.ytd-player');
-                    if(!videoContainer){
-                        videoContainer=document.querySelector('#movie_player');
-                    }
-                    if(!videoContainer){
-                        videoContainer=document.querySelector('.html5-video-container');
-                    }
-                }
-                if(!videoContainer){
-                    var videos=document.querySelectorAll('video');
-                    if(videos.length>0){
-                        videoContainer=videos[0];
-                    }else{
-                        alert('No video found on this page');
-                        window.baCoordinateToolActive = false;
-                        return;
-                    }
-                }
-                videoRect=videoContainer.getBoundingClientRect();
-                originalVideoRect=Object.assign({},videoRect);
-                function createZoomIndicator(){
-                    zoomIndicator=document.createElement('div');
-                    zoomIndicator.className='ba-zoom-indicator';
-                    if(isFullscreen&&document.fullscreenElement){
-                        zoomIndicator.style.position='fixed';
-                        document.fullscreenElement.appendChild(zoomIndicator);
-                    }else{
-                        zoomIndicator.style.position='absolute';
-                        zoomIndicator.style.top=videoRect.top+window.scrollY+10+'px';
-                        zoomIndicator.style.left=videoRect.left+window.scrollX+10+'px';
-                        document.body.appendChild(zoomIndicator);
-                    }
-                    updateZoomIndicator();
-                }
-                function createResolutionPanel(){
-                    resPanel=document.createElement('div');
-                    resPanel.className='ba-resolution-panel';
-                    resPanel.style.position='absolute';
-                    var panelWidth = 400;
-                    var preferredLeft = videoRect.left + window.scrollX;
-                    var maxLeft = window.innerWidth - panelWidth - 10;
-                    var minLeft = 10;
-                    var finalLeft = Math.max(minLeft, Math.min(preferredLeft, maxLeft));
-                    var preferredTop = videoRect.top + window.scrollY - 60;
-                    var finalTop = Math.max(10, preferredTop);
-                    resPanel.style.left=finalLeft+'px';
-                    resPanel.style.top=finalTop+'px';
-                    resPanel.style.backgroundColor='rgba(0,0,0,0.8)';
-                    resPanel.style.padding='10px';
-                    resPanel.style.borderRadius='5px';
-                    resPanel.style.color='white';
-                    resPanel.style.zIndex='10001';
-                    resPanel.style.display='flex';
-                    resPanel.style.alignItems='center';
-                    resPanel.style.pointerEvents='all';
-                    resPanel.innerHTML='<span style="margin-right:10px">Resolution:</span><input type="number" class="ba-width" value="'+Math.round(videoRect.width)+'" style="width:60px;margin-right:5px;padding:3px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;border-radius:3px"><span style="margin:0 5px">×</span><input type="number" class="ba-height" value="'+Math.round(videoRect.height)+'" style="width:60px;margin-right:10px;padding:3px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;border-radius:3px"><button class="ba-apply-res" style="background:#2ecc71;color:white;border:none;padding:3px 8px;border-radius:3px;cursor:pointer">Apply</button><label style="margin-left:10px;display:flex;align-items:center;cursor:pointer"><input type="checkbox" class="ba-lock-res" style="margin-right:5px">Lock</label>';
-                    if(isFullscreen&&document.fullscreenElement){
-                        document.fullscreenElement.appendChild(resPanel);
-                    }else{
-                        document.body.appendChild(resPanel);
-                    }
-                    widthInput=resPanel.querySelector('.ba-width');
-                    heightInput=resPanel.querySelector('.ba-height');
-                    lockResCheckbox=resPanel.querySelector('.ba-lock-res');
-                    resPanel.querySelector('.ba-apply-res').addEventListener('click',applyResolution);
-                    lockResCheckbox.addEventListener('change',function(){
-                        isResLocked=this.checked;
-                    });
-                }
-                function createImportModal(){
-                    importModal=document.createElement('div');
-                    importModal.className='ba-import-modal';
-                    importModal.innerHTML='<div style="background:#fff;margin:10% auto;padding:20px;border-radius:8px;width:80%;max-width:700px"><h3 style="margin-top:0;color:#2c3e50">Import Coordinates</h3><p>Paste coordinates below or upload a file:</p><input type="file" accept=".json,.txt,.cfg" id="ba-import-file" style="margin-bottom:10px"><textarea id="ba-import-text" style="width:100%;height:200px;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:5px;font-family:monospace" placeholder="Paste JSON or CFG content here..."></textarea><div id="ba-profile-selector" style="display:none;margin-top:15px"><h4 style="margin-top:0;color:#2c3e50">Select profile to import:</h4><select id="ba-profile-select" style="width:100%;padding:8px;margin-top:5px"></select></div><div style="display:flex;justify-content:flex-end;gap:10px"><button id="ba-close-import" style="padding:8px 15px;background-color:#7f8c8d;color:white;border:none;border-radius:4px">Cancel</button><button id="ba-process-import" style="padding:8px 15px;background-color:#27ae60;color:white;border:none;border-radius:4px">Import</button></div></div>';
-                    document.body.appendChild(importModal);
-                    
-                    document.getElementById('ba-close-import').addEventListener('click',function(){
-                        importModal.style.display='none';
-                        document.getElementById('ba-profile-selector').style.display='none';
-                        document.getElementById('ba-import-text').value='';
-                    });
-                    
-                    document.getElementById('ba-import-file').addEventListener('change',function(e){
-                        const file=e.target.files[0];
-                        if(!file) return;
-                        
-                        document.getElementById('ba-profile-selector').style.display='none';
-                        
-                        const reader=new FileReader();
-                        reader.onload=function(event){
-                            document.getElementById('ba-import-text').value=event.target.result;
-                            
-                            try {
-                                const jsonData=JSON.parse(event.target.result);
-                                if(jsonData.ControlSchemes && Array.isArray(jsonData.ControlSchemes) && jsonData.ControlSchemes.length>1){
-                                    const profileSelector=document.getElementById('ba-profile-selector');
-                                    const profileSelect=document.getElementById('ba-profile-select');
-                                    profileSelector.style.display='block';
-                                    profileSelect.innerHTML='';
-                                    
-                                    jsonData.ControlSchemes.forEach(function(scheme,index){
-                                        const option=document.createElement('option');
-                                        option.value=index;
-                                        option.textContent=scheme.Name+(scheme.Selected?' (Selected)':'')+(scheme.BuiltIn?' (Built-in)':'');
-                                        profileSelect.appendChild(option);
-                                        
-                                        if(scheme.Selected){
-                                            profileSelect.value=index;
-                                        }
-                                    });
-                                }
-                            } catch(error){
-                                console.log("Pre-parsing failed, will try again during import",error);
-                            }
-                        };
-                        reader.readAsText(file);
-                    });
-                    
-                    document.getElementById('ba-process-import').addEventListener('click',function(){
-                        processImport();
-                    });
-                }
-                function processImport(){
-                    var jsonText=document.getElementById('ba-import-text').value.trim();
-                    var profileSelector=document.getElementById('ba-profile-selector');
-                    var profileSelect=document.getElementById('ba-profile-select');
-                    
-                    if(!jsonText){
-                        alert('Please paste coordinate data or upload a file');
-                        return;
-                    }
-                    
-                    try{
-                        var jsonData=JSON.parse(jsonText);
-                        
-                        if(jsonData.ControlSchemes && Array.isArray(jsonData.ControlSchemes) && jsonData.ControlSchemes.length>1){
-                            if(profileSelector.style.display === 'block'){
-                                var selectedIndex=parseInt(profileSelect.value);
-                                var selectedProfile=jsonData.ControlSchemes[selectedIndex];
-                                
-                                if(markers.length>0 && confirm('Do you want to clear existing markers before importing?')){
-                                    resetMarkers();
-                                }
-                                
-                                importProfile(selectedProfile);
-                                
-                                importModal.style.display='none';
-                                profileSelector.style.display='none';
-                                document.getElementById('ba-import-text').value='';
-                            } else {
-                                profileSelector.style.display='block';
-                                profileSelect.innerHTML='';
-                                
-                                jsonData.ControlSchemes.forEach(function(scheme, index){
-                                    var option=document.createElement('option');
-                                    option.value=index;
-                                    option.textContent=scheme.Name+(scheme.Selected?' (Selected)':'')+(scheme.BuiltIn?' (Built-in)':'');
-                                    profileSelect.appendChild(option);
-                                    
-                                    if(scheme.Selected){
-                                        profileSelect.value=index;
-                                    }
-                                });
-                            }
-                        } else {
-                            profileSelector.style.display='none';
-                            
-                            if(markers.length>0 && confirm('Do you want to clear existing markers before importing?')){
-                                resetMarkers();
-                            }
-                            
-                            if(jsonData.ControlSchemes && Array.isArray(jsonData.ControlSchemes) && jsonData.ControlSchemes.length>0){
-                                var selectedProfile=jsonData.ControlSchemes.find(function(scheme){return scheme.Selected}) || jsonData.ControlSchemes[0];
-                                importProfile(selectedProfile);
-                            } else if(jsonData.GameControls && Array.isArray(jsonData.GameControls)){
-                                importBlueArchiveFormat(jsonData);
-                            } else {
-                                importGenericFormat(jsonData);
-                            }
-                            
-                            importModal.style.display='none';
-                            
-                            document.getElementById('ba-import-text').value='';
-                        }
-                    } catch(error){
-                        alert('Invalid data format: '+error.message);
-                        console.error(error);
-                    }
-                }
-                
-                function importProfile(profile){
-                    if(profile && profile.GameControls && Array.isArray(profile.GameControls)){
-                        var profileName=profile.Name || "Unnamed Profile";
-                        importBlueArchiveFormat(profile, profileName);
-                    } else {
-                        alert('The selected profile does not contain valid GameControls data');
-                    }
-                }
-                
-                function importBlueArchiveFormat(jsonData, profileName){
-                    var controls=jsonData.GameControls;
-                    var imported=0;
-                    controls.forEach(function(control){
-                        if(control.Type==="Tap"&&typeof control.X==='number'&&typeof control.Y==='number'){
-                            var ratioX=control.X;
-                            var ratioY=control.Y;
-                            var rect=overlay.getBoundingClientRect();
-                            var x=(ratioX/100)*rect.width;
-                            var y=(ratioY/100)*rect.height;
-                            var markerId=addMarker(x,y);
-                            if(control.Key){
-                                var marker=markers.find(function(m){return m.id==markerId});
-                                if(marker&&marker.labelElement){
-                                    marker.labelElement.textContent='#'+markerId+' - '+control.Key;
-                                    
-                                    var markerLabelInput=marker.coordItem.querySelector('.ba-marker-label-input');
-                                    if(markerLabelInput){
-                                        markerLabelInput.value=control.Key;
-                                    }
-                                }
-                            }
-                            imported++;
-                        }
-                    });
-                    var profileInfo=profileName?' from profile "'+profileName+'"':'';
-                    alert('Successfully imported '+imported+' coordinate points'+profileInfo);
-                }
-                
-                function importGenericFormat(jsonData){
-                    var imported=0;
-                    if(Array.isArray(jsonData)){
-                        jsonData.forEach(function(item){
-                            if((item.x!==undefined&&item.y!==undefined)||(item.X!==undefined&&item.Y!==undefined)){
-                                var x=item.x!==undefined?item.x:item.X;
-                                var y=item.y!==undefined?item.y:item.Y;
-                                var rect=overlay.getBoundingClientRect();
-                                var pixelX,pixelY;
-                                if(x<=100&&y<=100){
-                                    pixelX=(x/100)*rect.width;
-                                    pixelY=(y/100)*rect.height;
-                                }else{
-                                    pixelX=x;
-                                    pixelY=y;
-                                }
-                                addMarker(pixelX,pixelY);
-                                imported++;
-                            }
-                        });
-                    }
-                    alert('Successfully imported '+imported+' coordinate points');
-                }
-                
-                function createExportDialog(){
-                    if(exportDialog)exportDialog.remove();
-                    
-                    exportDialog=document.createElement('div');
-                    exportDialog.className='ba-export-dialog';
-                    exportDialog.innerHTML='<h3>Choose Export Format</h3><div class="ba-export-option" data-format="cfg"><h4>CFG Format (BlueStacks)</h4><p>For importing into BlueStacks emulator. Creates a complete control scheme configuration file.</p></div><div class="ba-export-option" data-format="json"><h4>Simple JSON Format</h4><p>Lightweight format for sharing coordinates or importing into other tools.</p></div><div class="ba-export-buttons"><button class="ba-btn" onclick="window.cancelExport()">Cancel</button></div>';
-                    
-                    document.body.appendChild(exportDialog);
-                    
-                    var options=exportDialog.querySelectorAll('.ba-export-option');
-                    options.forEach(function(option){
-                        option.addEventListener('click',function(){
-                            var format=this.getAttribute('data-format');
-                            performExport(format);
-                            exportDialog.remove();
-                        });
-                    });
-                    
-                    window.cancelExport=function(){
-                        exportDialog.remove();
-                    };
-                }
-                
-                function performExport(format){
-                    if(format==='cfg'){
-                        var exportData={
-                            "MetaData":{
-                                "ParserVersion":"17",
-                                "UpdateVersion":"",
-                                "UpdateArticleKey":"",
-                                "CloudUpdateTimeUTC":new Date().toISOString().split('T').join(' ').substring(0,19)
-                            },
-                            "ControlSchemes":[
-                                {
-                                    "Name":"Blue Archive Coordinates - "+new Date().toISOString().split('T')[0],
-                                    "BuiltIn":false,
-                                    "Selected":true,
-                                    "IsBookMarked":false,
-                                    "IsCategoryVisible":true,
-                                    "KeyboardLayout":"United States",
-                                    "GameControls":markers.map(function(marker,index){
-                                        var coordItem=marker.coordItem;
-                                        var ratioX=parseFloat(coordItem.querySelector('.ba-ratio-x').value);
-                                        var ratioY=parseFloat(coordItem.querySelector('.ba-ratio-y').value);
-                                        var labelText=marker.labelElement.textContent;
-                                        var keyMatch=labelText.match(/#\\d+ - (.+)/);
-                                        var key=keyMatch?keyMatch[1]:'Marker_'+(index+1);
-                                        return{
-                                            "$type":"Tap, Bluestacks",
-                                            "Type":"Tap",
-                                            "Tweaks":0,
-                                            "Exclusive":false,
-                                            "ExclusiveDelay":200,
-                                            "XExpr":"",
-                                            "YExpr":"",
-                                            "XOverlayOffset":"",
-                                            "YOverlayOffset":"",
-                                            "StartCondition":"",
-                                            "EnableCondition":"",
-                                            "ShowOnOverlay":true,
-                                            "X":ratioX,
-                                            "Y":ratioY,
-                                            "Key":key,
-                                            "Key_alt1":"",
-                                            "GuidanceCategory":"",
-                                            "Guidance":{}
-                                        };
-                                    }),
-                                    "Images":[]
-                                }
-                            ],
-                            "Strings":{}
-                        };
-                        
-                        var jsonString=JSON.stringify(exportData,null,4);
-                        var blob=new Blob([jsonString],{type:'application/json'});
-                        var url=URL.createObjectURL(blob);
-                        var a=document.createElement('a');
-                        a.href=url;
-                        a.download='blue_archive_coordinates.cfg';
-                        a.click();
-                        URL.revokeObjectURL(url);
-                    }else{
-                        var exportData={
-                            Name:"Blue Archive Coordinates - "+new Date().toISOString().split('T')[0],
-                            GameControls:markers.map(function(marker,index){
-                                var coordItem=marker.coordItem;
-                                var ratioX=parseFloat(coordItem.querySelector('.ba-ratio-x').value);
-                                var ratioY=parseFloat(coordItem.querySelector('.ba-ratio-y').value);
-                                var labelText=marker.labelElement.textContent;
-                                var keyMatch=labelText.match(/#\\d+ - (.+)/);
-                                var key=keyMatch?keyMatch[1]:'Marker_'+(index+1);
-                                return{
-                                    "$type":"Tap, Bluestacks",
-                                    "Type":"Tap",
-                                    "Tweaks":0,
-                                    "Exclusive":false,
-                                    "ExclusiveDelay":200,
-                                    "ShowOnOverlay":true,
-                                    "X":ratioX,
-                                    "Y":ratioY,
-                                    "Key":key
-                                };
-                            })
-                        };
-                        
-                        var jsonString=JSON.stringify(exportData,null,2);
-                        var blob=new Blob([jsonString],{type:'application/json'});
-                        var url=URL.createObjectURL(blob);
-                        var a=document.createElement('a');
-                        a.href=url;
-                        a.download='blue_archive_coordinates.json';
-                        a.click();
-                        URL.revokeObjectURL(url);
-                    }
-                }
-                
-                function exportCoordinates(){
-                    if(markers.length===0){
-                        alert('No markers to export');
-                        return;
-                    }
-                    
-                    createExportDialog();
-                }
-                
-                function createOverlay(){
-                    overlay=document.createElement('div');
-                    overlay.className='ba-overlay';
-                    overlay.style.position='absolute';
-                    overlay.style.width=videoRect.width+'px';
-                    overlay.style.height=videoRect.height+'px';
-                    overlay.style.top=videoRect.top+window.scrollY+'px';
-                    overlay.style.left=videoRect.left+window.scrollX+'px';
-                    if(isFullscreen&&document.fullscreenElement){
-                        overlay.style.position='fixed';
-                        overlay.style.top='0';
-                        overlay.style.left='0';
-                        document.fullscreenElement.appendChild(overlay);
-                    }else{
-                        document.body.appendChild(overlay);
-                    }
-                    
-                    overlay.addEventListener('click', function(e) {
-                        if(isDragging) {
-                            e.stopPropagation();
-                        } else if(isShiftPressed) {
-                            e.preventDefault();
-                            var rect = overlay.getBoundingClientRect();
-                            var x = e.clientX - rect.left;
-                            var y = e.clientY - rect.top;
-                            addMarker(x, y);
-                        }
-                    });
-                    
-                    overlay.addEventListener('mousemove', function(e) {
-                        var rect = overlay.getBoundingClientRect();
-                        mouseX = e.clientX - rect.left;
-                        mouseY = e.clientY - rect.top;
-                    });
-                }
-                function createControls(){
-                    controls=document.createElement('div');
-                    controls.className='ba-controls';
-                    controls.style.position='fixed';
-                    controls.style.top='10px';
-                    controls.style.right='10px';
-                    controls.innerHTML='<div class="ba-control-header"><h3><span>Blue Archive Coordinates</span><button class="ba-btn ba-add-btn">Add</button></h3></div>';
-                    
-                    var sizeColorControls=document.createElement('div');
-                    sizeColorControls.className='ba-size-color-controls';
-                    sizeColorControls.innerHTML='<div class="ba-control-item"><label>Ring Size:</label><div class="ba-control-row"><input type="range" class="ba-ring-size" min="10" max="500" value="20" step="1"><span class="ba-ring-size-value">20px</span></div></div><div class="ba-control-item"><label>Dot Size:</label><div class="ba-control-row"><input type="range" class="ba-dot-size" min="1" max="20" value="3" step="1"><span class="ba-dot-size-value">3px</span></div></div><div class="ba-control-item"><label>Ring Color:</label><div class="ba-control-row"><input type="color" class="ba-ring-color" value="#41b4ff"><span class="ba-ring-color-hex">#41b4ff</span></div></div><div class="ba-control-item"><label>Dot Color:</label><div class="ba-control-row"><input type="color" class="ba-dot-color" value="#ff0000"><span class="ba-dot-color-hex">#ff0000</span></div></div>';
-                    controls.appendChild(sizeColorControls);
-                    
-                    var coordListDiv=document.createElement('div');
-                    coordListDiv.className='ba-coordinates-list';
-                    controls.appendChild(coordListDiv);
-                    
-                    var importExportDiv=document.createElement('div');
-                    importExportDiv.className='ba-import-export';
-                    importExportDiv.innerHTML='<button class="ba-btn ba-import-btn">Import</button><button class="ba-btn ba-export-btn">Export</button>';
-                    controls.appendChild(importExportDiv);
-                    
-                    var buttonDiv=document.createElement('div');
-                    buttonDiv.style.textAlign='right';
-                    buttonDiv.style.marginTop='10px';
-                    buttonDiv.innerHTML='<button class="ba-btn ba-reset-btn">Reset</button><button class="ba-btn ba-close-btn">Close</button>';
-                    controls.appendChild(buttonDiv);
-                    
-                    if(isFullscreen&&document.fullscreenElement){
-                        document.fullscreenElement.appendChild(controls);
-                    }else{
-                        document.body.appendChild(controls);
-                    }
-                    
-                    createDebugInfo();
-                    
-                    setTimeout(function(){
-                        updateControlPanelPositions();
-                    },100);
-                    
-                    controls.querySelector('.ba-add-btn').addEventListener('click',function(){
-                        var rect=overlay.getBoundingClientRect();
-                        var x=rect.width/2;
-                        var y=rect.height/2;
-                        addMarker(x,y);
-                    });
-                    
-                    controls.querySelector('.ba-reset-btn').addEventListener('click',function(){
-                        resetMarkers();
-                    });
-                    
-                    controls.querySelector('.ba-close-btn').addEventListener('click',function(){
-                        closeOverlay();
-                    });
-                    
-                    controls.querySelector('.ba-import-btn').addEventListener('click',function(){
-                        if(!importModal){
-                            createImportModal();
-                        }
-                        importModal.style.display='block';
-                    });
-                    
-                    controls.querySelector('.ba-export-btn').addEventListener('click',function(){
-                        exportCoordinates();
-                    });
-                    
-                    var ringSizeSlider=controls.querySelector('.ba-ring-size');
-                    var ringSizeValue=controls.querySelector('.ba-ring-size-value');
-                    var dotSizeSlider=controls.querySelector('.ba-dot-size');
-                    var dotSizeValue=controls.querySelector('.ba-dot-size-value');
-                    var ringColorInput=controls.querySelector('.ba-ring-color');
-                    var ringColorHex=controls.querySelector('.ba-ring-color-hex');
-                    var dotColorInput=controls.querySelector('.ba-dot-color');
-                    var dotColorHex=controls.querySelector('.ba-dot-color-hex');
-                    
-                    ringSizeSlider.addEventListener('input',function(){
-                        currentRingSize=parseInt(this.value);
-                        ringSizeValue.textContent=currentRingSize+'px';
-                        markers.forEach(function(marker){
-                            if(marker.ring){
-                                marker.ring.style.width=currentRingSize+'px';
-                                marker.ring.style.height=currentRingSize+'px';
-                            }
-                        });
-                    });
-                    
-                    dotSizeSlider.addEventListener('input',function(){
-                        currentDotSize=parseInt(this.value);
-                        dotSizeValue.textContent=currentDotSize+'px';
-                        markers.forEach(function(marker){
-                            if(marker.dot){
-                                marker.dot.style.width=currentDotSize+'px';
-                                marker.dot.style.height=currentDotSize+'px';
-                            }
-                        });
-                    });
-                    
-                    ringColorInput.addEventListener('input',function(){
-                        currentRingColor=this.value;
-                        ringColorHex.textContent=this.value;
-                        markers.forEach(function(marker){
-                            if(marker.ring){
-                                marker.ring.style.borderColor=currentRingColor;
-                            }
-                        });
-                    });
-                    
-                    dotColorInput.addEventListener('input',function(){
-                        currentDotColor=this.value;
-                        dotColorHex.textContent=this.value;
-                        markers.forEach(function(marker){
-                            if(marker.dot){
-                                marker.dot.style.backgroundColor=currentDotColor;
-                            }
-                        });
-                    });
-                }
-                function applyResolution(){
-                    var width=parseInt(widthInput.value)||videoRect.width;
-                    var height=parseInt(heightInput.value)||videoRect.height;
-                    if(width<1||height<1){
-                        alert('Please enter valid dimensions greater than 0');
-                        return;
-                    }
-                    overlay.style.width=width+'px';
-                    overlay.style.height=height+'px';
-                    if(!isResLocked){
-                        updateMarkerPositions();
-                    }
-                }
-                function updateMarkerPositions(){
-                    if(isResLocked)return;
-                    var rect=overlay.getBoundingClientRect();
-                    markers.forEach(function(marker){
-                        var coordItem=marker.coordItem;
-                        var ratioXInput=coordItem.querySelector('.ba-ratio-x');
-                        var ratioYInput=coordItem.querySelector('.ba-ratio-y');
-                        var ratioX=parseFloat(ratioXInput.value);
-                        var ratioY=parseFloat(ratioYInput.value);
-                        var newX=(ratioX/100)*rect.width;
-                        var newY=(ratioY/100)*rect.height;
-                        marker.element.style.left=newX+'px';
-                        marker.element.style.top=newY+'px';
-                        var rawXInput=coordItem.querySelector('.ba-raw-x');
-                        var rawYInput=coordItem.querySelector('.ba-raw-y');
-                        rawXInput.value=Math.round(newX);
-                        rawYInput.value=Math.round(newY);
-                    });
-                }
-                function addMarker(x,y){
-                    markerCount++;
-                    var marker=document.createElement('div');
-                    marker.className='ba-marker';
-                    marker.style.left=x+'px';
-                    marker.style.top=y+'px';
-                    marker.setAttribute('data-id',markerCount);
-                    
-                    var innerDot=document.createElement('div');
-                    innerDot.className='ba-marker-inner';
-                    innerDot.style.width=currentDotSize+'px';
-                    innerDot.style.height=currentDotSize+'px';
-                    innerDot.style.backgroundColor=currentDotColor;
-                    
-                    var outerRing=document.createElement('div');
-                    outerRing.className='ba-marker-ring';
-                    outerRing.style.width=currentRingSize+'px';
-                    outerRing.style.height=currentRingSize+'px';
-                    outerRing.style.borderColor=currentRingColor;
-                    
-                    var labelElement=document.createElement('div');
-                    labelElement.className='ba-marker-label';
-                    labelElement.textContent='#'+markerCount;
-                    
-                    marker.appendChild(outerRing);
-                    marker.appendChild(innerDot);
-                    marker.appendChild(labelElement);
-                    overlay.appendChild(marker);
-                    
-                    marker.addEventListener('mousedown',function(e){
-                        e.preventDefault();
-                        e.stopPropagation();
-                        isDragging=true;
-                        selectedMarker=this;
-                        var rect=marker.getBoundingClientRect();
-                        dragOffsetX=e.clientX-(rect.left+rect.width/2);
-                        dragOffsetY=e.clientY-(rect.top+rect.height/2);
-                    });
-                    
-                    var rect=overlay.getBoundingClientRect();
-                    var ratioX=(x/rect.width*100).toFixed(2);
-                    var ratioY=(y/rect.height*100).toFixed(2);
-                    
-                    var coordItem=document.createElement('div');
-                    coordItem.className='ba-coordinate-item';
-                    coordItem.setAttribute('data-id',markerCount);
-                    
-                    coordItem.innerHTML='<h4><span>Marker #'+markerCount+'</span><button class="ba-btn ba-delete-btn" data-id="'+markerCount+'">×</button></h4><div class="ba-inputs"><div class="ba-input-group"><label>X:</label><input type="number" class="ba-raw-x" value="'+Math.round(x)+'" data-id="'+markerCount+'"></div><div class="ba-input-group"><label>Y:</label><input type="number" class="ba-raw-y" value="'+Math.round(y)+'" data-id="'+markerCount+'"></div><div class="ba-input-group"><label>Ratio X:</label><input type="number" class="ba-ratio-x" value="'+ratioX+'" data-id="'+markerCount+'"></div><div class="ba-input-group"><label>Ratio Y:</label><input type="number" class="ba-ratio-y" value="'+ratioY+'" data-id="'+markerCount+'"></div><div class="ba-input-group" style="grid-column:span 2;"><label>Label:</label><input type="text" class="ba-marker-label-input" value="" placeholder="Custom label" data-id="'+markerCount+'"></div></div>';
-                    
-                    controls.querySelector('.ba-coordinates-list').appendChild(coordItem);
-                    
-                    coordItem.querySelector('.ba-delete-btn').addEventListener('click',function(){
-                        var id=parseInt(this.getAttribute('data-id'));
-                        deleteMarker(id);
-                        renumberMarkers();
-                    });
-                    
-                    var rawXInput=coordItem.querySelector('.ba-raw-x');
-                    var rawYInput=coordItem.querySelector('.ba-raw-y');
-                    var ratioXInput=coordItem.querySelector('.ba-ratio-x');
-                    var ratioYInput=coordItem.querySelector('.ba-ratio-y');
-                    var markerLabelInput=coordItem.querySelector('.ba-marker-label-input');
-                    
-                    rawXInput.addEventListener('input',function(){
-                        var id=parseInt(this.getAttribute('data-id'));
-                        var markerObj=markers.find(function(m){return m.id===id});
-                        if(!markerObj)return;
-                        var newX=parseFloat(this.value);
-                        markerObj.element.style.left=newX+'px';
-                        var rect=overlay.getBoundingClientRect();
-                        var newRatioX=(newX/rect.width*100).toFixed(2);
-                        ratioXInput.value=newRatioX;
-                    });
-                    
-                    rawYInput.addEventListener('input',function(){
-                        var id=parseInt(this.getAttribute('data-id'));
-                        var markerObj=markers.find(function(m){return m.id===id});
-                        if(!markerObj)return;
-                        var newY=parseFloat(this.value);
-                        markerObj.element.style.top=newY+'px';
-                        var rect=overlay.getBoundingClientRect();
-                        var newRatioY=(newY/rect.height*100).toFixed(2);
-                        ratioYInput.value=newRatioY;
-                    });
-                    
-                    ratioXInput.addEventListener('input',function(){
-                        var id=parseInt(this.getAttribute('data-id'));
-                        var markerObj=markers.find(function(m){return m.id===id});
-                        if(!markerObj)return;
-                        var newRatioX=parseFloat(this.value);
-                        var rect=overlay.getBoundingClientRect();
-                        var newX=newRatioX*rect.width/100;
-                        markerObj.element.style.left=newX+'px';
-                        rawXInput.value=Math.round(newX);
-                    });
-                    
-                    ratioYInput.addEventListener('input',function(){
-                        var id=parseInt(this.getAttribute('data-id'));
-                        var markerObj=markers.find(function(m){return m.id===id});
-                        if(!markerObj)return;
-                        var newRatioY=parseFloat(this.value);
-                        var rect=overlay.getBoundingClientRect();
-                        var newY=newRatioY*rect.height/100;
-                        markerObj.element.style.top=newY+'px';
-                        rawYInput.value=Math.round(newY);
-                    });
-                    
-                    markerLabelInput.addEventListener('input',function(){
-                        var id=parseInt(this.getAttribute('data-id'));
-                        var markerObj=markers.find(function(m){return m.id===id});
-                        if(!markerObj)return;
-                        var label=this.value.trim();
-                        if(label){
-                            markerObj.labelElement.textContent='#'+id+' - '+label;
-                        }else{
-                            markerObj.labelElement.textContent='#'+id;
-                        }
-                    });
-                    
-                    markers.push({
-                        id:markerCount,
-                        element:marker,
-                        ring:outerRing,
-                        dot:innerDot,
-                        labelElement:labelElement,
-                        coordItem:coordItem,
-                        x:x,
-                        y:y
-                    });
-                    
-                    return markerCount;
-                }
-                function deleteMarker(id){
-                    var markerIndex=markers.findIndex(function(m){return m.id===id});
-                    if(markerIndex===-1)return;
-                    var marker=markers[markerIndex];
-                    if(marker.element&&marker.element.parentNode){
-                        marker.element.parentNode.removeChild(marker.element);
-                    }
-                    if(marker.coordItem&&marker.coordItem.parentNode){
-                        marker.coordItem.parentNode.removeChild(marker.coordItem);
-                    }
-                    markers.splice(markerIndex,1);
-                }
-                function renumberMarkers(){
-                    markers.sort(function(a,b){return a.id-b.id});
-                    markers.forEach(function(marker,index){
-                        var newId=index+1;
-                        var oldId=marker.id;
-                        marker.id=newId;
-                        marker.element.setAttribute('data-id',newId);
-                        marker.coordItem.setAttribute('data-id',newId);
-                        marker.coordItem.querySelector('h4 span').textContent='Marker #'+newId;
-                        marker.coordItem.querySelector('.ba-delete-btn').setAttribute('data-id',newId);
-                        marker.coordItem.querySelectorAll('input').forEach(function(input){
-                            input.setAttribute('data-id',newId);
-                        });
-                        var labelText=marker.labelElement.textContent;
-                        if(labelText.includes(' - ')){
-                            var customLabel=labelText.split(' - ')[1];
-                            marker.labelElement.textContent='#'+newId+' - '+customLabel;
-                        }else{
-                            marker.labelElement.textContent='#'+newId;
-                        }
-                    });
-                }
-                function resetMarkers(){
-                    markers.forEach(function(marker){
-                        if(marker.element&&marker.element.parentNode){
-                            marker.element.parentNode.removeChild(marker.element);
-                        }
-                    });
-                    markers=[];
-                    markerCount=0;
-                    if(controls){
-                        controls.querySelector('.ba-coordinates-list').innerHTML='';
-                    }
-                }
-                function closeOverlay(){
-                    window.baCoordinateToolActive = false;
-                    stopZoomMonitoring();
-                    if(overlay)overlay.remove();
-                    if(controls)controls.remove();
-                    if(resPanel)resPanel.remove();
-                    if(importModal)importModal.remove();
-                    if(zoomIndicator)zoomIndicator.remove();
-                    if(exportDialog)exportDialog.remove();
-                    if(debugInfo)debugInfo.remove();
-                    removeFullscreenEventListeners();
-                    document.removeEventListener('keydown',handleKeyDown);
-                    document.removeEventListener('keyup',handleKeyUp);
-                    style.remove();
-                }
-                function handleFullscreenChange(){
-                    isFullscreen=!!document.fullscreenElement||!!document.webkitFullscreenElement||!!document.mozFullScreenElement||!!document.msFullscreenElement;
-                    if(overlay){
-                        var markerRatios=[];
-                        markers.forEach(function(marker){
-                            var coordItem=marker.coordItem;
-                            var ratioX=parseFloat(coordItem.querySelector('.ba-ratio-x').value);
-                            var ratioY=parseFloat(coordItem.querySelector('.ba-ratio-y').value);
-                            markerRatios.push({id:marker.id,ratioX:ratioX,ratioY:ratioY});
-                        });
-                        if(overlay)overlay.remove();
-                        if(controls)controls.remove();
-                        if(resPanel)resPanel.remove();
-                        if(importModal)importModal.remove();
-                        if(zoomIndicator)zoomIndicator.remove();
-                        if(isFullscreen){
-                            videoRect={
-                                left:0,
-                                top:0,
-                                width:window.innerWidth,
-                                height:window.innerHeight
-                            };
-                        }else{
-                            videoRect=videoContainer.getBoundingClientRect();
-                        }
-                        createOverlay();
-                        createControls();
-                        createResolutionPanel();
-                        createZoomIndicator();
-                        markerRatios.forEach(function(markerRatio){
-                            var rect=overlay.getBoundingClientRect();
-                            var x=(markerRatio.ratioX/100)*rect.width;
-                            var y=(markerRatio.ratioY/100)*rect.height;
-                            addMarker(x,y);
-                        });
-                        widthInput.value=Math.round(videoRect.width);
-                        heightInput.value=Math.round(videoRect.height);
-                    }
-                }
-                function handleKeyDown(e){
-                    if(e.key==='Shift'){
-                        isShiftPressed=true;
-                        if(overlay){
-                            overlay.style.cursor='crosshair';
-                            overlay.style.pointerEvents='all';
-                        }
-                    }
-                }
-                function handleKeyUp(e){
-                    if(e.key==='Shift'){
-                        isShiftPressed=false;
-                        if(overlay){
-                            overlay.style.cursor='default';
-                            overlay.style.pointerEvents='none';
-                        }
-                    }
-                }
-                function addFullscreenEventListeners(){
-                    document.addEventListener('fullscreenchange',handleFullscreenChange);
-                    document.addEventListener('webkitfullscreenchange',handleFullscreenChange);
-                    document.addEventListener('mozfullscreenchange',handleFullscreenChange);
-                    document.addEventListener('MSFullscreenChange',handleFullscreenChange);
-                }
-                function removeFullscreenEventListeners(){
-                    document.removeEventListener('fullscreenchange',handleFullscreenChange);
-                    document.removeEventListener('webkitfullscreenchange',handleFullscreenChange);
-                    document.removeEventListener('mozfullscreenchange',handleFullscreenChange);
-                    document.removeEventListener('MSFullscreenChange',handleFullscreenChange);
-                }
-                document.addEventListener('keydown',handleKeyDown);
-                document.addEventListener('keyup',handleKeyUp);
-                document.addEventListener('mousemove',function(e){
-                    if(isDragging&&selectedMarker){
-                        var rect=overlay.getBoundingClientRect();
-                        var newX=e.clientX-rect.left-dragOffsetX;
-                        var newY=e.clientY-rect.top-dragOffsetY;
-                        newX=Math.max(0,Math.min(rect.width,newX));
-                        newY=Math.max(0,Math.min(rect.height,newY));
-                        selectedMarker.style.left=newX+'px';
-                        selectedMarker.style.top=newY+'px';
-                        var id=parseInt(selectedMarker.getAttribute('data-id'));
-                        var marker=markers.find(function(m){return m.id==id});
-                        if(marker){
-                            var coordItem=marker.coordItem;
-                            var rawXInput=coordItem.querySelector('.ba-raw-x');
-                            var rawYInput=coordItem.querySelector('.ba-raw-y');
-                            rawXInput.value=Math.round(newX);
-                            rawYInput.value=Math.round(newY);
-                            var ratioXInput=coordItem.querySelector('.ba-ratio-x');
-                            var ratioYInput=coordItem.querySelector('.ba-ratio-y');
-                            ratioXInput.value=(newX/rect.width*100).toFixed(2);
-                            ratioYInput.value=(newY/rect.height*100).toFixed(2);
-                        }
-                    }
-                });
-                document.addEventListener('mouseup',function(){
-                    isDragging=false;
-                    selectedMarker=null;
-                });
-                createOverlay();
-                createControls();
-                createResolutionPanel();
-                createZoomIndicator();
-                startZoomMonitoring();
-                addFullscreenEventListeners();
-                if(window.location.hostname.includes('youtube.com')){
-                    var ytFullscreenBtn=document.querySelector('.ytp-fullscreen-button');
-                    if(ytFullscreenBtn){
-                        ytFullscreenBtn.addEventListener('click',function(){
-                            setTimeout(handleFullscreenChange,300);
-                        });
-                    }
-                    var ytTheaterBtn=document.querySelector('.ytp-size-button');
-                    if(ytTheaterBtn){
-                        ytTheaterBtn.addEventListener('click',function(){
-                            setTimeout(function(){
-                                videoRect=videoContainer.getBoundingClientRect();
-                                if(overlay){
-                                    overlay.style.width=videoRect.width+'px';
-                                    overlay.style.height=videoRect.height+'px';
-                                    overlay.style.top=(videoRect.top+window.scrollY)+'px';
-                                    overlay.style.left=(videoRect.left+window.scrollX)+'px';
-                                    if(widthInput&&heightInput){
-                                        widthInput.value=Math.round(videoRect.width);
-                                        heightInput.value=Math.round(videoRect.height);
-                                    }
-                                    updateMarkerPositions();
-                                }
-                                updateControlPanelPositions();
-                            },300);
-                        });
-                    }
-                }
-            })();
-            `;
+            /**
+             * Bookmarklet Code String
+             * ================================================================================
+             * This variable contains the entire bookmarklet code that will be executed
+             * when the user clicks the bookmarklet link. It's a self-contained script
+             * that creates the coordinate tool overlay on any video page.
+             * 
+             */
+            var bookmarkletCode = `(function(){
+if(window.baCT){alert('Tool already active');return}
+window.baCT=1;
+var s=document.createElement('style');
+s.textContent='.ba-o{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(52,152,219,0.1);cursor:crosshair;z-index:10000;pointer-events:none}.ba-m{position:absolute;transform:translate(-50%,-50%);pointer-events:all;cursor:move;z-index:10001}.ba-d{width:3px;height:3px;background:red;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10002}.ba-r{border:1px solid #41b4ff;border-radius:50%;width:20px;height:20px;background:transparent;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10001;pointer-events:none}.ba-l{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:white;padding:2px 6px;border-radius:3px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:10002}.ba-c{position:fixed!important;top:10px!important;right:10px!important;background:rgba(0,0,0,0.9)!important;color:white!important;padding:15px!important;border-radius:8px!important;width:320px!important;z-index:2147483647!important;font-family:Arial,sans-serif!important;font-size:12px!important;max-height:90vh!important;overflow-y:auto!important;box-shadow:0 4px 20px rgba(0,0,0,0.5)!important}.ba-c h3{margin-top:0!important;margin-bottom:12px!important;font-size:14px!important;display:flex!important;justify-content:space-between!important;align-items:center!important}.ba-b{background:#3498db!important;color:white!important;border:none!important;padding:6px 12px!important;border-radius:4px!important;cursor:pointer!important;margin-right:5px!important;font-size:12px!important}.ba-b:hover{background:#2980b9!important}.ba-cl{margin-top:10px;max-height:300px;overflow-y:auto}.ba-ci{background:rgba(255,255,255,0.1);padding:8px;margin-bottom:8px;border-radius:3px}.ba-ci h4{margin:0 0 5px 0;font-size:12px;display:flex;justify-content:space-between;align-items:center}.ba-del{background:#e74c3c!important;padding:2px 5px!important;font-size:10px!important}.ba-i{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.ba-ig{display:flex;flex-direction:column;margin-bottom:5px}.ba-ig label{font-size:10px;margin-bottom:3px}.ba-ig input{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:4px;border-radius:3px;font-size:11px;width:100%;box-sizing:border-box}.ba-sc{margin-top:12px;background:rgba(52,152,219,0.1);padding:12px;border-radius:6px}.ba-ct{display:flex;flex-direction:column;margin-bottom:12px;width:100%}.ba-ct label{font-size:12px;margin-bottom:6px;font-weight:500}.ba-cr{display:flex;align-items:center;gap:8px;width:100%}.ba-cr input[type="range"]{flex:1}.ba-cr input[type="color"]{width:40px;height:30px;border:none;border-radius:4px;cursor:pointer;padding:0}.ba-cr span{min-width:45px;text-align:right;font-size:11px;color:#ccc}.ba-ie{display:flex;justify-content:space-between;margin-top:12px;gap:8px}.ba-ie .ba-b{flex:1;margin-right:0}.ba-im{display:none;position:fixed;z-index:2147483648;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5)}.ba-z{position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.8);color:white;padding:8px 12px;border-radius:6px;font-size:11px;z-index:10003;pointer-events:none}.ba-ed{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:25px;border-radius:8px;z-index:2147483648;box-shadow:0 4px 20px rgba(0,0,0,0.3);min-width:320px}.ba-eo{background:#f7f7f7;padding:15px;margin-bottom:15px;border-radius:5px;cursor:pointer;border:2px solid transparent;transition:all 0.2s}.ba-eo:hover{border-color:#3498db;background:#eaf7ff}.ba-eo h4{margin:0 0 5px 0;color:#2c3e50}.ba-eo p{margin:0;font-size:12px;color:#666}.ba-eb{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.ba-rp{position:absolute;background:rgba(0,0,0,0.8);padding:10px;border-radius:5px;color:white;z-index:10001;display:flex;align-items:center;pointer-events:all}';
+document.head.appendChild(s);
+var M=[],C=0,D=0,S=null,dx=0,dy=0,L=0,rs=20,ds=3,rc="#41b4ff",dc="#ff0000",o,c,rp,im,z,ed,wi,hi,lr,fs=0,vc=null,vr=null,sh=0,mx=0,my=0,cz=1,zi;
+function fv(){var v=document.querySelector('video');if(v)return v;v=document.querySelector('.video-container,.player-container,[class*="video"],[class*="player"]');return v||null}
+vc=fv();if(!vc){alert('No video found');window.baCT=0;return}
+vr=vc.getBoundingClientRect();
+function ce(t){return document.createElement(t)}
+function cl(e){while(e.firstChild)e.removeChild(e.firstChild)}
+function uz(){if(z)z.textContent='Zoom: '+Math.round(cz*100)+'%'}
+function co(){o=ce('div');o.className='ba-o';o.style.width=vr.width+'px';o.style.height=vr.height+'px';o.style.top=(vr.top+window.scrollY)+'px';o.style.left=(vr.left+window.scrollX)+'px';document.body.appendChild(o);
+o.addEventListener('click',function(e){if(!D&&sh){e.preventDefault();var r=o.getBoundingClientRect();am(e.clientX-r.left,e.clientY-r.top)}})}
+function cc(){c=ce('div');c.className='ba-c';
+var h=ce('h3'),t=ce('span');t.textContent='BA Coordinates';h.appendChild(t);
+var ab=ce('button');ab.className='ba-b';ab.textContent='Add';h.appendChild(ab);c.appendChild(h);
+var sc=ce('div');sc.className='ba-sc';
+var rsc=ce('div');rsc.className='ba-ct';var rsl=ce('label');rsl.textContent='Ring Size:';rsc.appendChild(rsl);
+var rsr=ce('div');rsr.className='ba-cr';var rss=ce('input');rss.type='range';rss.min='10';rss.max='500';rss.value='20';
+var rsv=ce('span');rsv.textContent='20px';rsr.appendChild(rss);rsr.appendChild(rsv);rsc.appendChild(rsr);sc.appendChild(rsc);
+var dsc=ce('div');dsc.className='ba-ct';var dsl=ce('label');dsl.textContent='Dot Size:';dsc.appendChild(dsl);
+var dsr=ce('div');dsr.className='ba-cr';var dss=ce('input');dss.type='range';dss.min='1';dss.max='20';dss.value='3';
+var dsv=ce('span');dsv.textContent='3px';dsr.appendChild(dss);dsr.appendChild(dsv);dsc.appendChild(dsr);sc.appendChild(dsc);
+var rcc=ce('div');rcc.className='ba-ct';var rcl=ce('label');rcl.textContent='Ring Color:';rcc.appendChild(rcl);
+var rcr=ce('div');rcr.className='ba-cr';var rci=ce('input');rci.type='color';rci.value='#41b4ff';
+var rch=ce('span');rch.textContent='#41b4ff';rcr.appendChild(rci);rcr.appendChild(rch);rcc.appendChild(rcr);sc.appendChild(rcc);
+var dcc=ce('div');dcc.className='ba-ct';var dcl=ce('label');dcl.textContent='Dot Color:';dcc.appendChild(dcl);
+var dcr=ce('div');dcr.className='ba-cr';var dci=ce('input');dci.type='color';dci.value='#ff0000';
+var dch=ce('span');dch.textContent='#ff0000';dcr.appendChild(dci);dcr.appendChild(dch);dcc.appendChild(dcr);sc.appendChild(dcc);
+c.appendChild(sc);
+var cl=ce('div');cl.className='ba-cl';c.appendChild(cl);
+var ie=ce('div');ie.className='ba-ie';var ib=ce('button');ib.className='ba-b';ib.textContent='Import';
+var eb=ce('button');eb.className='ba-b';eb.textContent='Export';ie.appendChild(ib);ie.appendChild(eb);c.appendChild(ie);
+var bd=ce('div');bd.style.textAlign='right';bd.style.marginTop='10px';
+var rb=ce('button');rb.className='ba-b';rb.textContent='Reset';
+var cb=ce('button');cb.className='ba-b';cb.textContent='Close';bd.appendChild(rb);bd.appendChild(cb);c.appendChild(bd);
+document.body.appendChild(c);
+ab.onclick=function(){var r=o.getBoundingClientRect();am(r.width/2,r.height/2)};
+rb.onclick=rm;cb.onclick=cx;ib.onclick=function(){cim();im.style.display='block'};eb.onclick=ex;
+rss.oninput=function(){rs=parseInt(this.value);rsv.textContent=rs+'px';M.forEach(function(m){if(m.r)m.r.style.width=m.r.style.height=rs+'px'})};
+dss.oninput=function(){ds=parseInt(this.value);dsv.textContent=ds+'px';M.forEach(function(m){if(m.d)m.d.style.width=m.d.style.height=ds+'px'})};
+rci.oninput=function(){rc=this.value;rch.textContent=this.value;M.forEach(function(m){if(m.r)m.r.style.borderColor=rc})};
+dci.oninput=function(){dc=this.value;dch.textContent=this.value;M.forEach(function(m){if(m.d)m.d.style.backgroundColor=dc})}}
+function crp(){rp=ce('div');rp.className='ba-rp';rp.style.left=(vr.left+window.scrollX)+'px';rp.style.top=(vr.top+window.scrollY-60)+'px';
+var l=ce('span');l.textContent='Resolution:';l.style.marginRight='10px';rp.appendChild(l);
+wi=ce('input');wi.type='number';wi.value=Math.round(vr.width);wi.style.cssText='width:60px;margin-right:5px;padding:3px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;border-radius:3px';
+hi=ce('input');hi.type='number';hi.value=Math.round(vr.height);hi.style.cssText='width:60px;margin-right:10px;padding:3px;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;border-radius:3px';
+var ap=ce('button');ap.textContent='Apply';ap.style.cssText='background:#2ecc71;color:white;border:none;padding:3px 8px;border-radius:3px;cursor:pointer';
+var ll=ce('label');ll.style.cssText='margin-left:10px;display:flex;align-items:center;cursor:pointer';
+lr=ce('input');lr.type='checkbox';lr.style.marginRight='5px';ll.appendChild(lr);ll.appendChild(document.createTextNode('Lock'));
+rp.appendChild(wi);rp.appendChild(document.createTextNode(' × '));rp.appendChild(hi);rp.appendChild(ap);rp.appendChild(ll);
+document.body.appendChild(rp);
+ap.onclick=ar;lr.onchange=function(){L=this.checked}}
+function cz(){z=ce('div');z.className='ba-z';document.body.appendChild(z);uz()}
+function cim(){if(im)return;im=ce('div');im.className='ba-im';
+var mc=ce('div');mc.style.cssText='background:#fff;margin:10% auto;padding:20px;border-radius:8px;width:80%;max-width:700px';
+var t=ce('h3');t.textContent='Import Coordinates';t.style.cssText='margin-top:0;color:#2c3e50';mc.appendChild(t);
+var ta=ce('textarea');ta.id='ba-it';ta.style.cssText='width:100%;height:200px;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:5px;font-family:monospace';
+ta.placeholder='Paste JSON/CFG content...';mc.appendChild(ta);
+var bc=ce('div');bc.style.cssText='display:flex;justify-content:flex-end;gap:10px';
+var cb=ce('button');cb.textContent='Cancel';cb.style.cssText='padding:8px 15px;background:#7f8c8d;color:white;border:none;border-radius:4px';
+var ib=ce('button');ib.textContent='Import';ib.style.cssText='padding:8px 15px;background:#27ae60;color:white;border:none;border-radius:4px';
+bc.appendChild(cb);bc.appendChild(ib);mc.appendChild(bc);im.appendChild(mc);document.body.appendChild(im);
+cb.onclick=function(){im.style.display='none';ta.value=''};
+ib.onclick=function(){pi()}}
+function pi(){var t=document.getElementById('ba-it').value.trim();if(!t){alert('No data');return}
+try{var j=JSON.parse(t);if(M.length>0&&confirm('Clear existing markers?'))rm();
+if(j.ControlSchemes&&j.ControlSchemes[0]){ip(j.ControlSchemes[0])}else if(j.GameControls){ip(j)}else{alert('Invalid format')}
+im.style.display='none';document.getElementById('ba-it').value=''}catch(e){alert('Import failed')}}
+function ip(d){var gc=d.GameControls||[];var n=0;
+gc.forEach(function(g){if(g.Type==="Tap"&&typeof g.X==='number'&&typeof g.Y==='number'){
+var r=o.getBoundingClientRect();var x=(g.X/100)*r.width;var y=(g.Y/100)*r.height;
+var id=am(x,y);if(g.Key){var m=M.find(function(m){return m.id==id});
+if(m&&m.l)m.l.textContent='#'+id+' - '+g.Key}n++}});
+alert('Imported '+n+' points')}
+function ced(){if(ed)ed.remove();ed=ce('div');ed.className='ba-ed';
+var t=ce('h3');t.textContent='Export Format';ed.appendChild(t);
+var co=ce('div');co.className='ba-eo';co.setAttribute('data-format','cfg');
+var ct=ce('h4');ct.textContent='CFG Format';co.appendChild(ct);
+var cd=ce('p');cd.textContent='For BlueStacks import';co.appendChild(cd);ed.appendChild(co);
+var jo=ce('div');jo.className='ba-eo';jo.setAttribute('data-format','json');
+var jt=ce('h4');jt.textContent='JSON Format';jo.appendChild(jt);
+var jd=ce('p');jd.textContent='Simple coordinate data';jo.appendChild(jd);ed.appendChild(jo);
+var bc=ce('div');bc.className='ba-eb';var cb=ce('button');cb.className='ba-b';cb.textContent='Cancel';
+cb.onclick=function(){ed.remove()};bc.appendChild(cb);ed.appendChild(bc);document.body.appendChild(ed);
+co.onclick=function(){pe('cfg');ed.remove()};jo.onclick=function(){pe('json');ed.remove()}}
+function pe(f){var d;if(f==='cfg'){d={MetaData:{},ControlSchemes:[{Name:"BA Coords",BuiltIn:false,Selected:true,
+GameControls:M.map(function(m){var ci=m.ci;var rx=parseFloat(ci.querySelector('.rx').value);
+var ry=parseFloat(ci.querySelector('.ry').value);return{Type:"Tap",X:rx,Y:ry,Key:'M'+(m.id)}})}]}}
+else{d={GameControls:M.map(function(m){var ci=m.ci;var rx=parseFloat(ci.querySelector('.rx').value);
+var ry=parseFloat(ci.querySelector('.ry').value);return{Type:"Tap",X:rx,Y:ry}})}}
+var j=JSON.stringify(d,null,2);var b=new Blob([j],{type:'application/json'});
+var u=URL.createObjectURL(b);var a=ce('a');a.href=u;a.download='ba_coords.'+(f==='cfg'?'cfg':'json');
+a.click();URL.revokeObjectURL(u)}
+function ex(){if(M.length===0){alert('No markers');return}ced()}
+function ar(){var w=parseInt(wi.value)||vr.width;var h=parseInt(hi.value)||vr.height;
+if(w<1||h<1){alert('Invalid dimensions');return}
+o.style.width=w+'px';o.style.height=h+'px';if(!L)um()}
+function um(){if(L)return;var r=o.getBoundingClientRect();
+M.forEach(function(m){var rx=parseFloat(m.ci.querySelector('.rx').value);
+var ry=parseFloat(m.ci.querySelector('.ry').value);var x=(rx/100)*r.width;var y=(ry/100)*r.height;
+m.e.style.left=x+'px';m.e.style.top=y+'px';
+m.ci.querySelector('.x').value=Math.round(x);m.ci.querySelector('.y').value=Math.round(y)})}
+function am(x,y){C++;var m=ce('div');m.className='ba-m';m.style.left=x+'px';m.style.top=y+'px';m.setAttribute('data-id',C);
+var d=ce('div');d.className='ba-d';d.style.width=ds+'px';d.style.height=ds+'px';d.style.backgroundColor=dc;
+var r=ce('div');r.className='ba-r';r.style.width=rs+'px';r.style.height=rs+'px';r.style.borderColor=rc;
+var l=ce('div');l.className='ba-l';l.textContent='#'+C;
+m.appendChild(r);m.appendChild(d);m.appendChild(l);o.appendChild(m);
+m.onmousedown=function(e){e.preventDefault();e.stopPropagation();D=1;S=this;
+var rect=m.getBoundingClientRect();dx=e.clientX-(rect.left+rect.width/2);dy=e.clientY-(rect.top+rect.height/2)};
+var or=o.getBoundingClientRect();var rx=(x/or.width*100).toFixed(2);var ry=(y/or.height*100).toFixed(2);
+var ci=ce('div');ci.className='ba-ci';ci.setAttribute('data-id',C);
+var h=ce('h4');var hs=ce('span');hs.textContent='Marker #'+C;h.appendChild(hs);
+var db=ce('button');db.className='ba-b ba-del';db.textContent='×';db.setAttribute('data-id',C);
+h.appendChild(db);ci.appendChild(h);
+var ic=ce('div');ic.className='ba-i';
+var xg=ce('div');xg.className='ba-ig';var xl=ce('label');xl.textContent='X:';xg.appendChild(xl);
+var xi=ce('input');xi.type='number';xi.className='x';xi.value=Math.round(x);xi.setAttribute('data-id',C);
+xg.appendChild(xi);ic.appendChild(xg);
+var yg=ce('div');yg.className='ba-ig';var yl=ce('label');yl.textContent='Y:';yg.appendChild(yl);
+var yi=ce('input');yi.type='number';yi.className='y';yi.value=Math.round(y);yi.setAttribute('data-id',C);
+yg.appendChild(yi);ic.appendChild(yg);
+var rxg=ce('div');rxg.className='ba-ig';var rxl=ce('label');rxl.textContent='Ratio X:';rxg.appendChild(rxl);
+var rxi=ce('input');rxi.type='number';rxi.className='rx';rxi.value=rx;rxi.setAttribute('data-id',C);
+rxg.appendChild(rxi);ic.appendChild(rxg);
+var ryg=ce('div');ryg.className='ba-ig';var ryl=ce('label');ryl.textContent='Ratio Y:';ryg.appendChild(ryl);
+var ryi=ce('input');ryi.type='number';ryi.className='ry';ryi.value=ry;ryi.setAttribute('data-id',C);
+ryg.appendChild(ryi);ic.appendChild(ryg);ci.appendChild(ic);
+c.querySelector('.ba-cl').appendChild(ci);
+db.onclick=function(){dm(parseInt(this.getAttribute('data-id')))};
+xi.oninput=function(){var id=parseInt(this.getAttribute('data-id'));var mo=M.find(function(m){return m.id===id});
+if(!mo)return;var nx=parseFloat(this.value);mo.e.style.left=nx+'px';
+var r=o.getBoundingClientRect();rxi.value=(nx/r.width*100).toFixed(2)};
+yi.oninput=function(){var id=parseInt(this.getAttribute('data-id'));var mo=M.find(function(m){return m.id===id});
+if(!mo)return;var ny=parseFloat(this.value);mo.e.style.top=ny+'px';
+var r=o.getBoundingClientRect();ryi.value=(ny/r.height*100).toFixed(2)};
+rxi.oninput=function(){var id=parseInt(this.getAttribute('data-id'));var mo=M.find(function(m){return m.id===id});
+if(!mo)return;var nr=parseFloat(this.value);var r=o.getBoundingClientRect();
+var nx=nr*r.width/100;mo.e.style.left=nx+'px';xi.value=Math.round(nx)};
+ryi.oninput=function(){var id=parseInt(this.getAttribute('data-id'));var mo=M.find(function(m){return m.id===id});
+if(!mo)return;var nr=parseFloat(this.value);var r=o.getBoundingClientRect();
+var ny=nr*r.height/100;mo.e.style.top=ny+'px';yi.value=Math.round(ny)};
+M.push({id:C,e:m,r:r,d:d,l:l,ci:ci,x:x,y:y});return C}
+function dm(id){var i=M.findIndex(function(m){return m.id===id});if(i===-1)return;
+var m=M[i];if(m.e.parentNode)m.e.parentNode.removeChild(m.e);
+if(m.ci.parentNode)m.ci.parentNode.removeChild(m.ci);M.splice(i,1)}
+function rm(){M.forEach(function(m){if(m.e.parentNode)m.e.parentNode.removeChild(m.e)});
+M=[];C=0;cl(c.querySelector('.ba-cl'))}
+function cx(){window.baCT=0;if(o)o.remove();if(c)c.remove();if(rp)rp.remove();
+if(im)im.remove();if(z)z.remove();if(ed)ed.remove();
+document.removeEventListener('keydown',kd);document.removeEventListener('keyup',ku);s.remove()}
+function kd(e){if(e.key==='Shift'){sh=1;if(o){o.style.cursor='crosshair';o.style.pointerEvents='all'}}}
+function ku(e){if(e.key==='Shift'){sh=0;if(o){o.style.cursor='default';o.style.pointerEvents='none'}}}
+document.addEventListener('keydown',kd);document.addEventListener('keyup',ku);
+document.addEventListener('mousemove',function(e){if(D&&S){var r=o.getBoundingClientRect();
+var nx=e.clientX-r.left-dx;var ny=e.clientY-r.top-dy;
+nx=Math.max(0,Math.min(r.width,nx));ny=Math.max(0,Math.min(r.height,ny));
+S.style.left=nx+'px';S.style.top=ny+'px';
+var id=parseInt(S.getAttribute('data-id'));var m=M.find(function(m){return m.id==id});
+if(m){m.ci.querySelector('.x').value=Math.round(nx);m.ci.querySelector('.y').value=Math.round(ny);
+m.ci.querySelector('.rx').value=(nx/r.width*100).toFixed(2);
+m.ci.querySelector('.ry').value=(ny/r.height*100).toFixed(2)}}});
+document.addEventListener('mouseup',function(){D=0;S=null});
+co();cc();crp();cz();
+setInterval(function(){cz=Math.round((window.outerWidth/window.innerWidth)*100)/100;uz()},250);
+})();`;
 
+            /**
+             * Get Container for Bookmarklet Code
+             * ================================================================================
+             * Retrieves the container element where the bookmarklet will be inserted.
+             */
             var bookmarkletCodeBlock = document.getElementById('bookmarkletCode');
             
+            /**
+             * Clear Container Content
+             * ================================================================================
+             * Removes all existing child elements from the container using DOM manipulation.
+             * This ensures a clean slate before inserting new content.
+             */
+            while (bookmarkletCodeBlock.firstChild) {
+                bookmarkletCodeBlock.removeChild(bookmarkletCodeBlock.firstChild);
+            }
+            
+            /**
+             * Create Instructions Section
+             * ================================================================================
+             * Creates the instructions and information about the bookmarklet.
+             * Uses DOM methods to build the structure instead of innerHTML.
+             */
+            var instructions = document.createElement('div');
+            
+            // Title paragraph with strong element
+            var instructionsTitle = document.createElement('p');
+            var strongElement = document.createElement('strong');
+            strongElement.textContent = 'How to Use This Bookmarklet:';
+            instructionsTitle.appendChild(strongElement);
+            instructions.appendChild(instructionsTitle);
+            
+            // Drag instructions paragraph
+            var dragInstructions = document.createElement('p');
+            dragInstructions.textContent = 'Drag this link to your bookmarks bar:';
+            instructions.appendChild(dragInstructions);
+            
+            // Feature description
+            var featureTitle = document.createElement('p');
+            featureTitle.textContent = 'This tool lets you place markers on videos for Blue Archive coordinates by:';
+            instructions.appendChild(featureTitle);
+            
+            /**
+             * Create Feature List
+             * ================================================================================
+             * Builds an unordered list of features using DOM manipulation.
+             * Special handling for NEW features to make them bold.
+             */
+            var featureList = document.createElement('ul');
+            
+            // Array of features to display
+            var features = [
+                'Add labels to markers for easy identification',
+                'Automatically adjusts when you zoom the page',
+                'Customize marker colors and sizes',
+                'Hold SHIFT and click to place markers',
+                'Import/Export in CFG format for BlueStacks',
+                'Shows current zoom level in top-left corner',
+                'Works on YouTube and most video sites',
+            ];
+            
+            // Create list items for each feature
+            features.forEach(function(feature) {
+                var listItem = document.createElement('li');
+                // Check if feature starts with 'NEW:' to make it bold
+                if (feature.startsWith('NEW:')) {
+                    var strongNew = document.createElement('strong');
+                    strongNew.textContent = feature;
+                    listItem.appendChild(strongNew);
+                } else {
+                    listItem.textContent = feature;
+                }
+                featureList.appendChild(listItem);
+            });
+            
+            instructions.appendChild(featureList);
+            
+            /**
+             * Create Bookmarklet Link
+             * ================================================================================
+             * Creates the draggable bookmarklet link that users can add to their bookmarks.
+             * The href contains the entire bookmarklet code, properly encoded.
+             */
             var bookmarkletLink = document.createElement('a');
             bookmarkletLink.href = 'javascript:' + encodeURIComponent(bookmarkletCode.replace(/\s+/g, ' ').trim());
-            bookmarkletLink.textContent = 'Blue Archive Coordinates Bookmarklet';
+            bookmarkletLink.textContent = 'Blue Archive Coordinates Bookmarklet v1.3';
             bookmarkletLink.className = 'bookmarklet-link';
             bookmarkletLink.setAttribute('draggable', 'true');
-
-            var instructions = document.createElement('div');
-            instructions.innerHTML =
-                '<p><strong>How to Use This Bookmarklet:</strong></p>' +
-                '<p>Drag this link to your bookmarks bar:</p>' +
-                '<p>This tool lets you place markers on videos for Blue Archive coordinates by:</p>' +
-                '<ul>' +
-                '<li>Hold SHIFT and click to place markers</li>' +
-                '<li>Customize marker colors and sizes</li>' +
-                '<li>Add labels to markers for easy identification</li>' +
-                '<li>Import/Export in CFG format for BlueStacks</li>' +
-                '<li>Automatically adjusts when you zoom the page</li>' +
-                '<li>Shows current zoom level in top-left corner</li>' +
-                '<li>Works best on YouTube</li>' +
-                '</ul>';
-
-            bookmarkletCodeBlock.innerHTML = '';
+            
+            /**
+             * Append Elements to Container
+             * ================================================================================
+             * Adds all created elements to the bookmarklet code container.
+             */
             bookmarkletCodeBlock.appendChild(instructions);
             bookmarkletCodeBlock.appendChild(bookmarkletLink);
         });
