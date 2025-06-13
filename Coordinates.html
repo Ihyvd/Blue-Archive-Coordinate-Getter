@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Archive Coordinate Tool v1.3</title>
+    <title>Blue Archive Coordinate Tool v1.4</title>
     
     <!-- 
     ================================================================================
@@ -216,23 +216,24 @@
     ================================================================================
     Contains all the visible content of the page including:
     - Title and version information
-    - Fix notes for version 1.3
+    - Fix notes for version 1.4
     - Instructions for using the tool
     - Bookmarklet code container
     ================================================================================
     -->
     <div class="container">
-        <h1>Blue Archive Coordinate Tool v1.3</h1>
+        <h1>Blue Archive Coordinate Tool v1.4</h1>
 
-        <!-- Version 1.3 Fix Notes -->
+        <!-- Version 1.4 Fix Notes -->
         <div class="fix-note">
-            <h3>Fixed Issues in v1.3:</h3>
+            <h3>Fixed Issues in v1.4:</h3>
             <ul>
                 <li>Fixed CSP (Content Security Policy) issues</li>
                 <li>Fixed TrustedHTML assignment errors</li>
                 <li>Replaced all innerHTML assignments with proper DOM manipulation</li>
                 <li>Enhanced theater mode detection with multiple fallback checks</li>
                 <li>Added stabilization period for fullscreen-to-normal transitions</li>
+                <li>Fixed resolution ratio calculations when manually changing dimensions</li>
                 <li>No scrolling or interaction needed - all transitions update instantly!</li>
             </ul>
         </div>
@@ -290,10 +291,11 @@
              * when the user clicks the bookmarklet link. It's a self-contained script
              * that creates the coordinate tool overlay on any video page.
              * 
-             * v1.3 Changes:
+             * v1.4 Changes:
              * - Fixed CSP issues with DOM manipulation
              * - Fixed YouTube mode switching for instant updates
              * - Enhanced detection and update mechanisms
+             * - Fixed resolution ratio calculations
              */
             var bookmarkletCode = `(function(){
 if(window.baCT){alert('Tool already active');return}
@@ -399,7 +401,12 @@ function ex(){if(M.length===0){alert('No markers');return}ced()}
 function ar(){var w=parseInt(wi.value)||vr.width;var h=parseInt(hi.value)||vr.height;
 if(w<1||h<1){alert('Invalid dimensions');return}
 vr={width:w,height:h,top:vr.top,left:vr.left,right:vr.left+w,bottom:vr.top+h};
-o.style.width=w+'px';o.style.height=h+'px';if(!L)um()}
+o.style.width=w+'px';o.style.height=h+'px';
+M.forEach(function(m){var currentX=parseFloat(m.e.style.left);var currentY=parseFloat(m.e.style.top);
+m.rx=(currentX/w*100).toFixed(2);m.ry=(currentY/h*100).toFixed(2);
+var rxInput=m.ci.querySelector('.rx');var ryInput=m.ci.querySelector('.ry');
+if(rxInput)rxInput.value=m.rx;if(ryInput)ryInput.value=m.ry});
+if(!L)um()}
 function um(){if(L)return;var r=o.getBoundingClientRect();
 M.forEach(function(m){var x=(m.rx/100)*r.width;var y=(m.ry/100)*r.height;
 m.e.style.left=x+'px';m.e.style.top=y+'px';
@@ -544,6 +551,7 @@ raf=requestAnimationFrame(cup);
             
             // Array of features to display
             var features = [
+                'NEW: Fixed resolution ratio calculations when manually changing dimensions!',
                 'NEW: Instant updates for ALL YouTube mode changes - no interaction needed!',
                 'Add labels to markers for easy identification',
                 'Automatically adjusts when you zoom the page',
@@ -578,7 +586,7 @@ raf=requestAnimationFrame(cup);
              */
             var bookmarkletLink = document.createElement('a');
             bookmarkletLink.href = 'javascript:' + encodeURIComponent(bookmarkletCode.replace(/\s+/g, ' ').trim());
-            bookmarkletLink.textContent = 'Blue Archive Coordinates Bookmarklet v1.3';
+            bookmarkletLink.textContent = 'Blue Archive Coordinates Bookmarklet v1.4';
             bookmarkletLink.className = 'bookmarklet-link';
             bookmarkletLink.setAttribute('draggable', 'true');
             
