@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blue Archive Coordinate Tool v1.4</title>
+    <title>Blue Archive Coordinate Tool v1.5</title>
     
     <!-- 
     ================================================================================
@@ -216,25 +216,22 @@
     ================================================================================
     Contains all the visible content of the page including:
     - Title and version information
-    - Fix notes for version 1.4
+    - Fix notes for version 1.5
     - Instructions for using the tool
     - Bookmarklet code container
     ================================================================================
     -->
     <div class="container">
-        <h1>Blue Archive Coordinate Tool v1.4</h1>
+        <h1>Blue Archive Coordinate Tool v1.5</h1>
 
-        <!-- Version 1.4 Fix Notes -->
+        <!-- Version 1.5 Fix Notes -->
         <div class="fix-note">
-            <h3>Fixed Issues in v1.4:</h3>
+            <h3>New in v1.5: Multi-Emulator Support</h3>
             <ul>
-                <li>Fixed CSP (Content Security Policy) issues</li>
-                <li>Fixed TrustedHTML assignment errors</li>
-                <li>Replaced all innerHTML assignments with proper DOM manipulation</li>
-                <li>Enhanced theater mode detection with multiple fallback checks</li>
-                <li>Added stabilization period for fullscreen-to-normal transitions</li>
-                <li>Fixed resolution ratio calculations when manually changing dimensions</li>
-                <li>No scrolling or interaction needed - all transitions update instantly!</li>
+                <li><strong>NEW:</strong> Full support for MuMu emulator keymaps</li>
+                <li><strong>NEW:</strong> Automatic format detection for imports</li>
+                <li><strong>NEW:</strong> Export to both BlueStacks (.cfg) and MuMu (.json) formats</li>
+                <li><strong>NEW:</strong> Smart conversion between different coordinate systems</li>
             </ul>
         </div>
 
@@ -242,13 +239,15 @@
         <div id="instructions">
             <h2>Information</h2>
             <ul>
+                <li><strong>Multi-Emulator Support:</strong> Works with both BlueStacks and MuMu emulators</li>
                 <li>Click "Activate Overlay" to place an overlay on the video</li>
                 <li>Customize marker colors and sizes using the control panel</li>
                 <li>Drag markers to adjust their position</li>
                 <li>Edit coordinate values in the control panel</li>
                 <li>Enter custom resolution values if needed and click "Apply"</li>
                 <li>Hold Shift and click anywhere on the video to place markers</li>
-                <li>Import coordinates from Blue Archive or export your current markers</li>
+                <li><strong>Import:</strong> Supports both BlueStacks CFG and MuMu JSON formats</li>
+                <li><strong>Export:</strong> Choose between BlueStacks CFG or MuMu JSON format</li>
                 <li>Left-clicks will pass through the overlay to interact with the video</li>
                 <li>Lock the resolution to prevent automatic resizing</li>
                 <li>Tool automatically adjusts when you zoom in/out of the page</li>
@@ -291,17 +290,17 @@
              * when the user clicks the bookmarklet link. It's a self-contained script
              * that creates the coordinate tool overlay on any video page.
              * 
-             * v1.4 Changes:
-             * - Fixed CSP issues with DOM manipulation
-             * - Fixed YouTube mode switching for instant updates
-             * - Enhanced detection and update mechanisms
-             * - Fixed resolution ratio calculations
+             * v1.5 Changes:
+             * - Added MuMu emulator support
+             * - Enhanced import format detection
+             * - Added dual export options
+             * - Improved coordinate conversion logic
              */
             var bookmarkletCode = `(function(){
 if(window.baCT){alert('Tool already active');return}
 window.baCT=1;
 var s=document.createElement('style');
-s.textContent='.ba-o{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(52,152,219,0.1);cursor:crosshair;z-index:10000;pointer-events:none}.ba-m{position:absolute;transform:translate(-50%,-50%);pointer-events:all;cursor:move;z-index:10001}.ba-d{width:3px;height:3px;background:red;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10002}.ba-r{border:1px solid #41b4ff;border-radius:50%;width:20px;height:20px;background:transparent;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10001;pointer-events:none}.ba-l{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:white;padding:2px 6px;border-radius:3px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:10002}.ba-c{position:fixed!important;top:10px!important;right:10px!important;background:rgba(0,0,0,0.9)!important;color:white!important;padding:15px!important;border-radius:8px!important;width:320px!important;z-index:2147483647!important;font-family:Arial,sans-serif!important;font-size:12px!important;max-height:90vh!important;overflow-y:auto!important;box-shadow:0 4px 20px rgba(0,0,0,0.5)!important}.ba-c h3{margin-top:0!important;margin-bottom:12px!important;font-size:14px!important;display:flex!important;justify-content:space-between!important;align-items:center!important}.ba-b{background:#3498db!important;color:white!important;border:none!important;padding:6px 12px!important;border-radius:4px!important;cursor:pointer!important;margin-right:5px!important;font-size:12px!important}.ba-b:hover{background:#2980b9!important}.ba-cl{margin-top:10px;max-height:300px;overflow-y:auto}.ba-ci{background:rgba(255,255,255,0.1);padding:8px;margin-bottom:8px;border-radius:3px}.ba-ci h4{margin:0 0 5px 0;font-size:12px;display:flex;justify-content:space-between;align-items:center}.ba-del{background:#e74c3c!important;padding:2px 5px!important;font-size:10px!important}.ba-i{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.ba-ig{display:flex;flex-direction:column;margin-bottom:5px}.ba-ig label{font-size:10px;margin-bottom:3px}.ba-ig input{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:4px;border-radius:3px;font-size:11px;width:100%;box-sizing:border-box}.ba-sc{margin-top:12px;background:rgba(52,152,219,0.1);padding:12px;border-radius:6px}.ba-ct{display:flex;flex-direction:column;margin-bottom:12px;width:100%}.ba-ct label{font-size:12px;margin-bottom:6px;font-weight:500}.ba-cr{display:flex;align-items:center;gap:8px;width:100%}.ba-cr input[type="range"]{flex:1}.ba-cr input[type="color"]{width:40px;height:30px;border:none;border-radius:4px;cursor:pointer;padding:0}.ba-cr span{min-width:45px;text-align:right;font-size:11px;color:#ccc}.ba-ie{display:flex;justify-content:space-between;margin-top:12px;gap:8px}.ba-ie .ba-b{flex:1;margin-right:0}.ba-im{display:none;position:fixed;z-index:2147483648;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5)}.ba-z{position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.8);color:white;padding:8px 12px;border-radius:6px;font-size:11px;z-index:10003;pointer-events:none}.ba-ed{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:25px;border-radius:8px;z-index:2147483648;box-shadow:0 4px 20px rgba(0,0,0,0.3);min-width:320px}.ba-eo{background:#f7f7f7;padding:15px;margin-bottom:15px;border-radius:5px;cursor:pointer;border:2px solid transparent;transition:all 0.2s}.ba-eo:hover{border-color:#3498db;background:#eaf7ff}.ba-eo h4{margin:0 0 5px 0;color:#2c3e50}.ba-eo p{margin:0;font-size:12px;color:#666}.ba-eb{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.ba-rp{position:absolute;background:rgba(0,0,0,0.8);padding:10px;border-radius:5px;color:white;z-index:10001;display:flex;align-items:center;pointer-events:all}';
+s.textContent='.ba-o{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(52,152,219,0.1);cursor:crosshair;z-index:10000;pointer-events:none}.ba-m{position:absolute;transform:translate(-50%,-50%);pointer-events:all;cursor:move;z-index:10001}.ba-d{width:3px;height:3px;background:red;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10002}.ba-r{border:1px solid #41b4ff;border-radius:50%;width:20px;height:20px;background:transparent;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10001;pointer-events:none}.ba-l{position:absolute;top:-24px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:white;padding:2px 6px;border-radius:3px;font-size:12px;white-space:nowrap;pointer-events:none;z-index:10002}.ba-c{position:fixed!important;top:10px!important;right:10px!important;background:rgba(0,0,0,0.9)!important;color:white!important;padding:15px!important;border-radius:8px!important;width:320px!important;z-index:2147483647!important;font-family:Arial,sans-serif!important;font-size:12px!important;max-height:90vh!important;overflow-y:auto!important;box-shadow:0 4px 20px rgba(0,0,0,0.5)!important}.ba-c h3{margin-top:0!important;margin-bottom:12px!important;font-size:14px!important;display:flex!important;justify-content:space-between!important;align-items:center!important}.ba-b{background:#3498db!important;color:white!important;border:none!important;padding:6px 12px!important;border-radius:4px!important;cursor:pointer!important;margin-right:5px!important;font-size:12px!important}.ba-b:hover{background:#2980b9!important}.ba-cl{margin-top:10px;max-height:300px;overflow-y:auto}.ba-ci{background:rgba(255,255,255,0.1);padding:8px;margin-bottom:8px;border-radius:3px}.ba-ci h4{margin:0 0 5px 0;font-size:12px;display:flex;justify-content:space-between;align-items:center}.ba-del{background:#e74c3c!important;padding:2px 5px!important;font-size:10px!important}.ba-i{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.ba-ig{display:flex;flex-direction:column;margin-bottom:5px}.ba-ig label{font-size:10px;margin-bottom:3px}.ba-ig input{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:white;padding:4px;border-radius:3px;font-size:11px;width:100%;box-sizing:border-box}.ba-sc{margin-top:12px;background:rgba(52,152,219,0.1);padding:12px;border-radius:6px}.ba-ct{display:flex;flex-direction:column;margin-bottom:12px;width:100%}.ba-ct label{font-size:12px;margin-bottom:6px;font-weight:500}.ba-cr{display:flex;align-items:center;gap:8px;width:100%}.ba-cr input[type="range"]{flex:1}.ba-cr input[type="color"]{width:40px;height:30px;border:none;border-radius:4px;cursor:pointer;padding:0}.ba-cr span{min-width:45px;text-align:right;font-size:11px;color:#ccc}.ba-ie{display:flex;justify-content:space-between;margin-top:12px;gap:8px}.ba-ie .ba-b{flex:1;margin-right:0}.ba-im{display:none;position:fixed;z-index:2147483648;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5)}.ba-z{position:absolute;top:10px;left:10px;background:rgba(0,0,0,0.8);color:white;padding:8px 12px;border-radius:6px;font-size:11px;z-index:10003;pointer-events:none}.ba-ed{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:25px;border-radius:8px;z-index:2147483648;box-shadow:0 4px 20px rgba(0,0,0,0.3);min-width:320px}.ba-eo{background:#f7f7f7;padding:15px;margin-bottom:15px;border-radius:5px;cursor:pointer;border:2px solid transparent;transition:all 0.2s}.ba-eo:hover{border-color:#3498db;background:#eaf7ff}.ba-eo h4{margin:0 0 5px 0;color:#2c3e50}.ba-eo p{margin:0;font-size:12px;color:#666}.ba-eb{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}.ba-rp{position:absolute;background:rgba(0,0,0,0.8);padding:10px;border-radius:5px;color:white;z-index:10001;display:flex;align-items:center;pointer-events:all}.ba-kp{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:20px;border-radius:8px;z-index:2147483649;box-shadow:0 4px 20px rgba(0,0,0,0.3);min-width:300px}.ba-kp h4{margin-top:0;color:#2c3e50}.ba-kp input{width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:14px;text-align:center;margin-bottom:15px}.ba-kp-btn{display:flex;justify-content:flex-end;gap:10px}';
 document.head.appendChild(s);
 var M=[],C=0,D=0,S=null,dx=0,dy=0,L=0,rs=20,ds=3,rc="#41b4ff",dc="#ff0000",o,c,rp,im,z,ed,wi,hi,lr,fs=0,vc=null,vr=null,sh=0,mx=0,my=0,cz=1,zi,ro=null,mo=null,ut=null,ifu=0,lvm=null,vpr=null,yt=0,ytut=null,ytft=0,raf=null,udt=0,fuu=0,yro=null,pmu=0,sut=null,pfs=0;
 function fv(){var v=document.querySelector('video');if(v)return v;var iframe=document.querySelector('iframe[src*="youtube"]');if(iframe&&iframe.contentDocument){v=iframe.contentDocument.querySelector('video')}return v||null}
@@ -317,9 +316,9 @@ function frd(){if(o){o.style.display='none';o.offsetHeight;o.style.display='bloc
 function uop(force){if(!vc||!o)return;var now=Date.now();if(!force&&(ifu||now-udt<16))return;udt=now;ifu=1;try{var nvr=gvb();if(!nvr){ifu=0;return}var ifs=ifsm();var ytm=dytm();var cm=ifs?'fullscreen':(ytm||'normal');var wasFs=lvm==='fullscreen';var isExitingFs=wasFs&&!ifs;var hasChanged=Math.abs(nvr.width-vr.width)>1||Math.abs(nvr.height-vr.height)>1||Math.abs(nvr.top-vr.top)>1||Math.abs(nvr.left-vr.left)>1||lvm!==cm||force;if(!hasChanged){ifu=0;return}if(isExitingFs)pfs=1;vr=nvr;lvm=cm;var sp={x:window.pageXOffset||window.scrollX||0,y:window.pageYOffset||window.scrollY||0};o.style.position=ifs?'fixed':'absolute';o.style.width=Math.round(vr.width)+'px';o.style.height=Math.round(vr.height)+'px';if(ifs){o.style.top=Math.round(vr.top)+'px';o.style.left=Math.round(vr.left)+'px'}else{o.style.top=Math.round(vr.top+sp.y)+'px';o.style.left=Math.round(vr.left+sp.x)+'px'}o.style.zIndex=ifs?'2147483646':'10000';if(rp){rp.style.position=ifs?'fixed':'absolute';var rpTop=Math.max(10,vr.top-60);if(ifs){rp.style.left=Math.round(vr.left)+'px';rp.style.top=Math.round(rpTop)+'px'}else{rp.style.left=Math.round(vr.left+sp.x)+'px';rp.style.top=Math.round(rpTop+sp.y)+'px'}rp.style.zIndex=ifs?'2147483647':'10001'}if(!L){wi.value=Math.round(vr.width);hi.value=Math.round(vr.height)}M.forEach(function(m){if(m.rx&&m.ry){var nx=(m.rx/100)*vr.width;var ny=(m.ry/100)*vr.height;m.e.style.left=nx+'px';m.e.style.top=ny+'px';m.ci.querySelector('.x').value=Math.round(nx);m.ci.querySelector('.y').value=Math.round(ny)}});if(force||fuu||pmu||pfs){frd()}}catch(e){console.error('Update position error:',e)}finally{ifu=0;pmu=0}}
 function iup(){fuu=1;pmu=1;clearTimeout(ut);clearTimeout(sut);uop(true);frd();requestAnimationFrame(function(){uop(true);frd();requestAnimationFrame(function(){uop(true);frd();setTimeout(function(){uop(true);frd();if(pfs){sut=setTimeout(function(){var stabilizeCount=0;var stabilize=setInterval(function(){uop(true);frd();stabilizeCount++;if(stabilizeCount>=5){clearInterval(stabilize);pfs=0}},50);},100)}fuu=0},100)})})}
 function cup(){if(window.location.hostname.includes('youtube')){var cm=dytm();if(cm!==lvm){lvm=cm;clearTimeout(sut);iup()}}cz=Math.round((window.outerWidth/window.innerWidth)*100)/100;uz();var nvr=gvb();if(nvr&&(Math.abs(nvr.width-vr.width)>1||Math.abs(nvr.height-vr.height)>1||Math.abs(nvr.top-vr.top)>1||Math.abs(nvr.left-vr.left)>1)){uop()}raf=requestAnimationFrame(cup)}
-function co(){o=ce('div');o.className='ba-o';document.body.appendChild(o);uop(true);o.addEventListener('click',function(e){if(!D&&sh){e.preventDefault();var r=o.getBoundingClientRect();am(e.clientX-r.left,e.clientY-r.top)}})}
+function co(){o=ce('div');o.className='ba-o';document.body.appendChild(o);uop(true);o.addEventListener('click',function(e){if(!D&&sh){e.preventDefault();var r=o.getBoundingClientRect();am(e.clientX-r.left,e.clientY-r.top,'',true)}})}
 function cc(){c=ce('div');c.className='ba-c';
-var h=ce('h3'),t=ce('span');t.textContent='BA Coordinates';h.appendChild(t);
+var h=ce('h3'),t=ce('span');t.textContent='BA Coordinates v1.5';h.appendChild(t);
 var ab=ce('button');ab.className='ba-b';ab.textContent='Add';h.appendChild(ab);c.appendChild(h);
 var sc=ce('div');sc.className='ba-sc';
 var rsc=ce('div');rsc.className='ba-ct';var rsl=ce('label');rsl.textContent='Ring Size:';rsc.appendChild(rsl);
@@ -342,7 +341,7 @@ var bd=ce('div');bd.style.textAlign='right';bd.style.marginTop='10px';
 var rb=ce('button');rb.className='ba-b';rb.textContent='Reset';
 var cb=ce('button');cb.className='ba-b';cb.textContent='Close';bd.appendChild(rb);bd.appendChild(cb);c.appendChild(bd);
 document.body.appendChild(c);
-ab.onclick=function(){var r=o.getBoundingClientRect();am(r.width/2,r.height/2)};
+ab.onclick=function(){var r=o.getBoundingClientRect();am(r.width/2,r.height/2,'',true)};
 rb.onclick=rm;cb.onclick=cx;ib.onclick=function(){cim();im.style.display='block'};eb.onclick=ex;
 rss.oninput=function(){rs=parseInt(this.value);rsv.textContent=rs+'px';M.forEach(function(m){if(m.r)m.r.style.width=m.r.style.height=rs+'px'})};
 dss.oninput=function(){ds=parseInt(this.value);dsv.textContent=ds+'px';M.forEach(function(m){if(m.d)m.d.style.width=m.d.style.height=ds+'px'})};
@@ -362,41 +361,127 @@ function cz(){z=ce('div');z.className='ba-z';document.body.appendChild(z);uz()}
 function cim(){if(im)return;im=ce('div');im.className='ba-im';
 var mc=ce('div');mc.style.cssText='background:#fff;margin:10% auto;padding:20px;border-radius:8px;width:80%;max-width:700px';
 var t=ce('h3');t.textContent='Import Coordinates';t.style.cssText='margin-top:0;color:#2c3e50';mc.appendChild(t);
-var ta=ce('textarea');ta.id='ba-it';ta.style.cssText='width:100%;height:200px;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:5px;font-family:monospace';
-ta.placeholder='Paste JSON/CFG content...';mc.appendChild(ta);
+var info=ce('p');info.textContent='Supports both BlueStacks (.cfg) and MuMu (.json) formats';info.style.cssText='color:#666;font-size:12px;margin-bottom:15px';mc.appendChild(info);
+var li=ce('div');li.style.cssText='background:#f0f8ff;padding:15px;margin-bottom:15px;border-radius:5px;font-size:11px;color:#555';
+var lt=ce('p');lt.style.cssText='margin:0 0 10px 0;font-weight:500;color:#2c3e50';lt.textContent='Default file locations:';li.appendChild(lt);
+var bp=ce('p');bp.style.cssText='margin:5px 0';bp.innerHTML='<strong>BlueStacks:</strong><br>C:/ProgramData/BlueStacks_[version]/Engine/UserData/InputMapper/UserFiles<br><em>(version: msi5, 5, or just BlueStacks)</em>';li.appendChild(bp);
+var mp=ce('p');mp.style.cssText='margin:5px 0';mp.innerHTML='<strong>MuMu:</strong><br>C:/Users/[YourUsername]/AppData/Roaming/Netease/MuMuPlayerGlobal-12.0/data/keymapConfig';li.appendChild(mp);
+mc.appendChild(li);
+var fic=ce('div');fic.style.cssText='background:#f5f5f5;padding:15px;border-radius:5px;margin-bottom:15px;text-align:center';
+var fil=ce('label');fil.textContent='Choose file to import: ';fil.style.cssText='display:inline-block;margin-right:10px;font-weight:500';
+var fi=ce('input');fi.type='file';fi.accept='.cfg,.json';fi.style.cssText='margin-bottom:10px';
+fic.appendChild(fil);fic.appendChild(fi);mc.appendChild(fic);
+var ord=ce('div');ord.style.cssText='text-align:center;margin-bottom:15px';
+var ort=ce('span');ort.textContent='— OR —';ort.style.cssText='color:#999;font-size:12px;font-weight:500';
+ord.appendChild(ort);mc.appendChild(ord);
+var ta=ce('textarea');ta.id='ba-it';ta.style.cssText='width:100%;height:150px;margin-bottom:10px;padding:10px;border:1px solid #ddd;border-radius:5px;font-family:monospace';
+ta.placeholder='Paste BlueStacks CFG or MuMu JSON content...';mc.appendChild(ta);
 var bc=ce('div');bc.style.cssText='display:flex;justify-content:flex-end;gap:10px';
 var cb=ce('button');cb.textContent='Cancel';cb.style.cssText='padding:8px 15px;background:#7f8c8d;color:white;border:none;border-radius:4px';
 var ib=ce('button');ib.textContent='Import';ib.style.cssText='padding:8px 15px;background:#27ae60;color:white;border:none;border-radius:4px';
 bc.appendChild(cb);bc.appendChild(ib);mc.appendChild(bc);im.appendChild(mc);document.body.appendChild(im);
-cb.onclick=function(){im.style.display='none';ta.value=''};
+fi.onchange=function(){if(this.files.length>0){var file=this.files[0];var reader=new FileReader();
+reader.onload=function(e){ta.value=e.target.result};reader.readAsText(file)}};
+cb.onclick=function(){im.style.display='none';ta.value='';fi.value=''};
 ib.onclick=function(){pi()}}
+function dfi(t){try{var j=JSON.parse(t);if(j.keymaps&&Array.isArray(j.keymaps)){return'mumu'}else if(j.ControlSchemes||j.GameControls||j.MetaData){return'bluestacks'}else{return'unknown'}}catch(e){return'unknown'}}
+function gcs(j,format){var schemes=[];if(format==='bluestacks'&&j.ControlSchemes&&Array.isArray(j.ControlSchemes)){j.ControlSchemes.forEach(function(cs,i){if(cs.GameControls&&cs.GameControls.length>0){var taps=cs.GameControls.filter(function(gc){return gc.Type==='Tap'}).length;schemes.push({index:i,name:cs.Name||'Scheme '+(i+1),selected:cs.Selected||false,tapCount:taps,data:cs})}})}else if(format==='mumu'&&j.keymaps&&Array.isArray(j.keymaps)){var taps=j.keymaps.filter(function(km){return km.type==='Click'}).length;schemes.push({index:0,name:'MuMu Keymap',selected:true,tapCount:taps,data:j})}else if(format==='bluestacks'&&j.GameControls){var taps=j.GameControls.filter(function(gc){return gc.Type==='Tap'}).length;schemes.push({index:0,name:'Default Scheme',selected:true,tapCount:taps,data:j})}return schemes}
+function csd(schemes,format,callback){var sd=ce('div');sd.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:25px;border-radius:8px;z-index:2147483649;box-shadow:0 4px 20px rgba(0,0,0,0.3);max-width:500px;max-height:80vh;overflow-y:auto';
+var st=ce('h3');st.textContent='Select Control Schemes to Import';st.style.cssText='margin-top:0;margin-bottom:15px;color:#2c3e50';sd.appendChild(st);
+var si=ce('p');si.textContent='Multiple control schemes detected. Select which ones to import:';si.style.cssText='color:#666;font-size:12px;margin-bottom:15px';sd.appendChild(si);
+var sc=ce('div');sc.style.cssText='margin-bottom:20px';
+schemes.forEach(function(scheme,idx){var si=ce('div');si.style.cssText='background:#f7f7f7;padding:12px;margin-bottom:10px;border-radius:5px;border:2px solid transparent';
+var cb=ce('input');cb.type='checkbox';cb.checked=scheme.selected;cb.style.cssText='margin-right:10px;cursor:pointer';cb.setAttribute('data-index',idx);
+var sl=ce('label');sl.style.cssText='cursor:pointer;display:flex;align-items:center;width:100%';
+var sn=ce('span');sn.style.cssText='font-weight:500;flex:1';sn.textContent=scheme.name;
+var st=ce('span');st.style.cssText='color:#666;font-size:11px';st.textContent='('+scheme.tapCount+' tap points)';
+sl.appendChild(cb);sl.appendChild(sn);sl.appendChild(st);si.appendChild(sl);sc.appendChild(si);
+cb.onchange=function(){si.style.borderColor=this.checked?'#3498db':'transparent'}});
+sd.appendChild(sc);
+var bc=ce('div');bc.style.cssText='display:flex;justify-content:flex-end;gap:10px';
+var ca=ce('button');ca.textContent='Cancel';ca.style.cssText='padding:8px 15px;background:#7f8c8d;color:white;border:none;border-radius:4px;cursor:pointer';
+var ib=ce('button');ib.textContent='Import Selected';ib.style.cssText='padding:8px 15px;background:#27ae60;color:white;border:none;border-radius:4px;cursor:pointer';
+bc.appendChild(ca);bc.appendChild(ib);sd.appendChild(bc);
+document.body.appendChild(sd);
+ca.onclick=function(){sd.remove()};
+ib.onclick=function(){var selected=[];sc.querySelectorAll('input[type="checkbox"]:checked').forEach(function(cb){var idx=parseInt(cb.getAttribute('data-index'));selected.push(schemes[idx])});sd.remove();if(selected.length>0){callback(selected)}else{alert('No schemes selected')}}}
 function pi(){var t=document.getElementById('ba-it').value.trim();if(!t){alert('No data');return}
-try{var j=JSON.parse(t);if(M.length>0&&confirm('Clear existing markers?'))rm();
-if(j.ControlSchemes&&j.ControlSchemes[0]){ip(j.ControlSchemes[0])}else if(j.GameControls){ip(j)}else{alert('Invalid format')}
-im.style.display='none';document.getElementById('ba-it').value=''}catch(e){alert('Import failed')}}
-function ip(d){var gc=d.GameControls||[];var n=0;
+try{var format=dfi(t);if(format==='unknown'){alert('Unknown format. Please paste BlueStacks CFG or MuMu JSON content.');return}
+var j=JSON.parse(t);var schemes=gcs(j,format);
+if(schemes.length===0){alert('No valid control schemes found in the file');return}
+else if(schemes.length===1){if(M.length>0&&confirm('Clear existing markers?'))rm();ips([schemes[0]],format)}
+else{csd(schemes,format,function(selected){if(M.length>0&&confirm('Clear existing markers?'))rm();ips(selected,format)})}
+im.style.display='none';document.getElementById('ba-it').value='';var fi=im.querySelector('input[type="file"]');if(fi)fi.value=''}catch(e){alert('Import failed: '+e.message)}}
+function ips(schemes,format){var totalImported=0;schemes.forEach(function(scheme){if(format==='mumu'){var keymaps=scheme.data.keymaps||[];keymaps.forEach(function(km){if(km.type==='Click'&&km.rel_work_position){var r=o.getBoundingClientRect();var x=km.rel_work_position.rel_x*r.width;var y=km.rel_work_position.rel_y*r.height;var kb=km.key&&km.key.text?km.key.text:'';var id=am(x,y,kb);var m=M.find(function(m){return m.id==id});if(m&&m.l){m.l.textContent='#'+id+(kb?' - '+kb:'')}totalImported++}})}else if(format==='bluestacks'){ipbs(scheme.data,scheme.name,true);var gc=scheme.data.GameControls||[];totalImported+=gc.filter(function(g){return g.Type==='Tap'}).length}});alert('Imported '+totalImported+' markers from '+schemes.length+' scheme(s)')}
+function ipbs(d,schemeName,silent){var gc=d.GameControls||[];var n=0;
 gc.forEach(function(g){if(g.Type==="Tap"&&typeof g.X==='number'&&typeof g.Y==='number'){
 var r=o.getBoundingClientRect();var x=(g.X/100)*r.width;var y=(g.Y/100)*r.height;
-var id=am(x,y);if(g.Key){var m=M.find(function(m){return m.id==id});
-if(m&&m.l)m.l.textContent='#'+id+' - '+g.Key}n++}});
-alert('Imported '+n+' points')}
-function ced(){if(ed)ed.remove();ed=ce('div');ed.className='ba-ed';
-var t=ce('h3');t.textContent='Export Format';ed.appendChild(t);
+var kb=g.Key||'';var id=am(x,y,kb);if(g.Key){var m=M.find(function(m){return m.id==id});
+if(m&&m.l)m.l.textContent='#'+id+' - '+kb}n++}});
+if(!silent)alert('Imported '+n+' BlueStacks markers')}
+function ced(){if(ed)ed.remove();ed=ce('div');ed.className='ba-ed';ed.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;padding:25px;border-radius:8px;z-index:2147483648;box-shadow:0 4px 20px rgba(0,0,0,0.3);min-width:400px;max-width:600px';
+var t=ce('h3');t.textContent='Export Coordinates';t.style.cssText='margin-top:0;margin-bottom:15px;color:#2c3e50';ed.appendChild(t);
+var nc=ce('div');nc.style.cssText='margin-bottom:20px';
+var nl=ce('label');nl.textContent='Scheme Name:';nl.style.cssText='display:block;margin-bottom:5px;font-weight:500';nc.appendChild(nl);
+var ni=ce('input');ni.type='text';ni.placeholder='e.g., Binah Torment, Chesed Insane...';ni.value='BA Coords Export';
+ni.style.cssText='width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;box-sizing:border-box';nc.appendChild(ni);ed.appendChild(nc);
+var ft=ce('p');ft.textContent='Select export format:';ft.style.cssText='margin-bottom:10px;font-weight:500';ed.appendChild(ft);
 var co=ce('div');co.className='ba-eo';co.setAttribute('data-format','cfg');
-var ct=ce('h4');ct.textContent='CFG Format';co.appendChild(ct);
-var cd=ce('p');cd.textContent='For BlueStacks import';co.appendChild(cd);ed.appendChild(co);
+var ct=ce('h4');ct.textContent='BlueStacks CFG Format';co.appendChild(ct);
+var cd=ce('p');cd.textContent='For BlueStacks emulator import';co.appendChild(cd);ed.appendChild(co);
+var mo=ce('div');mo.className='ba-eo';mo.setAttribute('data-format','mumu');
+var mt=ce('h4');mt.textContent='MuMu JSON Format';mo.appendChild(mt);
+var md=ce('p');md.textContent='For MuMu emulator import';mo.appendChild(md);ed.appendChild(mo);
 var jo=ce('div');jo.className='ba-eo';jo.setAttribute('data-format','json');
-var jt=ce('h4');jt.textContent='JSON Format';jo.appendChild(jt);
-var jd=ce('p');jd.textContent='Simple coordinate data';jo.appendChild(jd);ed.appendChild(jo);
+var jt=ce('h4');jt.textContent='Simple JSON Format';jo.appendChild(jt);
+var jd=ce('p');jd.textContent='Generic coordinate data';jo.appendChild(jd);ed.appendChild(jo);
+var li=ce('div');li.style.cssText='background:#f0f8ff;padding:15px;margin:15px 0;border-radius:5px;font-size:11px;color:#555';
+var lt=ce('p');lt.style.cssText='margin:0 0 10px 0;font-weight:500;color:#2c3e50';lt.textContent='Default file locations:';li.appendChild(lt);
+var bp=ce('p');bp.style.cssText='margin:5px 0';bp.innerHTML='<strong>BlueStacks:</strong><br>C:/ProgramData/BlueStacks_[version]/Engine/UserData/InputMapper/UserFiles<br><em>(version may be: msi5, 5, or just BlueStacks)</em>';li.appendChild(bp);
+var mp=ce('p');mp.style.cssText='margin:5px 0';mp.innerHTML='<strong>MuMu:</strong><br>C:/Users/[YourUsername]/AppData/Roaming/Netease/MuMuPlayerGlobal-12.0/data/keymapConfig';li.appendChild(mp);
+ed.appendChild(li);
 var bc=ce('div');bc.className='ba-eb';var cb=ce('button');cb.className='ba-b';cb.textContent='Cancel';
 cb.onclick=function(){ed.remove()};bc.appendChild(cb);ed.appendChild(bc);document.body.appendChild(ed);
-co.onclick=function(){pe('cfg');ed.remove()};jo.onclick=function(){pe('json');ed.remove()}}
-function pe(f){var d;if(f==='cfg'){d={MetaData:{},ControlSchemes:[{Name:"BA Coords",BuiltIn:false,Selected:true,
-GameControls:M.map(function(m){return{Type:"Tap",X:m.rx,Y:m.ry,Key:'M'+(m.id)}})}]}}
-else{d={GameControls:M.map(function(m){return{Type:"Tap",X:m.rx,Y:m.ry}})}}
-var j=JSON.stringify(d,null,2);var b=new Blob([j],{type:'application/json'});
-var u=URL.createObjectURL(b);var a=ce('a');a.href=u;a.download='ba_coords.'+(f==='cfg'?'cfg':'json');
-a.click();URL.revokeObjectURL(u)}
+co.onclick=function(){var name=ni.value.trim()||'BA Coords Export';pen('cfg',name);ed.remove()};
+mo.onclick=function(){var name=ni.value.trim()||'BA Coords Export';pen('mumu',name);ed.remove()};
+jo.onclick=function(){var name=ni.value.trim()||'BA Coords Export';pen('json',name);ed.remove()}}
+function gkm(key){var km={A:{sc:30,vk:65},B:{sc:48,vk:66},C:{sc:46,vk:67},D:{sc:32,vk:68},E:{sc:18,vk:69},F:{sc:33,vk:70},
+G:{sc:34,vk:71},H:{sc:35,vk:72},I:{sc:23,vk:73},J:{sc:36,vk:74},K:{sc:37,vk:75},L:{sc:38,vk:76},
+M:{sc:50,vk:77},N:{sc:49,vk:78},O:{sc:24,vk:79},P:{sc:25,vk:80},Q:{sc:16,vk:81},R:{sc:19,vk:82},
+S:{sc:31,vk:83},T:{sc:20,vk:84},U:{sc:22,vk:85},V:{sc:47,vk:86},W:{sc:17,vk:87},X:{sc:45,vk:88},
+Y:{sc:21,vk:89},Z:{sc:44,vk:90},'1':{sc:2,vk:49},'2':{sc:3,vk:50},'3':{sc:4,vk:51},'4':{sc:5,vk:52},
+'5':{sc:6,vk:53},'6':{sc:7,vk:54},'7':{sc:8,vk:55},'8':{sc:9,vk:56},'9':{sc:10,vk:57},'0':{sc:11,vk:48},
+'F1':{sc:59,vk:112},'F2':{sc:60,vk:113},'F3':{sc:61,vk:114},'F4':{sc:62,vk:115},'F5':{sc:63,vk:116},
+'F6':{sc:64,vk:117},'F7':{sc:65,vk:118},'F8':{sc:66,vk:119},'F9':{sc:67,vk:120},'F10':{sc:68,vk:121},
+'F11':{sc:87,vk:122},'F12':{sc:88,vk:123},'Escape':{sc:1,vk:27},'Tab':{sc:15,vk:9},'CapsLock':{sc:58,vk:20},
+'Shift':{sc:42,vk:16},'Ctrl':{sc:29,vk:17},'Alt':{sc:56,vk:18},'Space':{sc:57,vk:32},'Enter':{sc:28,vk:13},
+'Backspace':{sc:14,vk:8},'Home':{sc:71,vk:36},'End':{sc:79,vk:35},'PgUp':{sc:73,vk:33},'PgDn':{sc:81,vk:34},
+'Up':{sc:72,vk:38},'Down':{sc:80,vk:40},'Left':{sc:75,vk:37},'Right':{sc:77,vk:39},'Ins':{sc:82,vk:45},
+'Del':{sc:83,vk:46},'Pause':{sc:0,vk:19},'ScrLk':{sc:70,vk:145},'Win':{sc:91,vk:91}};
+return km[key]||{sc:30,vk:65}}
+function pen(f,name){var d;if(f==='cfg'){d={MetaData:{ParserVersion:"17",UpdateVersion:"1",UpdateArticleKey:"",CloudUpdateTimeUTC:new Date().toISOString().replace('T',' ').split('.')[0]},
+ControlSchemes:[{Name:name||"BA Coords Export",BuiltIn:false,Selected:true,IsBookMarked:false,IsCategoryVisible:true,KeyboardLayout:"United States",
+GameControls:M.map(function(m,i){return{"$type":"Tap, Bluestacks",Type:"Tap",Tweaks:0,Exclusive:false,ExclusiveDelay:200,
+XExpr:"",YExpr:"",XOverlayOffset:"",YOverlayOffset:"",StartCondition:"",EnableCondition:"",ShowOnOverlay:true,
+X:parseFloat(m.rx),Y:parseFloat(m.ry),Key:m.kb||(i+1).toString(),Key_alt1:"",
+GuidanceCategory:"",Guidance:{}}}),Images:[]}],
+Strings:{"en-US":{}}}}
+else if(f==='mumu'){d={info:{background_color:"000000FF",is_joystick:false,transparent_ESC:false,
+transparent_keyboard:true,transparent_mouse:"Mouse_No_Transparent",transparent_mouse_windows_raw_move_period:0,
+transparent_wheel:false,visibility:true},
+keymaps:M.map(function(m,i){var key=m.kb||String.fromCharCode(65+i%26);var km=gkm(key);return{editor_icon_scale:1,
+icon:{background_color:"00000066",description:"",radius_correction:1,
+rel_position:{rel_x:m.rx/100,rel_y:m.ry/100},visibility:true},
+key:{device:"keyboard",scan_code:km.sc,text:key,virtual_key:km.vk},
+rel_work_position:{rel_x:m.rx/100,rel_y:m.ry/100},type:"Click"}}),
+param:{wheel_policy:{wheel_step_distance:0.01,zoom_first_interval:16,zoom_last_idle:0,
+zoom_margin:20,zoom_period:16,zoom_step_distance:0.00625,zoom_steps:8}}}}
+else{d={GameControls:M.map(function(m){return{Type:"Tap",X:m.rx,Y:m.ry,Key:m.kb||''}})}}
+var j=JSON.stringify(d,null,4);var b=new Blob([j],{type:'application/json'});
+var u=URL.createObjectURL(b);var a=ce('a');a.href=u;
+var filename='ba_coords_'+(f==='cfg'?'bluestacks.cfg':(f==='mumu'?'mumu.json':'simple.json'));
+a.download=filename;a.click();URL.revokeObjectURL(u)}
+function pe(f){pen(f,'BA Coords Export')}
 function ex(){if(M.length===0){alert('No markers');return}ced()}
 function ar(){var w=parseInt(wi.value)||vr.width;var h=parseInt(hi.value)||vr.height;
 if(w<1||h<1){alert('Invalid dimensions');return}
@@ -411,10 +496,39 @@ function um(){if(L)return;var r=o.getBoundingClientRect();
 M.forEach(function(m){var x=(m.rx/100)*r.width;var y=(m.ry/100)*r.height;
 m.e.style.left=x+'px';m.e.style.top=y+'px';
 m.ci.querySelector('.x').value=Math.round(x);m.ci.querySelector('.y').value=Math.round(y)})}
-function am(x,y){C++;var m=ce('div');m.className='ba-m';m.style.left=x+'px';m.style.top=y+'px';m.setAttribute('data-id',C);
+function ckd(callback){var kd=ce('div');kd.className='ba-kp';
+var t=ce('h4');t.textContent='Enter Key Binding';kd.appendChild(t);
+var info=ce('p');info.textContent='Waiting... Release shift key';info.style.cssText='color:#666;font-size:12px;margin-bottom:15px';kd.appendChild(info);
+var ki=ce('input');ki.type='text';ki.readOnly=true;ki.placeholder='Waiting...';
+ki.style.cssText='width:100%;padding:8px;border:1px solid #ddd;border-radius:4px;font-size:14px;text-align:center;margin-bottom:15px;background:#f5f5f5';
+kd.appendChild(ki);
+var bc=ce('div');bc.className='ba-kp-btn';
+var cb=ce('button');cb.className='ba-b';cb.textContent='Cancel';
+cb.onclick=function(){kd.remove();callback('')};
+bc.appendChild(cb);kd.appendChild(bc);
+document.body.appendChild(kd);
+var isActive=false;
+setTimeout(function(){isActive=true;info.textContent='Press any key or ESC to cancel';ki.placeholder='Press a key...';ki.style.background='#fff';ki.focus()},500);
+ki.onkeydown=function(e){if(!isActive)return;e.preventDefault();e.stopPropagation();
+var keyName='';if(e.key==='Escape'){kd.remove();callback('');return}
+else if(e.key==='Tab'){keyName='Tab'}else if(e.key==='CapsLock'){keyName='CapsLock'}
+else if(e.key==='Shift'){keyName='Shift'}else if(e.key==='Control'){keyName='Ctrl'}
+else if(e.key==='Alt'){keyName='Alt'}else if(e.key==='Meta'){keyName='Win'}
+else if(e.key==='Enter'){keyName='Enter'}else if(e.key===' '){keyName='Space'}
+else if(e.key==='Backspace'){keyName='Backspace'}else if(e.key==='Delete'){keyName='Delete'}
+else if(e.key==='ArrowUp'){keyName='Up'}else if(e.key==='ArrowDown'){keyName='Down'}
+else if(e.key==='ArrowLeft'){keyName='Left'}else if(e.key==='ArrowRight'){keyName='Right'}
+else if(e.key==='Home'){keyName='Home'}else if(e.key==='End'){keyName='End'}
+else if(e.key==='PageUp'){keyName='PgUp'}else if(e.key==='PageDown'){keyName='PgDn'}
+else if(e.key==='Insert'){keyName='Ins'}else if(e.key==='Pause'){keyName='Pause'}
+else if(e.key==='ScrollLock'){keyName='ScrLk'}else if(e.key.startsWith('F')&&!isNaN(e.key.substr(1))){keyName=e.key}
+else if(e.key.length===1){keyName=e.key.toUpperCase()}
+ki.value=keyName;
+setTimeout(function(){kd.remove();callback(keyName)},200)}}
+function am(x,y,kb,askForKey){C++;var m=ce('div');m.className='ba-m';m.style.left=x+'px';m.style.top=y+'px';m.setAttribute('data-id',C);
 var d=ce('div');d.className='ba-d';d.style.width=ds+'px';d.style.height=ds+'px';d.style.backgroundColor=dc;
 var r=ce('div');r.className='ba-r';r.style.width=rs+'px';r.style.height=rs+'px';r.style.borderColor=rc;
-var l=ce('div');l.className='ba-l';l.textContent='#'+C;
+var l=ce('div');l.className='ba-l';l.textContent='#'+C+(kb?' - '+kb:'');
 m.appendChild(r);m.appendChild(d);m.appendChild(l);o.appendChild(m);
 m.onmousedown=function(e){e.preventDefault();e.stopPropagation();D=1;S=this;
 var rect=m.getBoundingClientRect();dx=e.clientX-(rect.left+rect.width/2);dy=e.clientY-(rect.top+rect.height/2)};
@@ -435,7 +549,11 @@ var rxi=ce('input');rxi.type='number';rxi.className='rx';rxi.value=rx;rxi.setAtt
 rxg.appendChild(rxi);ic.appendChild(rxg);
 var ryg=ce('div');ryg.className='ba-ig';var ryl=ce('label');ryl.textContent='Ratio Y:';ryg.appendChild(ryl);
 var ryi=ce('input');ryi.type='number';ryi.className='ry';ryi.value=ry;ryi.setAttribute('data-id',C);
-ryg.appendChild(ryi);ic.appendChild(ryg);ci.appendChild(ic);
+ryg.appendChild(ryi);ic.appendChild(ryg);
+var kg=ce('div');kg.className='ba-ig';kg.style.gridColumn='1 / -1';var kl=ce('label');kl.textContent='Key:';kg.appendChild(kl);
+var ki=ce('input');ki.type='text';ki.className='kb';ki.value=kb||'';ki.setAttribute('data-id',C);
+ki.style.cssText='text-align:center;cursor:pointer;background:rgba(255,255,255,0.3)';ki.readOnly=true;
+ki.placeholder='Click & press key';kg.appendChild(ki);ic.appendChild(kg);ci.appendChild(ic);
 c.querySelector('.ba-cl').appendChild(ci);
 db.onclick=function(){dm(parseInt(this.getAttribute('data-id')))};
 xi.oninput=function(){var id=parseInt(this.getAttribute('data-id'));var mo=M.find(function(m){return m.id===id});
@@ -450,7 +568,34 @@ var nx=mo.rx*r.width/100;mo.e.style.left=nx+'px';xi.value=Math.round(nx)};
 ryi.oninput=function(){var id=parseInt(this.getAttribute('data-id'));var mo=M.find(function(m){return m.id===id});
 if(!mo)return;mo.ry=parseFloat(this.value);var r=o.getBoundingClientRect();
 var ny=mo.ry*r.height/100;mo.e.style.top=ny+'px';yi.value=Math.round(ny)};
-M.push({id:C,e:m,r:r,d:d,l:l,ci:ci,x:x,y:y,rx:parseFloat(rx),ry:parseFloat(ry)});return C}
+ki.onfocus=function(){this.style.background='rgba(52,152,219,0.3)'};
+ki.onblur=function(){this.style.background='rgba(255,255,255,0.3)'};
+ki.onkeydown=function(e){e.preventDefault();e.stopPropagation();
+var keyName='';if(e.key==='Escape'){keyName='Escape'}else if(e.key==='Tab'){keyName='Tab'}
+else if(e.key==='CapsLock'){keyName='CapsLock'}else if(e.key==='Shift'){keyName='Shift'}
+else if(e.key==='Control'){keyName='Ctrl'}else if(e.key==='Alt'){keyName='Alt'}
+else if(e.key==='Meta'){keyName='Win'}else if(e.key==='Enter'){keyName='Enter'}
+else if(e.key===' '){keyName='Space'}else if(e.key==='Backspace'){keyName=''}
+else if(e.key==='Delete'){keyName=''}else if(e.key==='ArrowUp'){keyName='Up'}
+else if(e.key==='ArrowDown'){keyName='Down'}else if(e.key==='ArrowLeft'){keyName='Left'}
+else if(e.key==='ArrowRight'){keyName='Right'}else if(e.key==='Home'){keyName='Home'}
+else if(e.key==='End'){keyName='End'}else if(e.key==='PageUp'){keyName='PgUp'}
+else if(e.key==='PageDown'){keyName='PgDn'}else if(e.key==='Insert'){keyName='Ins'}
+else if(e.key==='Pause'){keyName='Pause'}else if(e.key==='ScrollLock'){keyName='ScrLk'}
+else if(e.key==='F1'){keyName='F1'}else if(e.key==='F2'){keyName='F2'}
+else if(e.key==='F3'){keyName='F3'}else if(e.key==='F4'){keyName='F4'}
+else if(e.key==='F5'){keyName='F5'}else if(e.key==='F6'){keyName='F6'}
+else if(e.key==='F7'){keyName='F7'}else if(e.key==='F8'){keyName='F8'}
+else if(e.key==='F9'){keyName='F9'}else if(e.key==='F10'){keyName='F10'}
+else if(e.key==='F11'){keyName='F11'}else if(e.key==='F12'){keyName='F12'}
+else if(e.key.length===1){keyName=e.key.toUpperCase()}
+this.value=keyName;var id=parseInt(this.getAttribute('data-id'));
+var mo=M.find(function(m){return m.id===id});
+if(mo){mo.kb=keyName;mo.l.textContent='#'+id+(keyName?' - '+keyName:'')}};
+var mo={id:C,e:m,r:r,d:d,l:l,ci:ci,x:x,y:y,rx:parseFloat(rx),ry:parseFloat(ry),kb:kb||''};
+M.push(mo);
+if(askForKey){ckd(function(key){if(key){ki.value=key;mo.kb=key;l.textContent='#'+C+(key?' - '+key:'')}})}
+return C}
 function dm(id){var i=M.findIndex(function(m){return m.id===id});if(i===-1)return;
 var m=M[i];if(m.e.parentNode)m.e.parentNode.removeChild(m.e);
 if(m.ci.parentNode)m.ci.parentNode.removeChild(m.ci);M.splice(i,1)}
@@ -551,13 +696,14 @@ raf=requestAnimationFrame(cup);
             
             // Array of features to display
             var features = [
-                'NEW: Fixed resolution ratio calculations when manually changing dimensions!',
-                'NEW: Instant updates for ALL YouTube mode changes - no interaction needed!',
+                'NEW: Full support for MuMu emulator keymaps',
+                'NEW: Auto-detects import format (BlueStacks or MuMu)',
+                'NEW: Export to both BlueStacks CFG and MuMu JSON formats',
                 'Add labels to markers for easy identification',
                 'Automatically adjusts when you zoom the page',
                 'Customize marker colors and sizes',
                 'Hold SHIFT and click to place markers',
-                'Import/Export in CFG format for BlueStacks',
+                'Import/Export coordinates between emulators',
                 'Shows current zoom level in top-left corner',
                 'Works on YouTube and most video sites',
             ];
@@ -586,7 +732,7 @@ raf=requestAnimationFrame(cup);
              */
             var bookmarkletLink = document.createElement('a');
             bookmarkletLink.href = 'javascript:' + encodeURIComponent(bookmarkletCode.replace(/\s+/g, ' ').trim());
-            bookmarkletLink.textContent = 'Blue Archive Coordinates Bookmarklet v1.4';
+            bookmarkletLink.textContent = 'Blue Archive Coordinates Bookmarklet v1.5';
             bookmarkletLink.className = 'bookmarklet-link';
             bookmarkletLink.setAttribute('draggable', 'true');
             
