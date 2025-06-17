@@ -81,7 +81,12 @@ Coordinate data uses percentage ratios specifically because Blue Archive players
 The bookmarklet is completely self-contained and doesn't require any external servers or accounts. Everything runs locally in your browser for maximum compatibility and privacy.
 
 ---
+## Special Thanks!
 
 **Remember:** This tool helps you understand expert positioning, but mastering high-difficulty content still requires practice and strategic understanding. Use coordinate mapping as a foundation for developing your own precision gameplay skills.
 
-**This tool was inspired by https://arca.live/b/bluearchive/130030062** Full credits to the idea to its creator!
+**This tool was inspired by https://arca.live/b/bluearchive/130030062** Full credits to the idea to its creator, 야드파운드인치갤런!
+
+Thank you Soomshigi for helping me create this post as it was directly inspired from someone else on Arca: https://arca.live/b/bluearchive/139131901
+
+Thank you Mapleless for providing a keymap file for MumuPlayer as I wasn't using that emulator at the time!
